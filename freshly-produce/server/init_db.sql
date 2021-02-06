@@ -1,7 +1,3 @@
--- CREATE DATABASE freshly_produce;
-
--- USE DATABASE freshly_produce;
-
 CREATE TABLE users (
   user_id SERIAL PRIMARY KEY,
   username TEXT,
