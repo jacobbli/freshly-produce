@@ -10,8 +10,6 @@
             </div>
             <div class="p-col-8">
                 <ProfileTabMenu/>
-
-                <router-view />
             </div>
         </div>
     </div>

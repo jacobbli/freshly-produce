@@ -16,6 +16,8 @@ import Avatar from 'primevue/avatar';
 import Menu from 'primevue/menu';
 import Sidebar from 'primevue/sidebar';
 import TabMenu from 'primevue/tabmenu';
+import Chart from 'primevue/chart';
+import TieredMenu from 'primevue/tieredmenu';
 
 const app = createApp(App);
 app.use(router);
@@ -31,6 +33,8 @@ app.component('Avatar', Avatar);
 app.component('Menu', Menu);
 app.component('Sidebar', Sidebar);
 app.component('TabMenu', TabMenu);
+app.component('Chart', Chart);
+app.component('TieredMenu', TieredMenu);
 
 app.mount('#app');
 

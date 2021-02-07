@@ -10,7 +10,8 @@
                 <img id="freshlyLogo" @click="goToHomePage" alt="logo" src="/images/freshlyproduce.png" height="40" class="p-mx-4">
             </template>
             <template #end>
-                <Avatar label="P" shape="circle" class="p-mr-2" size="large" @click="goToProfile" />
+                <Avatar label="P" shape="circle" class="p-mr-2" size="large" @click="toggle" aria-haspopup="true" aria-controls="overlay_tmenu" />
+                <TieredMenu id="overlay_tmenu" ref="menu" :model="itemsAvatar" :popup="true" />
             </template>
         </Menubar>
     </div>
@@ -19,11 +20,11 @@
 
 export default {
     methods:{
-        goToProfile(){
-            this.$router.push({ name: 'Profile' });
-        },
         goToHomePage(){
             this.$router.push({ name: 'Home' });
+        },
+        toggle(event) {
+            this.$refs.menu.toggle(event);
         }
     },
     data() {
@@ -49,9 +50,26 @@ export default {
                         },
                     ]
                 }
-            ]
+            ],
+                        itemsAvatar: [
+        
+                {
+                   label:'Profile',
+                   icon:'pi pi-fw pi-user',
+                   to: '/mydetail'
+                },
+                {
+                   separator:true
+                },
+                {
+                   label:'Log Out',
+                   icon:'pi pi-fw pi-power-off'
+                }
+             ]
         }
-    }
+    },
+
+    
 }
 </script>
 <style >

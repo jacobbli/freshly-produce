@@ -10,11 +10,14 @@ export default {
     components:{
         TabMenu,
     },
+    beforeMount() {
+        this.$router.push({ name: 'MyDetail' });
+    },
     data() {
 		return {
 			items: [
                 {label: 'My Details', icon: 'pi pi-fw pi-home', to: '/mydetail'},
-                {label: 'My Subscription', icon: 'pi pi-fw pi-calendar', to: '/mysubscription'},
+                // {label: 'My Subscription', icon: 'pi pi-fw pi-calendar', to: '/mysubscription'},
             ]
 		}
 	}
