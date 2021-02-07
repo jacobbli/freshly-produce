@@ -18,6 +18,7 @@ import Dropdown from 'primevue/dropdown';
 import FileUpload from 'primevue/fileupload';
 import Menu from 'primevue/menu';
 import Sidebar from 'primevue/sidebar';
+import DataView from 'primevue/dataview';
 
 const app = createApp(App);
 app.use(router);
@@ -35,6 +36,7 @@ app.component('Dropdown', Dropdown);
 app.component('FileUpload', FileUpload);
 app.component('Menu', Menu);
 app.component('Sidebar', Sidebar);
+app.component('DataView', DataView);
 
 app.mount('#app');
 
