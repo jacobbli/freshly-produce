@@ -4,6 +4,7 @@ import LoginPage from '../views/LoginPage.vue'
 import RoleSelectionForm from '../components/login-component/RoleSelectionForm.vue'
 import LoginForm from '../components/login-component/LoginForm.vue'
 import CustomerSubscriptionsPage from '../views/CustomerSubscriptionsPage.vue'
+import FarmerSubscriptionsPage from '../views/FarmerSubscriptionsPage.vue'
 import AvailableSubscriptionsPage from '../views/AvailableSubscriptionsPage.vue'
 import SubscriptionCreationPage from '../views/SubscriptionCreationPage.vue'
 import SubscriptionCreationForm from '../components/subscription-component/SubscriptionCreationForm.vue'
@@ -12,42 +13,49 @@ import ProductDescriptionForm from '../components/subscription-component/Product
 
 const routes = [
   {
-    path: '/home',
-    alias: '/',
+    path: '/',
     name: 'Home',
     component: HomePage,
     children: [
       {
-        path: 'my-subscriptions',
+        path: 'available-subscriptions',
         name: 'AvailableSubscriptionsPage',
         component: AvailableSubscriptionsPage
       },
       {
-        path: 'available-subscriptions',
+        path: 'my-subscriptions',
         name: 'CustomerSubscriptionsPage',
         component: CustomerSubscriptionsPage
-      }
-    ]
-  },
-  {
-    path: '/subscription',
-    name: 'SubscriptionCreationPage',
-    component: SubscriptionCreationPage,
-    children: [
-      {
-        path: 'create',
-        name: 'SubscriptionCreationForm',
-        component: SubscriptionCreationForm
       },
+
       {
-        path: 'frequency',
-        name: 'FrequencySelectionForm',
-        component: FrequencySelectionForm
-      },
-      {
-        path: 'product',
-        name: 'ProductDescriptionForm',
-        component: ProductDescriptionForm
+        path: 'my-offers',
+        name: 'FarmerSubscriptionsPage',
+        component: FarmerSubscriptionsPage,
+        children: [
+          {
+            path: 'new-subscription',
+            name: 'SubscriptionCreationPage',
+            component: SubscriptionCreationPage,
+            children: [
+              {
+                path: 'create',
+                name: 'SubscriptionCreationForm',
+                component: SubscriptionCreationForm
+              },
+              {
+                path: 'frequency',
+                name: 'FrequencySelectionForm',
+                component: FrequencySelectionForm
+              },
+              {
+                path: 'product',
+                name: 'ProductDescriptionForm',
+                component: ProductDescriptionForm
+              },
+            ]
+          }
+        ]
       },
     ]
   },
