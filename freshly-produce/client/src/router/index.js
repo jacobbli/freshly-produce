@@ -1,9 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '../views/HomePage.vue'
 import LoginPage from '../views/LoginPage.vue'
+import ProfilePage from '../views/ProfilePage.vue'
 import CloseToExpiry from '../views/CloseToExpiry.vue'
 import RoleSelectionForm from '../components/login-component/RoleSelectionForm.vue'
 import LoginForm from '../components/login-component/LoginForm.vue'
+import MyDetail from '../components/profile-component/MyDetail.vue'
+import MySubscription from '../components/profile-component/MySubscription.vue'
 import SubscriptionCreationPage from '../views/SubscriptionCreationPage.vue'
 import SubscriptionCreationForm from '../components/subscription-component/SubscriptionCreationForm.vue'
 import FrequencySelectionForm from '../components/subscription-component/FrequencySelectionForm.vue'
@@ -15,6 +18,24 @@ const routes = [
     alias: '/',
     name: 'Home',
     component: HomePage,
+  },
+  
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: ProfilePage,
+    children:[
+      {
+        path: '/mydetail',
+        name: 'MyDetail',
+        component: MyDetail
+      },
+      {
+        path: '/mysubscription',
+        name: 'MySubscription',
+        component: MySubscription
+      },
+    ]
   },
   {
     path: '/closetoexpiry',
