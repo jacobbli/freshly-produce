@@ -36,12 +36,12 @@ export default {
                         {
                             label:'Close-To-Expiry',
                             icon:'pi pi-clock',
-                            to: ''
+                            to: '/closetoexpiry'
                         },
                         {
                             label:'Subscription',
                             icon:'pi pi-bell',
-                            to: ''
+                            to: '/home'
                         },                        
                         {
                             label:'My Subscription',

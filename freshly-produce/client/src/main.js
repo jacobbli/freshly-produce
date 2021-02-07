@@ -22,6 +22,8 @@ import Sidebar from 'primevue/sidebar';
 import TabMenu from 'primevue/tabmenu';
 import Chart from 'primevue/chart';
 import TieredMenu from 'primevue/tieredmenu';
+import DataView from 'primevue/dataview';
+
 
 const app = createApp(App);
 app.use(router);
@@ -43,6 +45,8 @@ app.component('Sidebar', Sidebar);
 app.component('TabMenu', TabMenu);
 app.component('Chart', Chart);
 app.component('TieredMenu', TieredMenu);
+app.component('DataView', DataView);
+
 
 app.mount('#app');
 
