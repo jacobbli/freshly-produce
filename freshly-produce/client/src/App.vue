@@ -20,8 +20,7 @@ export default {
 }
 
 body {
-  margin: 0;
-   margin: 0px;
-   background-color: #F8F9FA;
+  margin: 0px;
+  background-color: #F8F9FA;
 }
 </style>
