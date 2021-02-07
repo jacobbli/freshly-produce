@@ -12,16 +12,21 @@ import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
 import Menubar from 'primevue/menubar';
 import Card from 'primevue/card';
+import Menu from 'primevue/menu';
+import Sidebar from 'primevue/sidebar';
 
 const app = createApp(App);
 app.use(router);
 app.use(PrimeVue);
+
 
 app.component('InputText', InputText);
 app.component('Button', Button);
 app.component('Dialog', Dialog);
 app.component('Card', Card);
 app.component('Menubar', Menubar);
+app.component('Menu', Menu);
+app.component('Sidebar', Sidebar);
 
 app.mount('#app');
 
