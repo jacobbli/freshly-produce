@@ -6,6 +6,10 @@ import RoleSelectionForm from '../components/login-component/RoleSelectionForm.v
 import LoginForm from '../components/login-component/LoginForm.vue'
 import MyDetail from '../components/profile-component/MyDetail.vue'
 import MySubscription from '../components/profile-component/MySubscription.vue'
+import SubscriptionCreationPage from '../views/SubscriptionCreationPage.vue'
+import SubscriptionCreationForm from '../components/subscription-component/SubscriptionCreationForm.vue'
+import FrequencySelectionForm from '../components/subscription-component/FrequencySelectionForm.vue'
+import ProductDescriptionForm from '../components/subscription-component/ProductDescriptionForm.vue'
 
 const routes = [
   {
@@ -29,6 +33,28 @@ const routes = [
         path: '/mysubscription',
         name: 'MySubscription',
         component: MySubscription
+      },
+    ]
+  },
+  {
+    path: '/subscription',
+    name: 'SubscriptionCreationPage',
+    component: SubscriptionCreationPage,
+    children: [
+      {
+        path: 'create',
+        name: 'SubscriptionCreationForm',
+        component: SubscriptionCreationForm
+      },
+      {
+        path: 'frequency',
+        name: 'FrequencySelectionForm',
+        component: FrequencySelectionForm
+      },
+      {
+        path: 'product',
+        name: 'ProductDescriptionForm',
+        component: ProductDescriptionForm
       },
     ]
   },

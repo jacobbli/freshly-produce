@@ -1,7 +1,5 @@
 <template>
-  <div>
     <router-view/>
-  </div>
 </template>
 
 <script>
@@ -25,7 +23,6 @@ export default {
 }
 
 body {
-  margin: 0;
   margin: 0px;
   background-color: #F8F9FA;
   overflow-x: hidden;
