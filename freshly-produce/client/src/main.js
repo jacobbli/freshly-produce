@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import App from './App.vue'
+import App from './App.vue';
 import router from './router'
 
 import "primevue/resources/themes/saga-blue/theme.css";
@@ -8,15 +8,20 @@ import "primeicons/primeicons.css";
 import 'primeflex/primeflex.css';
 import PrimeVue from 'primevue/config';
 import InputText from 'primevue/inputtext';
-import Card from 'primevue/card';
 import Button from 'primevue/button';
+import Dialog from 'primevue/dialog';
+import Menubar from 'primevue/menubar';
+import Card from 'primevue/card';
 
 const app = createApp(App);
 app.use(router);
 app.use(PrimeVue);
 
 app.component('InputText', InputText);
-app.component('Card', Card);
 app.component('Button', Button);
+app.component('Dialog', Dialog);
+app.component('Card', Card);
+app.component('Menubar', Menubar);
 
-app.mount('#app')
+app.mount('#app');
+

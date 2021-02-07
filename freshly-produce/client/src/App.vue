@@ -4,6 +4,13 @@
   </div>
 </template>
 
+<script>
+
+export default {
+  name: 'App'
+}
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -16,5 +23,7 @@
 
 body {
   margin: 0;
+   margin: 0px;
+   background-color: #F8F9FA;
 }
 </style>
