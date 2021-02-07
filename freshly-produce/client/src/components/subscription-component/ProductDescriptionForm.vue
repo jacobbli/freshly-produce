@@ -1,63 +1,76 @@
 <template>
     <div class="p-fluid">
       <div class="p-field p-grid">
-        <label 
+        <label
           class="p-col-12 p-md-4"
           for="frequency">
           Product Photo
         </label>
         <div class="p-col-12 p-md-8">
-          <FileUpload mode="basic" name="demo[]" url="./upload" accept="image/*" />
+          <!-- <Card>
+          </Card> -->
+          <FileUpload
+            class="p-fileupload-sm"
+            name="demo[]"
+            :showUploadButton="false"
+            :customUpload="true"
+            @uploader="myUploader"
+            accept="image/*"
+            :maxFileSize="1000000"
+            chooseLabel="Upload Photo">
+            <template>
+            </template>
+          </FileUpload>
         </div>
       </div>
       <div class="p-field p-grid">
-        <label 
+        <label
           class="p-col-12 p-md-4"
-          for="frequency">
+          for="name">
           Product Name
         </label>
         <div class="p-col-12 p-md-8">
-          <InputText 
-            id="name" 
+          <InputText
+            id="name"
             type="text"/>
         </div>
       </div>
       <div class="p-field p-grid">
-        <label 
+        <label
           class="p-col-12 p-md-4"
-          for="frequency">
+          for="description">
           Product Description
         </label>
         <div class="p-col-12 p-md-8">
-          <InputText 
-            id="name" 
+          <InputText
+            id="description"
             type="text"/>
         </div>
       </div>
       <div class="p-field p-grid">
-        <label 
+        <label
           class="p-col-12 p-md-4"
-          for="frequency">
+          for="unit">
           Unit of Measurement
         </label>
         <div class="p-col-12 p-md-8">
-          <Dropdown 
-            v-model="selectedUnit" 
-            :options="units" 
-            optionLabel="name" 
+          <Dropdown
+            v-model="selectedUnit"
+            :options="units"
+            optionLabel="unit"
             placeholder="Select a unit"
             @change="setMinDecimal()" />
         </div>
       </div>
       <div class="p-field p-grid">
-        <label 
+        <label
           class="p-col-12 p-md-4"
           for="quantity">
         Quantity
         </label>
         <div class="p-col-12 p-md-8">
-          <InputNumber 
-            v-model="quantity" 
+          <InputNumber
+            v-model="quantity"
             :minFractionDigits="minDecimal"/>
         </div>
       </div>
@@ -76,6 +89,7 @@ export default {
     return {
       minDecimal: 0,
       quantity: null,
+      productPhoto: null,
       selectedUnit: null,
       units: [
         {name: 'Unit'},
@@ -93,32 +107,12 @@ export default {
       } else {
         this.minDecimal = 2;
       }
-    }
-  },
-  computed: {
-    days: function () {
-      if (this.selectedFrequency === null) {
-        return null;
-      } else if (this.selectedFrequency.name == 'Monthly') {
-        const options = [
-          {name: 'first Monday of the month'},
-          {name: 'first Tuesday of the month'},
-          {name: 'first Wednesday of the month'},
-          {name: 'first Thursday of the month'},         
-          {name: 'first Friday of the month'},
-        ]
-        return options      
-        } else if (this.selectedFrequency.name == 'Weekly' || this.selectedFrequency.name == 'Bi-weekly') {
-        const options = [
-          {name: 'Monday'},
-          {name: 'Tuesday'},
-          {name: 'Wednesday'},
-          {name: 'Thursday'},         
-          {name: 'Friday'},
-        ]
-        return options
-      }
-      return null;
+    },
+    myUploader(event) {
+      console.log(event.files)
+    },
+    onUpload() {
+      console.log('here')
     }
   }
 }
@@ -126,14 +120,15 @@ export default {
 
 <style scoped>
 .p-fluid {
-  width: 500px;
+  width: 1000px;
+}
+
+.p-fileupload	{
+  text-align: end;
 }
 
 .submit-button {
   width: 150px;
 }
 
-.p-fileupload {
-  text-align: start;
-}
 </style>
