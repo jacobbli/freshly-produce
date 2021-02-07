@@ -3,6 +3,8 @@ import HomePage from '../views/HomePage.vue'
 import LoginPage from '../views/LoginPage.vue'
 import RoleSelectionForm from '../components/login-component/RoleSelectionForm.vue'
 import LoginForm from '../components/login-component/LoginForm.vue'
+import CustomerSubscriptionsPage from '../views/CustomerSubscriptionsPage.vue'
+import AvailableSubscriptionsPage from '../views/AvailableSubscriptionsPage.vue'
 
 const routes = [
   {
@@ -10,6 +12,18 @@ const routes = [
     alias: '/',
     name: 'Home',
     component: HomePage,
+    children: [
+      {
+        path: 'my-subscriptions',
+        name: 'AvailableSubscriptionsPage',
+        component: AvailableSubscriptionsPage
+      },
+      {
+        path: 'available-subscriptions',
+        name: 'CustomerSubscriptionsPage',
+        component: CustomerSubscriptionsPage
+      }
+    ]
   },
   {
     path: '/login',
