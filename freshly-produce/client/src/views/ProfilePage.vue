@@ -1,21 +1,43 @@
 <template>
-    <div>
-        <Card style="width: 25rem; margin-bottom: 2em">
-            <template #title>
-                <Avatar label="P" size="large"/> Jameson
-            </template>
-            <template #content>
-                Jameson
-            </template>
-        </Card>
-        <Card style="width: 25rem; margin-bottom: 2em">
-            <template #title>
-                Simple Card
-            </template>
-            <template #content>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
-                quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
-            </template>
-        </Card>
+    <div id="profilePage">
+        <NavBar />
+        <div class="p-grid">
+            <div class="p-col-4"> 
+                <Avatar id="avatarProfilePage" shape="circle" class="p-mt-4" label="P" size="xlarge"/> 
+                <h1>Jameson Cheong</h1>
+                <h3>JamesonCheong@email.com</h3>
+                <h3>1251 Candy Lane street</h3>
+            </div>
+            <div class="p-col-8">
+                <ProfileTabMenu/>
+
+                <router-view />
+            </div>
+        </div>
     </div>
 </template>
+
+<script>
+
+import NavBar from '../components/NavBar'
+import ProfileTabMenu from '../components/profile-component/ProfileTabMenu'
+export default {
+    name:'Profile',
+    components: {
+        NavBar,
+        ProfileTabMenu,
+    },
+    data() {
+		return {
+			
+		}
+	}
+}
+</script>
+<style>
+    #avatarProfilePage{
+        width: 250px;
+        height: 250px;
+        font-size: 100px
+    }
+</style>

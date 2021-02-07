@@ -7,7 +7,10 @@
 <script>
 
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+
+  }
 }
 </script>
 
@@ -23,7 +26,8 @@ export default {
 
 body {
   margin: 0;
-   margin: 0px;
-   background-color: #F8F9FA;
+  margin: 0px;
+  background-color: #F8F9FA;
+  overflow-x: hidden;
 }
 </style>
