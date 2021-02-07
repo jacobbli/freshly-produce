@@ -18,10 +18,14 @@ import Dropdown from 'primevue/dropdown';
 import FileUpload from 'primevue/fileupload';
 import Menu from 'primevue/menu';
 import Sidebar from 'primevue/sidebar';
+import ToastService from 'primevue/toastservice';
+import Toast from 'primevue/toast';
+import DataView from 'primevue/dataview';
 
 const app = createApp(App);
 app.use(router);
 app.use(PrimeVue);
+app.use(ToastService);
 
 
 app.component('InputText', InputText);
@@ -35,6 +39,8 @@ app.component('Dropdown', Dropdown);
 app.component('FileUpload', FileUpload);
 app.component('Menu', Menu);
 app.component('Sidebar', Sidebar);
+app.component('Toast', Toast);
+app.component('DataView', DataView);
 
 app.mount('#app');
 
