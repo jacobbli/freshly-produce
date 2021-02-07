@@ -1,16 +1,16 @@
 <template>
     <div class="p-fluid">
       <div class="p-field p-grid">
-        <label 
+        <label
           class="p-col-12 p-md-4"
           for="frequency">
           Delivery Frequency
         </label>
         <div class="p-col-12 p-md-8">
-          <Dropdown 
-            v-model="selectedFrequency" 
-            :options="frequency" 
-            optionLabel="name" 
+          <Dropdown
+            v-model="selectedFrequency"
+            :options="frequency"
+            optionLabel="frequency"
             placeholder="Select a Frequency" />
         </div>
       </div>
@@ -21,10 +21,10 @@
           Delivery Day
         </label>
         <div class="p-col-12 p-md-8">
-          <Dropdown 
-            v-model="selectedDay" 
-            :options="days" 
-            optionLabel="name" 
+          <Dropdown
+            v-model="selectedDay"
+            :options="days"
+            optionLabel="day"
             placeholder="Select the day of the week" />
         </div>
       </div>
@@ -32,8 +32,8 @@
         <div class="p-col-fixed submit-button">
           <Button
           label="Next"
-          @click="nextPage()" 
-          icon="pi pi-angle-right" 
+          @click="nextPage()"
+          icon="pi pi-angle-right"
           iconPos="right" />
         </div>
       </div>
@@ -69,16 +69,16 @@ export default {
           {name: 'first Monday of the month'},
           {name: 'first Tuesday of the month'},
           {name: 'first Wednesday of the month'},
-          {name: 'first Thursday of the month'},         
+          {name: 'first Thursday of the month'},
           {name: 'first Friday of the month'},
         ]
-        return options      
+        return options
         } else if (this.selectedFrequency.name == 'Weekly' || this.selectedFrequency.name == 'Bi-weekly') {
         const options = [
           {name: 'Monday'},
           {name: 'Tuesday'},
           {name: 'Wednesday'},
-          {name: 'Thursday'},         
+          {name: 'Thursday'},
           {name: 'Friday'},
         ]
         return options
