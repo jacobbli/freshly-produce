@@ -12,6 +12,7 @@ import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
 import Menubar from 'primevue/menubar';
 import Card from 'primevue/card';
+import Avatar from 'primevue/avatar';
 
 const app = createApp(App);
 app.use(router);
@@ -22,6 +23,7 @@ app.component('Button', Button);
 app.component('Dialog', Dialog);
 app.component('Card', Card);
 app.component('Menubar', Menubar);
+app.component('Avatar', Avatar);
 
 app.mount('#app');
 
