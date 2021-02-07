@@ -17,17 +17,12 @@ const routes = [
     path: '/',
     name: 'Home',
     component: HomePage,
-  },
-  {
-    path: '/closetoexpiry',
-    name: 'CloseToExpiry',
-    component: CloseToExpiry,
-  },
-  {
-    path: '/subscription',
-    name: 'SubscriptionCreationPage',
-    component: SubscriptionCreationPage,
     children: [
+      {
+        path: '/closetoexpiry',
+        name: 'CloseToExpiry',
+        component: CloseToExpiry,
+      },
       {
         path: 'available-subscriptions',
         name: 'AvailableSubscriptionsPage',

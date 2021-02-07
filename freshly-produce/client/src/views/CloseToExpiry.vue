@@ -1,6 +1,5 @@
 <template>
     <div>
-        <NavBar />
         <DataView :value="listProduct" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
             <template #header>
                 <div class="p-grid p-nogutter">
@@ -35,11 +34,7 @@
     </div>
 </template>
 <script>
-import NavBar from '../components/NavBar.vue'
 export default {
-    components:{
-        NavBar,
-    },
     methods: {
         onSortChange(event){
             const value = event.value.value;
