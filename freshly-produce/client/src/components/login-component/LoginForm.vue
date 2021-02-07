@@ -33,7 +33,9 @@
         </div>
         <div class="login-button p-grid p-jc-center">
           <div class="p-col-fixed">
-            <Button label="Sign in"/>
+            <router-link to="/home">
+              <Button label="Sign in"/>
+            </router-link>
           </div>
         </div>
       </form>
@@ -55,6 +57,9 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
+a {
+    text-decoration: none;
+}
 
 </style>
