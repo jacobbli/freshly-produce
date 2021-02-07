@@ -57,7 +57,7 @@
           <Dropdown
             v-model="selectedUnit"
             :options="units"
-            optionLabel="unit"
+            optionLabel="name"
             placeholder="Select a unit"
             @change="setMinDecimal()" />
         </div>
@@ -76,7 +76,9 @@
       </div>
       <div class="p-field p-grid p-jc-end">
         <div class="p-col-fixed submit-button">
-          <Button label="Submit"/>
+          <Button 
+            label="Submit"
+            @click="onSubmit"/>
         </div>
       </div>
     </div>
@@ -111,8 +113,8 @@ export default {
     myUploader(event) {
       console.log(event.files)
     },
-    onUpload() {
-      console.log('here')
+    onSubmit() {
+      this.$emit('submitForm');
     }
   }
 }
@@ -121,6 +123,7 @@ export default {
 <style scoped>
 .p-fluid {
   width: 1000px;
+  height: 500px;
 }
 
 .p-fileupload	{
