@@ -9,22 +9,36 @@
             {{product.product_name}}
         </template>
         <template #content>
-            Food Type: {{product.product_type}}
+            <p>Food Type: {{product.product_type}}</p>
+            <p>Price: {{product.price}}</p>
         </template>
         <template #footer>
-            <Button icon="pi pi-check" label="Subscribe" />
-            <!-- <Button icon="pi pi-times" label="Cancel" class="p-button-secondary" style="margin-left: .5em" /> -->
+          <Button v-if="product.is_subscribed" icon="pi pi-times" class="p-button-warning" label="Unsubscribe" @click="openModal(product)" />
+          <Button v-else icon="pi pi-check" label="Subscribe" @click="openModal(product)" />
         </template>
       </Card>
+
+      <subscription-modal
+        :is-visible="modalIsVisible"
+        :product="selectedProduct"
+        v-on:cancel="closeModal()"
+        v-on:confirm="confirmModalAction($event)" />
     </div>
   </div>
 </template>
 
 <script>
+import SubscriptionModal from '../components/SubscriptionModal.vue'
+
 export default {
   name: 'AvailableSubscriptionsPage',
+  components: {
+    SubscriptionModal
+  },
   data() {
 		return {
+      modalIsVisible: false,
+      selectedProduct: Object,
       listproduce:[
         "berries.jpg",
         "blueberries.jpg",
@@ -35,37 +49,67 @@ export default {
       listProduct:[
         {
           product_id: 1,
-          product_name: "carrots", 
-          product_type: "food", 
-        }, 
+          product_name: "carrots",
+          product_type: "food",
+          price: 15.99,
+          is_subscribed: false,
+        },
         {
           product_id: 2,
-          product_name: "crrots", 
-          product_type: "food", 
-        }, 
+          product_name: "crrots",
+          product_type: "food",
+          price: 15.99,
+          is_subscribed: true,
+        },
         {
           product_id: 3,
-          product_name: "carots", 
-          product_type: "food", 
-        }, 
+          product_name: "carots",
+          product_type: "food",
+          price: 15.99,
+          is_subscribed: true,
+        },
         {
           product_id: 4,
-          product_name: "carots", 
-          product_type: "food", 
-        }, 
+          product_name: "carots",
+          product_type: "food",
+          price: 15.99,
+          is_subscribed: false,
+        },
         {
           product_id: 5,
-          product_name: "carots", 
-          product_type: "food", 
-        }, 
+          product_name: "carots",
+          product_type: "food",
+          price: 15.99,
+          is_subscribed: false,
+        },
         {
           product_id: 6,
-          product_name: "carros", 
-          product_type: "food", 
-        }, 
+          product_name: "carros",
+          product_type: "food",
+          price: 15.99,
+          is_subscribed: false,
+        },
       ]
 		}
-	}
+	},
+  methods: {
+    openModal(product) {
+      this.selectedProduct = product;
+      this.modalIsVisible = true;
+    },
+
+    closeModal() {
+      this.modalIsVisible = false;
+    },
+
+    confirmModalAction(newProduct) {
+      this.closeModal();
+      const index = this.listProduct.findIndex(product => {
+        return product.product_id == newProduct.product_id
+      })
+      this.listProduct[index] = newProduct;
+    }
+  }
 }
 </script>
 
