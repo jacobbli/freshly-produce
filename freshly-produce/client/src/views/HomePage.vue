@@ -1,77 +1,20 @@
 <template>
   <NavBar />
-     
   <div class="p-grid p-p-4">
-
-    <div class="p-col-3">
+    <div class="p-col-3" v-for='product in this.listProduct' :key='product.product_id'>
         <Card>
         <template #header>
-            <img alt="user header" src="demo/images/usercard.png">
+            <img alt="user header" src="/images/temp/berries.jpg">
         </template>
         <template #title>
-            Advanced Card
+            {{product.product_name}}
         </template>
         <template #content>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
-            quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!
+            Food Type: {{product.product_type}}
         </template>
         <template #footer>
-            <Button icon="pi pi-check" label="Save" />
-            <Button icon="pi pi-times" label="Cancel" class="p-button-secondary" style="margin-left: .5em" />
-        </template>
-      </Card>
-    </div>
-    <div class="p-col-3">
-    <Card>
-        <template #header>
-            <img alt="user header" src="demo/images/usercard.png">
-        </template>
-        <template #title>
-            Advanced Card
-        </template>
-        <template #content>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
-            quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!
-        </template>
-        <template #footer>
-            <Button icon="pi pi-check" label="Save" />
-            <Button icon="pi pi-times" label="Cancel" class="p-button-secondary" style="margin-left: .5em" />
-        </template>
-      </Card>
-    </div>
-    <div class="p-col-3">
-    <Card>
-        <template #header>
-            <img alt="user header" src="demo/images/usercard.png">
-        </template>
-        <template #title>
-            Advanced Card
-        </template>
-        <template #content>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
-            quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!
-        </template>
-        <template #footer>
-            <Button icon="pi pi-check" label="Save" />
-            <Button icon="pi pi-times" label="Cancel" class="p-button-secondary" style="margin-left: .5em" />
-        </template>
-      </Card>
-    </div>
-    <div class="p-col-3">
-    <Card>
-        <template #header>
-            <img alt="user header" src="demo/images/usercard.png">
-        </template>
-        <template #title>
-            Advanced Card
-        </template>
-        <template #content>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
-            quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!
-        </template>
-        <template #footer>
-            <Button icon="pi pi-check" label="Save" />
-            <Button icon="pi pi-times" label="Cancel" class="p-button-secondary" style="margin-left: .5em" />
+            <Button icon="pi pi-check" label="Subscribe" />
+            <!-- <Button icon="pi pi-times" label="Cancel" class="p-button-secondary" style="margin-left: .5em" /> -->
         </template>
       </Card>
     </div>
@@ -90,7 +33,45 @@ export default {
   },
   data() {
 		return {
-      listProduct:[]
+      listproduce:[
+        "berries.jpg",
+        "blueberries.jpg",
+        "broccoli.jpg",
+        "carrots.jpg"
+      ]
+      ,
+      listProduct:[
+        {
+          product_id: 1,
+          product_name: "carrots", 
+          product_type: "food", 
+        }, 
+        {
+          product_id: 2,
+          product_name: "crrots", 
+          product_type: "food", 
+        }, 
+        {
+          product_id: 3,
+          product_name: "carots", 
+          product_type: "food", 
+        }, 
+        {
+          product_id: 4,
+          product_name: "carots", 
+          product_type: "food", 
+        }, 
+        {
+          product_id: 5,
+          product_name: "carots", 
+          product_type: "food", 
+        }, 
+        {
+          product_id: 6,
+          product_name: "carros", 
+          product_type: "food", 
+        }, 
+      ]
 		}
 	}
 }
