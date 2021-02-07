@@ -23,7 +23,7 @@ export default {
         {
           label:'Close-To-Expiry',
           icon:'pi pi-clock',
-          to: ''
+          to: '/closetoexpiry'
         },
         {
           label:'Available Subscriptions',
