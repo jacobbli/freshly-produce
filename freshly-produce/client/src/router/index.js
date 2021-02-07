@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '../views/HomePage.vue'
 import LoginPage from '../views/LoginPage.vue'
+import CloseToExpiry from '../views/CloseToExpiry.vue'
 import RoleSelectionForm from '../components/login-component/RoleSelectionForm.vue'
 import LoginForm from '../components/login-component/LoginForm.vue'
 import SubscriptionCreationPage from '../views/SubscriptionCreationPage.vue'
@@ -14,6 +15,11 @@ const routes = [
     alias: '/',
     name: 'Home',
     component: HomePage,
+  },
+  {
+    path: '/closetoexpiry',
+    name: 'CloseToExpiry',
+    component: CloseToExpiry,
   },
   {
     path: '/subscription',
