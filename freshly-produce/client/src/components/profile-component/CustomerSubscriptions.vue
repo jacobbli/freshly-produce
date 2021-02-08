@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import ActionConfirmationModal from '../components/ActionConfirmationModal.vue'
+import ActionConfirmationModal from '../ActionConfirmationModal.vue'
 
 export default {
   name: 'CustomerSubscriptionsPage',
