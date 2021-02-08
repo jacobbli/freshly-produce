@@ -14,7 +14,7 @@ export default {
     return {
       items: [
         {label: 'My Details', icon: 'pi pi-fw pi-home', to: 'mydetail'},
-        {label: 'My Subscription', icon: 'pi pi-fw pi-calendar', to: 'my-subscriptions'}
+        {label: 'My Subscriptions', icon: 'pi pi-fw pi-calendar', to: 'my-subscriptions'}
       ]
     }
   }
