@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Close-To-Expiry</h1>
+    <h1>Discounted Produce</h1>
     <DataView :value="listProduct" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
       <template #header>
           <div class="p-grid p-nogutter">

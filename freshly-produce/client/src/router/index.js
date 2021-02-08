@@ -39,15 +39,14 @@ const routes = [
         ]
       },
       {
-        path: '/cart',
-        alias: '/',
-        name: 'Cart',
-        component: CartPage,
-      },
-      {
         path: '/closetoexpiry',
         name: 'CloseToExpiry',
         component: CloseToExpiry,
+      },
+      {
+        path: '/cart',
+        name: 'Cart',
+        component: CartPage,
       },
       {
         path: 'available-subscriptions',
