@@ -49,7 +49,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .p-fluid {
   width: 1000px;
   height: 500px;
