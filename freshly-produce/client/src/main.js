@@ -12,6 +12,7 @@ import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
 import Menubar from 'primevue/menubar';
 import Card from 'primevue/card';
+import Avatar from 'primevue/avatar';
 import InputNumber from 'primevue/inputnumber';
 import Steps from 'primevue/steps';
 import Dropdown from 'primevue/dropdown';
@@ -20,7 +21,11 @@ import Menu from 'primevue/menu';
 import Sidebar from 'primevue/sidebar';
 import ToastService from 'primevue/toastservice';
 import Toast from 'primevue/toast';
+import TabMenu from 'primevue/tabmenu';
+import Chart from 'primevue/chart';
+import TieredMenu from 'primevue/tieredmenu';
 import DataView from 'primevue/dataview';
+
 
 const app = createApp(App);
 app.use(router);
@@ -33,6 +38,7 @@ app.component('Button', Button);
 app.component('Dialog', Dialog);
 app.component('Card', Card);
 app.component('Menubar', Menubar);
+app.component('Avatar', Avatar);
 app.component('InputNumber', InputNumber);
 app.component('Steps', Steps);
 app.component('Dropdown', Dropdown);
@@ -40,7 +46,11 @@ app.component('FileUpload', FileUpload);
 app.component('Menu', Menu);
 app.component('Sidebar', Sidebar);
 app.component('Toast', Toast);
+app.component('TabMenu', TabMenu);
+app.component('Chart', Chart);
+app.component('TieredMenu', TieredMenu);
 app.component('DataView', DataView);
+
 
 app.mount('#app');
 
