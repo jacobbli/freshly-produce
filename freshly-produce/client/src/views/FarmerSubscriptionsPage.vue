@@ -50,7 +50,8 @@
     <subscription-creation-modal
       :is-visible="modalIsVisible"
       v-on:cancel="closeModal()"
-      @confirm="confirmModalAction($event)" />
+      @confirm="confirmModalAction($event)"
+      @cancel="closeConfirmationModal()" />
 
     <action-confirmation-modal
       :is-visible="confirmationModalIsVisible"
