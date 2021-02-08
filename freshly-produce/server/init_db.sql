@@ -1,6 +1,7 @@
 CREATE TABLE users (
   user_id SERIAL PRIMARY KEY NOT NULL,
   username TEXT,
+  "password" TEXT,
   first_name TEXT,
   surname TEXT,
   "role" SMALLINT NOT NULL,
