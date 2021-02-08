@@ -15,7 +15,8 @@
             <InputText 
               id="username" 
               type="username"
-              autocomplete="on"/>
+              autocomplete="on"
+              v-model="loginObject.username"/>
           </div>
         </div>
         <div class="password-input p-field p-grid p-jc-center">
@@ -28,14 +29,15 @@
             <InputText
               id="password" 
               type="password"
-              autocomplete="on"/>
+              autocomplete="on"
+              v-model="loginObject.password"/>
           </div>
         </div>
         <div class="login-button p-grid p-jc-center">
           <div class="p-col-fixed">
-            <router-link to="/">
-              <Button label="Sign in"/>
-            </router-link>
+            <Button 
+              label="Sign in"
+              @click="submitForm()"/>
           </div>
         </div>
       </form>
@@ -44,22 +46,29 @@
 </template>
 
 <script>
+import { login } from '../../api/UsersApi.js'
+
 export default {
   name: 'LoginForm',
   
   data() {
 		return {
-      username: null,
-      password: null,
+      loginObject: {
+        username: null,
+        password: null,
+      }
 		}
-	}
+	},
+  methods: {
+    submitForm() {
+      login(this.loginObject);
+      this.$router.push('/');
+    }
+  }
 }
 
 </script>
 
 <style scoped>
-a {
-    text-decoration: none;
-}
 
 </style>
