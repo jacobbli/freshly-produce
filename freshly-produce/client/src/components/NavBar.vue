@@ -36,11 +36,6 @@ export default {
           to: '/my-subscriptions'
         },
         {
-          label:'Create Subscription',
-          icon:'pi pi-tags',
-          to: '/subscriptions/create'
-        },
-        {
           label:'My Offered Subscriptions',
           icon:'pi pi-tags',
           to: '/my-offers'
