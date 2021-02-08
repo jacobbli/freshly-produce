@@ -52,7 +52,7 @@ export default {
   name: "SubscriptionCreationForm",
   methods: {
     nextPage() {
-      this.$emit('next-page', {formData: {firstname: this.firstname, lastname: this.lastname, age: this.age}, pageIndex: 0});
+      this.$emit('next-page');
     }
   }
 }
@@ -60,7 +60,8 @@ export default {
 
 <style>
 .p-fluid {
-  width: 500px;
+  width: 1000px;
+  height: 500px;
 }
 
 .submit-button {

@@ -4,7 +4,7 @@
             <img alt="logo" src="/images/freshlyproduce.png" height="30" class="p-mx-4">
             <Menu class="p-m-0 p-shadow-0" :model="menuitems" />
         </Sidebar>
-        <Menubar :model="items" >
+        <Menubar>
             <template #start>
                 <Button  icon="pi pi-bars" @click="visibleLeft = true" />
                 <img id="freshlyLogo" @click="goToHomePage" alt="logo" src="/images/freshlyproduce.png" height="40" class="p-mx-4">
@@ -16,58 +16,54 @@
         </Menubar>
     </div>
 </template>
+
 <script>
 
 export default {
-    methods:{
-        goToHomePage(){
-            this.$router.push({ name: 'Home' });
+  methods:{
+    goToHomePage(){
+      this.$router.push({ name: 'Home' });
+    },
+    toggle(event) {
+      this.$refs.menu.toggle(event);
+    }
+  },
+  data() {
+    return {
+      visibleLeft : false,
+      menuitems: [
+        {
+          label:'Close-To-Expiry',
+          icon:'pi pi-clock',
+          to: '/closetoexpiry'
+        },                   
+        {
+          label:'Available Subscriptions',
+          icon:'pi pi-bell',
+          to: '/available-subscriptions'
         },
-        toggle(event) {
-            this.$refs.menu.toggle(event);
+        {
+          label:'My Offered Subscriptions',
+          icon:'pi pi-tags',
+          to: '/my-offers'
         }
-    },
-    data() {
-        return {
-            visibleLeft : false,
-            menuitems: [
-                {
-                    items:[
-                        {
-                            label:'Close-To-Expiry',
-                            icon:'pi pi-clock',
-                            to: '/closetoexpiry'
-                        },
-                        {
-                            label:'Subscription',
-                            icon:'pi pi-bell',
-                            to: '/home'
-                        },                        
-                        {
-                            label:'My Subscription',
-                            icon:'pi pi-tags',
-                            to: ''
-                        },
-                    ]
-                }
-            ],
-                        itemsAvatar: [
-        
-                {
-                   label:'Profile',
-                   icon:'pi pi-fw pi-user',
-                   to: '/mydetail'
-                },
-                {
-                   separator:true
-                },
-                {
-                   label:'Log Out',
-                   icon:'pi pi-fw pi-power-off'
-                }
-             ]
+      ],
+      itemsAvatar: [
+        {
+          label:'Profile',
+          icon:'pi pi-fw pi-user',
+          to: '/profile/mydetail'
+        },
+        {
+          separator:true
+        },
+        {
+          label:'Log Out',
+          icon:'pi pi-fw pi-power-off'
         }
-    },
+      ]
+    }
+  },
 
     
 }

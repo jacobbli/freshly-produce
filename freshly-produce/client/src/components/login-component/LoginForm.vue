@@ -33,7 +33,7 @@
         </div>
         <div class="login-button p-grid p-jc-center">
           <div class="p-col-fixed">
-            <router-link to="/home">
+            <router-link to="/">
               <Button label="Sign in"/>
             </router-link>
           </div>

@@ -1,6 +1,5 @@
 <template>
     <div id="profilePage">
-        <NavBar />
         <div class="p-grid">
             <div class="p-col-4"> 
                 <Avatar id="avatarProfilePage" shape="circle" class="p-mt-4" label="P" size="xlarge"/> 
@@ -16,14 +15,11 @@
 </template>
 
 <script>
-
-import NavBar from '../components/NavBar'
 import ProfileTabMenu from '../components/profile-component/ProfileTabMenu'
 export default {
     name:'Profile',
     components: {
-        NavBar,
-        ProfileTabMenu,
+        ProfileTabMenu
     },
     data() {
 		return {
