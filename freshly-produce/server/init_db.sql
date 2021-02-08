@@ -1,10 +1,10 @@
 CREATE TABLE users (
-  user_id SERIAL PRIMARY KEY,
+  user_id SERIAL PRIMARY KEY NOT NULL,
   username TEXT,
   "password" TEXT,
   first_name TEXT,
   surname TEXT,
-  "role" SMALLINT,
+  "role" SMALLINT NOT NULL,
   phone TEXT,
   email TEXT,
   "address" TEXT,
@@ -12,7 +12,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE products (
-  product_id SERIAL PRIMARY KEY,
+  product_id SERIAL PRIMARY KEY NOT NULL,
   photo BYTEA,
   product_name TEXT,
   product_type TEXT,
@@ -21,39 +21,39 @@ CREATE TABLE products (
   unit TEXT,
   quantity NUMERIC,
   expiration_date TIMESTAMPTZ,
-  user_id INTEGER,
+  user_id INTEGER NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
 CREATE TABLE "user_subscriptions" (
-  subscription_id SERIAL PRIMARY KEY,
+  subscription_id SERIAL PRIMARY KEY NOT NULL,
   frequency TEXT,
   delivery_day TEXT,
   expiration_date TIMESTAMPTZ,
-  created_at TIMESTAMPTZ,
-  user_id INTEGER,
-  product_id INTEGER,
+  created_at TIMESTAMPTZ NOT NULL,
+  user_id INTEGER NOT NULL,
+  product_id INTEGER NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(user_id),
   FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
 
 CREATE TABLE transactions (
-  transaction_id SERIAL PRIMARY KEY,
-  transaction_cost NUMERIC,
-  created_at TIMESTAMPTZ,
-  product_id INTEGER,
-  user_id INTEGER,
+  transaction_id SERIAL PRIMARY KEY NOT NULL,
+  transaction_cost NUMERIC NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL,
+  product_id INTEGER NOT NULL,
+  user_id INTEGER NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
 CREATE TABLE orders (
-  order_id SERIAL PRIMARY KEY,
-  price NUMERIC,
-  quantity NUMERIC,
-  created_at TIMESTAMPTZ,
-  user_id INTEGER,
-  transaction_id INTEGER,
-  product_id INTEGER,
+  order_id SERIAL PRIMARY KEY NOT NULL,
+  price NUMERIC NOT NULL,
+  quantity NUMERIC NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL,
+  user_id INTEGER NOT NULL,
+  transaction_id INTEGER NOT NULL,
+  product_id INTEGER NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(user_id),
   FOREIGN KEY (transaction_id) REFERENCES transactions(transaction_id),
   FOREIGN KEY (product_id) REFERENCES products(product_id)
