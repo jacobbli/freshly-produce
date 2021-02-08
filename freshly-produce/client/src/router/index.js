@@ -3,6 +3,7 @@ import HomePage from '../views/HomePage.vue'
 import LoginPage from '../views/LoginPage.vue'
 import ProfilePage from '../views/ProfilePage.vue'
 import CloseToExpiry from '../views/CloseToExpiry.vue'
+import CartPage from '../views/CartPage.vue'
 import RoleSelectionForm from '../components/login-component/RoleSelectionForm.vue'
 import LoginForm from '../components/login-component/LoginForm.vue'
 import CustomerSubscriptions from '../components/profile-component/CustomerSubscriptions.vue'
@@ -41,6 +42,11 @@ const routes = [
         path: '/closetoexpiry',
         name: 'CloseToExpiry',
         component: CloseToExpiry,
+      },
+      {
+        path: '/cart',
+        name: 'Cart',
+        component: CartPage,
       },
       {
         path: 'available-subscriptions',

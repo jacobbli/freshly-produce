@@ -25,6 +25,8 @@ import TabMenu from 'primevue/tabmenu';
 import Chart from 'primevue/chart';
 import TieredMenu from 'primevue/tieredmenu';
 import DataView from 'primevue/dataview';
+import BadgeDirective from 'primevue/badgedirective';
+
 
 
 const app = createApp(App);
@@ -50,6 +52,8 @@ app.component('TabMenu', TabMenu);
 app.component('Chart', Chart);
 app.component('TieredMenu', TieredMenu);
 app.component('DataView', DataView);
+
+app.directive('badge', BadgeDirective);
 
 
 app.mount('#app');

@@ -1,62 +1,47 @@
 <template>
-  <div>
-    <h1>Discounted Produce</h1>
-    <DataView :value="listProduct" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
-      <template #header>
-          <div class="p-grid p-nogutter">
-              <div class="p-col-6" style="text-align: left">
-                  <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="Sort By Price" @change="onSortChange($event)"/>
-              </div>
-          </div>
-      </template>
+    <div class="p-grid">
+        <DataView class="p-pt-4 p-pl-4 p-col-8" :value="listProduct" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
+            <template #list="slotProps">
+                <div class="p-col-12">
+                    <div class="product-list-item">
+                        <div class="p-grid">
+                            <img class="p-col-4 p-mt-2" :src="'/images/temp/carrots.jpg'" :alt="'user header'"/>
+                            <div class="product-list-detail p-col-4 p-mt-6">
+                                <div class="product-name">{{slotProps.data.product_name}}</div>
+                                <div class="product-description">{{slotProps.data.expiration_date}}</div>
+                                <i class="pi pi-tag product-category-icon"></i><span class="product-category">{{slotProps.data.product_type}}</span>
+                            </div>
+                            <div class="product-list-action p-col-4 p-mt-6">
+                                <span class="product-price">${{slotProps.data.product_price}}</span>
+                                <Button icon="pi pi-times-circle" label="Delete" />
 
-      <template #grid="slotProps">
-          <div class="p-col-3 p-p-4">
-              <Card>
-                  <template #header>
-                      <img alt="user header" src="/images/temp/carrots.jpg">
-                  </template>
-                  <template #title>
-                      {{slotProps.data.product_name}}
-                  </template>
-                  <template #content>
-                      <i class="pi pi-tag product-category-icon p-pr-2"></i><span class="product-category">{{slotProps.data.product_type}}</span>
-                      <h4>Expiry Date: {{slotProps.data.expiration_date}}</h4>
-                      <span class="product-price p-pr-4">${{slotProps.data.product_price}}</span>
-                      <h4>Discount: 10%</h4>
-                  </template>
-                  <template #footer>
-                      <Button icon="pi pi-shopping-cart" label="Add to Cart" />
-                  </template>
-              </Card>
-          </div>
-      </template>
-    </DataView>
-  </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </template>
+        </DataView>
+        <div class="p-col-4 p-pt-4">
+            <h1>Total Cost:</h1>
+            <h3><span>$555.25</span></h3>
+            <Button icon="pi pi-check" label="Check Out" @click="checkOutOrders" ></Button>
+        </div>
+        
+    </div>
 </template>
-
 <script>
 export default {
-    methods: {
-        onSortChange(event){
-            const value = event.value.value;
-            const sortValue = event.value;
-
-            if (value.indexOf('!') === 0) {
-                this.sortOrder = -1;
-                this.sortField = value.substring(1, value.length);
-                this.sortKey = sortValue;
-            }
-            else {
-                this.sortOrder = 1;
-                this.sortField = value;
-                this.sortKey = sortValue;
-            }
-        }
-    },
+   methods: {
+       checkOutOrders(){
+           this.$toast.add({severity:'success', summary: 'Purchased!', life: 3000,});
+           this.$router.push({ name: 'CloseToExpiry' });
+           //clear cart
+       }
+   },
     data() {
 		return {
-            layout: 'grid',
+            layout: 'list',
             sortKey: null,
             sortOrder: null,
             sortField: null,
@@ -136,3 +121,9 @@ export default {
     }
 }
 </script>
+<style>
+    .product-list-item img{
+        height: 150px;
+        width: 225px;
+    }
+</style>
