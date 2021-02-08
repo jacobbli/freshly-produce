@@ -1,45 +1,41 @@
 <template>
-    <div>
-        <NavBar />
-        <DataView :value="listProduct" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
-            <template #header>
-                <div class="p-grid p-nogutter">
-                    <div class="p-col-6" style="text-align: left">
-                        <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="Sort By Price" @change="onSortChange($event)"/>
-                    </div>
-                </div>
-            </template>
-            
-            <template #grid="slotProps">
-                <div class="p-col-3 p-p-4">
-                    <Card>
-                        <template #header>
-                            <img alt="user header" src="/images/temp/carrots.jpg">
-                        </template>
-                        <template #title>
-                            {{slotProps.data.product_name}}
-                        </template>
-                        <template #content>
-                            <i class="pi pi-tag product-category-icon p-pr-2"></i><span class="product-category">{{slotProps.data.product_type}}</span>
-                            <h4>Expiry Date: {{slotProps.data.expiration_date}}</h4>
-                            <span class="product-price p-pr-4">${{slotProps.data.product_price}}</span>
-                            <h4>Discount: 10%</h4>
-                        </template>
-                        <template #footer>
-                            <Button icon="pi pi-shopping-cart" label="Add to Cart" />
-                        </template>
-                    </Card>
-                </div>
-            </template>
-        </DataView>
-    </div>
+  <div>
+    <DataView :value="listProduct" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
+      <template #header>
+          <div class="p-grid p-nogutter">
+              <div class="p-col-6" style="text-align: left">
+                  <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="Sort By Price" @change="onSortChange($event)"/>
+              </div>
+          </div>
+      </template>
+
+      <template #grid="slotProps">
+          <div class="p-col-3 p-p-4">
+              <Card>
+                  <template #header>
+                      <img alt="user header" src="/images/temp/carrots.jpg">
+                  </template>
+                  <template #title>
+                      {{slotProps.data.product_name}}
+                  </template>
+                  <template #content>
+                      <i class="pi pi-tag product-category-icon p-pr-2"></i><span class="product-category">{{slotProps.data.product_type}}</span>
+                      <h4>Expiry Date: {{slotProps.data.expiration_date}}</h4>
+                      <span class="product-price p-pr-4">${{slotProps.data.product_price}}</span>
+                      <h4>Discount: 10%</h4>
+                  </template>
+                  <template #footer>
+                      <Button icon="pi pi-shopping-cart" label="Add to Cart" />
+                  </template>
+              </Card>
+          </div>
+      </template>
+    </DataView>
+  </div>
 </template>
+
 <script>
-import NavBar from '../components/NavBar.vue'
 export default {
-    components:{
-        NavBar,
-    },
     methods: {
         onSortChange(event){
             const value = event.value.value;

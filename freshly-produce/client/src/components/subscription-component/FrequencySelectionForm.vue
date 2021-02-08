@@ -48,50 +48,50 @@ export default {
       selectedFrequency: null,
       selectedDay: null,
       frequency: [
-        {name: 'Weekly'},
-        {name: 'Bi-weekly'},
-        {name: 'Monthly'}
+        {frequency: 'Weekly'},
+        {frequency: 'Bi-weekly'},
+        {frequency: 'Monthly'}
       ],
-
     }
   },
   methods: {
     nextPage() {
-      this.$emit('next-page', {formData: {firstname: this.firstname, lastname: this.lastname, age: this.age}, pageIndex: 1});
+      this.$emit('next-page');
     }
   },
   computed: {
     days: function () {
       if (this.selectedFrequency === null) {
         return null;
-      } else if (this.selectedFrequency.name == 'Monthly') {
+      } else if (this.selectedFrequency.frequency == 'Monthly') {
         const options = [
-          {name: 'first Monday of the month'},
-          {name: 'first Tuesday of the month'},
-          {name: 'first Wednesday of the month'},
-          {name: 'first Thursday of the month'},
-          {name: 'first Friday of the month'},
+          {day: 'first Monday of the month'},
+          {day: 'first Tuesday of the month'},
+          {day: 'first Wednesday of the month'},
+          {day: 'first Thursday of the month'},
+          {day: 'first Friday of the month'},
         ]
         return options
-        } else if (this.selectedFrequency.name == 'Weekly' || this.selectedFrequency.name == 'Bi-weekly') {
+        } else if (this.selectedFrequency.frequency == 'Weekly' || this.selectedFrequency.frequency == 'Bi-weekly') {
         const options = [
-          {name: 'Monday'},
-          {name: 'Tuesday'},
-          {name: 'Wednesday'},
-          {name: 'Thursday'},
-          {name: 'Friday'},
+          {day: 'Monday'},
+          {day: 'Tuesday'},
+          {day: 'Wednesday'},
+          {day: 'Thursday'},
+          {day: 'Friday'},
         ]
         return options
       }
       return null;
     }
-  }
+  },
 }
 </script>
 
 <style scoped>
 .p-fluid {
-  width: 500px;
+  width: 1000px;
+  height: 500px;
 }
 
 .submit-button {
