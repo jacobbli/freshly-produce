@@ -74,13 +74,6 @@
             :minFractionDigits="minDecimal"/>
         </div>
       </div>
-      <div class="p-field p-grid p-jc-end">
-        <div class="p-col-fixed submit-button">
-          <Button 
-            label="Submit"
-            @click="onSubmit"/>
-        </div>
-      </div>
     </div>
 </template>
 

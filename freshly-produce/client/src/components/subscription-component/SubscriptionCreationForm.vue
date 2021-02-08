@@ -35,15 +35,6 @@
           type="text" />
       </div>
     </div>
-    <div class="p-field p-grid p-jc-end">
-      <div class="p-col-fixed submit-button">
-        <Button 
-          label="Next"
-          @click="nextPage()" 
-          icon="pi pi-angle-right" 
-          iconPos="right" />
-      </div>
-    </div>
   </div>
 </template>
 
