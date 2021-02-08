@@ -6,14 +6,17 @@ CREATE TABLE users (
   "role" SMALLINT,
   phone TEXT,
   email TEXT,
-  "address" TEXT
+  "address" TEXT,
+  photo BYTEA
 );
 
 CREATE TABLE products (
   product_id SERIAL PRIMARY KEY,
+  photo BYTEA,
   product_name TEXT,
   product_type TEXT,
   product_price NUMERIC,
+  is_published BOOLEAN,
   unit TEXT,
   quantity NUMERIC,
   expiration_date TIMESTAMPTZ,
