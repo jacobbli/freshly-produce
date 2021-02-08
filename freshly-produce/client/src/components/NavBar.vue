@@ -10,7 +10,8 @@
                 <img id="freshlyLogo" @click="goToHomePage" alt="logo" src="/images/freshlyproduce.png" height="40" class="p-mx-4">
             </template>
             <template #end>
-                <Avatar label="P" shape="circle" class="p-mr-2" size="large" @click="toggle" aria-haspopup="true" aria-controls="overlay_tmenu" />
+                <i class="pi pi-shopping-cart p-mr-4 " style="font-size: 1.25rem" v-badge="2" @click="goToCart"></i>
+                <Avatar label="P" shape="circle" class="p-mr-2" size="medium" @click="toggle" aria-haspopup="true" aria-controls="overlay_tmenu" />
                 <TieredMenu id="overlay_tmenu" ref="menu" :model="itemsAvatar" :popup="true" />
             </template>
         </Menubar>
@@ -22,6 +23,9 @@ export default {
     methods:{
         goToHomePage(){
             this.$router.push({ name: 'Home' });
+        },        
+        goToCart(){
+            this.$router.push({ name: 'Cart' });
         },
         toggle(event) {
             this.$refs.menu.toggle(event);

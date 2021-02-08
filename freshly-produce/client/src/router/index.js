@@ -3,6 +3,7 @@ import HomePage from '../views/HomePage.vue'
 import LoginPage from '../views/LoginPage.vue'
 import ProfilePage from '../views/ProfilePage.vue'
 import CloseToExpiry from '../views/CloseToExpiry.vue'
+import CartPage from '../views/CartPage.vue'
 import RoleSelectionForm from '../components/login-component/RoleSelectionForm.vue'
 import LoginForm from '../components/login-component/LoginForm.vue'
 import MyDetail from '../components/profile-component/MyDetail.vue'
@@ -18,6 +19,12 @@ const routes = [
     alias: '/',
     name: 'Home',
     component: HomePage,
+  },  
+  {
+    path: '/cart',
+    alias: '/',
+    name: 'Cart',
+    component: CartPage,
   },
   
   {
