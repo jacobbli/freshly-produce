@@ -9,13 +9,12 @@
                             <div class="product-list-detail p-col-4 p-mt-6">
                                 <div class="product-name">{{slotProps.data.product_name}}</div>
                                 <div class="product-description">{{slotProps.data.expiration_date}}</div>
-                                <!-- <Rating :modelValue="slotProps.data.rating" :readonly="true" :cancel="false"></Rating> -->
                                 <i class="pi pi-tag product-category-icon"></i><span class="product-category">{{slotProps.data.product_type}}</span>
                             </div>
                             <div class="product-list-action p-col-4 p-mt-6">
                                 <span class="product-price">${{slotProps.data.product_price}}</span>
-                                <Button icon="pi pi-shopping-cart" label="Add to Cart" :disabled="slotProps.data.inventoryStatus === 'OUTOFSTOCK'"></Button>
-                                <!-- <span :class="'product-badge status-'+slotProps.data.inventoryStatus.toLowerCase()">{{slotProps.data.inventoryStatus}}</span> -->
+                                <Button icon="pi pi-times-circle" label="Delete" />
+
                             </div>
                         </div>
                         
@@ -28,16 +27,15 @@
             <h3><span>$555.25</span></h3>
             <Button icon="pi pi-check" label="Check Out" @click="checkOutOrders" ></Button>
         </div>
-        <Toast position="top-right" />
+        
     </div>
 </template>
 <script>
 export default {
    methods: {
        checkOutOrders(){
-           console.log("checkout")
            this.$toast.add({severity:'success', summary: 'Purchased!', life: 3000,});
-           this.$router.push({ name: 'Home' });
+           this.$router.push({ name: 'CloseToExpiry' });
            //clear cart
        }
    },

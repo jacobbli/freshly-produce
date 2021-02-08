@@ -10,8 +10,15 @@
                 <img id="freshlyLogo" @click="goToHomePage" alt="logo" src="/images/freshlyproduce.png" height="40" class="p-mx-4">
             </template>
             <template #end>
-                <i class="pi pi-shopping-cart p-mr-4 " style="font-size: 1.25rem" v-badge="2" @click="goToCart"></i>
-                <Avatar label="P" shape="circle" class="p-mr-2" size="medium" @click="toggle" aria-haspopup="true" aria-controls="overlay_tmenu" />
+                <div class="p-grid">
+                    <div class="p-col-6 p-pr-0">
+                        <i id="cartIcon" class="pi pi-shopping-cart p-mr-4" style="font-size: 1.7rem" @click="goToCart"></i>
+                    </div>
+                    <div class="p-col-6 p-pl-0 p-pr-4" >
+                        <Avatar label="P" shape="circle"  size="medium" @click="toggle" aria-haspopup="true" aria-controls="overlay_tmenu" />
+                        
+                    </div>
+                </div>
                 <TieredMenu id="overlay_tmenu" ref="menu" :model="itemsAvatar" :popup="true" />
             </template>
         </Menubar>
@@ -24,7 +31,7 @@ export default {
 
     methods:{
         goToHomePage(){
-            this.$router.push({ name: 'Home' });
+            this.$router.push({ name: 'CloseToExpiry' });
         },        
         goToCart(){
             this.$router.push({ name: 'Cart' });
@@ -96,6 +103,10 @@ export default {
     }
     
     #navbar #freshlyLogo{
+        cursor: pointer;
+    }
+
+    #navbar #cartIcon{
         cursor: pointer;
     }
 
