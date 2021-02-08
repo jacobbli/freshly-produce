@@ -28,7 +28,7 @@ export default {
         },        
         goToCart(){
             this.$router.push({ name: 'Cart' });
-        }
+        },
         toggle(event) {
             this.$refs.menu.toggle(event);
         }
@@ -46,7 +46,6 @@ export default {
           label:'Available Subscriptions',
           icon:'pi pi-bell',
           to: '/available-subscriptions'
->>>>>>> main
         },
         {
           label:'My Offered Subscriptions',

@@ -1,34 +1,46 @@
 <template>
-    <div>
-        <DataView :value="listProduct" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
-
+    <div class="p-grid">
+        <DataView class="p-pt-4 p-pl-4 p-col-8" :value="listProduct" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
             <template #list="slotProps">
-                <div class="p-col-3 p-p-4">
-                    <Card>
-                        <template #header>
-                            <img alt="user header" src="/images/temp/carrots.jpg">
-                        </template>
-                        <template #title>
-                            {{slotProps.data.product_name}}
-                        </template>
-                        <template #content>
-                            <i class="pi pi-tag product-category-icon p-pr-2"></i><span class="product-category">{{slotProps.data.product_type}}</span>
-                            <h4>Expiry Date: {{slotProps.data.expiration_date}}</h4>
-                            <span class="product-price p-pr-4">${{slotProps.data.product_price}}</span>
-                            <h4>Discount: 10%</h4>
-                        </template>
-                        <template #footer>
-                            <Button icon="pi pi-shopping-cart" label="Add to Cart" />
-                        </template>
-                    </Card>
+                <div class="p-col-12">
+                    <div class="product-list-item">
+                        <div class="p-grid">
+                            <img class="p-col-4 p-mt-2" :src="'/images/temp/carrots.jpg'" :alt="'user header'"/>
+                            <div class="product-list-detail p-col-4 p-mt-6">
+                                <div class="product-name">{{slotProps.data.product_name}}</div>
+                                <div class="product-description">{{slotProps.data.expiration_date}}</div>
+                                <!-- <Rating :modelValue="slotProps.data.rating" :readonly="true" :cancel="false"></Rating> -->
+                                <i class="pi pi-tag product-category-icon"></i><span class="product-category">{{slotProps.data.product_type}}</span>
+                            </div>
+                            <div class="product-list-action p-col-4 p-mt-6">
+                                <span class="product-price">${{slotProps.data.product_price}}</span>
+                                <Button icon="pi pi-shopping-cart" label="Add to Cart" :disabled="slotProps.data.inventoryStatus === 'OUTOFSTOCK'"></Button>
+                                <!-- <span :class="'product-badge status-'+slotProps.data.inventoryStatus.toLowerCase()">{{slotProps.data.inventoryStatus}}</span> -->
+                            </div>
+                        </div>
+                        
+                    </div>
                 </div>
             </template>
         </DataView>
+        <div class="p-col-4 p-pt-4">
+            <h1>Total Cost:</h1>
+            <h3><span>$555.25</span></h3>
+            <Button icon="pi pi-check" label="Check Out" @click="checkOutOrders" ></Button>
+        </div>
+        <Toast position="top-right" />
     </div>
 </template>
 <script>
 export default {
-   
+   methods: {
+       checkOutOrders(){
+           console.log("checkout")
+           this.$toast.add({severity:'success', summary: 'Purchased!', life: 3000,});
+           this.$router.push({ name: 'Home' });
+           //clear cart
+       }
+   },
     data() {
 		return {
             layout: 'list',
@@ -111,3 +123,9 @@ export default {
     }
 }
 </script>
+<style>
+    .product-list-item img{
+        height: 150px;
+        width: 225px;
+    }
+</style>
