@@ -6,19 +6,23 @@
             </template>
             <div class="p-fluid p-formgrid p-grid ">
                 <div class="p-field p-col-12 p-mt-2">
-                    <InputText placeholder="Product Name" id="product_name" type="text" />
+                    <InputText v-model="productName" placeholder="Product Name" id="product_name" type="text" />
                 </div>
                 <div class="p-field p-col-12 ">
                     <Dropdown v-model="selectedProdueType" :options="produeType" optionLabel="type" placeholder="Select a Produce Type" />
                 </div>
-                <div class="p-field p-col-12">
-                    <label for="Upload Photo">Upload Produce Photo</label>
-                    <FileUpload name="demo[]" url="./upload" />
+
+                <div class="p-field p-col-12 p-md-6">
+                    <InputNumber id="qty" placeholder="Qty" v-model="qtyValue" mode="decimal" showButtons :min="0" :max="1000" />
                 </div>
+                <div class="p-field p-col-12 p-md-6">
+                    <Dropdown v-model="selectedUnitType" :options="unitType" optionLabel="unit" placeholder="Select unit" />
+                </div>
+
                 <div class="p-field p-col-12 p-md-6">
                     <div class="p-inputgroup">
                         <span class="p-inputgroup-addon">$</span>
-                        <InputText placeholder="Price" />
+                        <InputText v-model="price" placeholder="Price" />
                         <span class="p-inputgroup-addon">.00</span>
                     </div>
                 </div>
@@ -27,30 +31,32 @@
                         <span class="p-inputgroup-addon">
                             <i class="pi pi-calendar"></i>
                         </span>
-                        <InputText placeholder="YYYY-MM-DD" />
+                        <InputText v-model="date" placeholder="YYYY-MM-DD" />
                     </div>
                 </div>
-                <div class="p-field p-col-12 p-md-6">
-                    <InputNumber id="qty" placeholder="Qty" v-model="value20" mode="decimal" showButtons :min="0" :max="1000" />
-                </div>
-                <div class="p-field p-col-12 p-md-6">
-                    <Dropdown v-model="selectedUnitType" :options="unitType" optionLabel="unit" placeholder="Select unit" />
+                <div class="p-field p-col-12">
+                    <label for="Upload Photo">Upload Produce Photo</label>
+                    <FileUpload name="demo[]" url="./upload" />
                 </div>
 
             </div>
             <template #footer>
-                <div class="p-field p-col-12 p-md-6">
+            <div class="p-grid">
+                <div class="p-field p-col-6 ">
                     <Button label="Cancel" icon="pi pi-times-circle" @click="closeModal" autofocus />
                 </div>
-                <div class="p-field p-col-12 p-md-6">
+                <div class="p-field p-col-6">
                     <Button label="Submit" icon="pi pi-check" @click="submit" autofocus />
                 </div>
+            
+            </div>
             </template>
         </Dialog>
     </div>
 </template>
 
 <script>
+import ProductsApi from '../../api/ProductsApi.js'
 export default {
     props: {
         isVisible: Boolean,
@@ -64,7 +70,10 @@ export default {
     data() {
 		return {
             date: "",
+            qtyValue: null,
+            price: null,
 			display: this.isVisible,
+            productName: null,
             selectedProdueType: null,
             selectedUnitType: null,
             produeType: [
@@ -90,7 +99,15 @@ export default {
             this.$emit('eventname', this.display)
         },
         submit(){
-            
+            let addProductValue = {
+                product_name: this.productName,
+                product_type: this.selectedProdueType,
+                product_price: this.price,
+                unit: this.selectedUnitType,
+                quantity: this.qtyValue,
+                expiration_date: this.date,
+            }
+            ProductsApi.addProduct(addProductValue);
         }
     },
 }
