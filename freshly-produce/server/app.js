@@ -7,7 +7,7 @@ var cors = require('cors')
 
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/user');
-var orderRouter = require('./routes/order');
+// var orderRouter = require('./routes/order');
 var productRouter = require('./routes/product');
 
 
@@ -27,7 +27,7 @@ app.use(cors())
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);
-app.use('/order', orderRouter);
+// app.use('/order', orderRouter);
 app.use('/product', productRouter);
 
 

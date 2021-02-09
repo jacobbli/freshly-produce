@@ -1,6 +1,6 @@
 let productModel = require('../model/product-model');
 
-addItem = (req,res)=>{
+addProduct = (req,res)=>{
     let p_product_type = req.body.product_type;
     let p_product_name = req.body.product_name;
     let p_product_price = req.body.product_price;
@@ -35,6 +35,6 @@ function getProducts(request, response) {
 
 
 module.exports = {
-    addItem,
+    addProduct,
     getProducts
   }
