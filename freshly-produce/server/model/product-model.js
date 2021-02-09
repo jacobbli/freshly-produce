@@ -12,7 +12,21 @@ function addCloseToExpiryProduct(obj){
     return db.query(sql);
 }
 
+async function getProducts(product_type) {
+    try {
+      const query = `SELECT * FROM products WHERE product_type = $1;`;
+      const args = [product_type];
+      const res = await db.query(query, args);
+      console.log(res.rows)
+      return Promise.resolve(res.rows);
+    } catch (error) {
+      return Promise.resolve(error);
+    }
+}
+
+
 module.exports = {
     add : addProduct,
     addExpiry : addCloseToExpiryProduct,
+    getProducts
 }
