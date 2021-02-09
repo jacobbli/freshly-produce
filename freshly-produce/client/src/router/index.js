@@ -14,6 +14,7 @@ import SubscriptionCreationPage from '../views/SubscriptionCreationPage.vue'
 import SubscriptionCreationForm from '../components/subscription-component/SubscriptionCreationForm.vue'
 import FrequencySelectionForm from '../components/subscription-component/FrequencySelectionForm.vue'
 import ProductDescriptionForm from '../components/subscription-component/ProductDescriptionForm.vue'
+import FarmerDiscountedProducePage from '../views/FarmerDiscountedProducePage.vue'
 
 const routes = [
   {
@@ -52,6 +53,11 @@ const routes = [
         path: 'available-subscriptions',
         name: 'AvailableSubscriptionsPage',
         component: AvailableSubscriptionsPage
+      },
+      {
+        path: '/my-dicounted-produce',
+        name: 'FarmerDiscountedProducePage',
+        component: FarmerDiscountedProducePage,
       },
       {
         path: 'my-offers',
