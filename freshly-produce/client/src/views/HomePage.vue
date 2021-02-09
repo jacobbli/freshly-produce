@@ -2,19 +2,19 @@
   <NavBar />
   <router-view ></router-view>
   <div v-if="this.$route['fullPath'] == '/'">
-    <CloseToExpiry/>
+    <DiscountedProduce/>
   </div>
 
 </template>
 
 <script>
 import NavBar from '../components/NavBar'
-import CloseToExpiry from '../views/CloseToExpiry.vue'
+import DiscountedProduce from '../views/DiscountedProduce.vue'
 export default {
   name: 'HomePage',
   components: {
     NavBar,
-    CloseToExpiry
+    DiscountedProduce
   }
 }
 </script>
