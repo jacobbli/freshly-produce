@@ -16,10 +16,10 @@ exports.addItem = (req,res)=>{
         product_price: p_product_price,
         unit: p_unit,
         quantity: p_quantity,
-        user_id: p_user_id,
+        user_id: 1,
     }
     
     //add to model
-    itemModel.add(iOject);
+    productModel.add(iOject);
     res.json(req.body);
 }
