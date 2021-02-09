@@ -44,3 +44,23 @@ export async function addProduct(productObject) {
     return Promise.reject('Request failed');
   }
 }
+
+export async function publishProduct(reqObject) {
+  try {
+    let endpointUrl = `${process.env.VUE_APP_ROOT_URL}/user/products/publish`;
+    let response = await axios.patch(endpointUrl, reqObject);
+    return Promise.resolve(response.data);
+  } catch(err) {
+    return Promise.reject('Request failed');
+  }
+}
+
+export async function unpublishProduct(reqObject) {
+  try {
+    let endpointUrl = `${process.env.VUE_APP_ROOT_URL}/user/products/unpublish`;
+    let response = await axios.patch(endpointUrl, reqObject);
+    return Promise.resolve(response.data);
+  } catch(err) {
+    return Promise.reject('Request failed');
+  }
+}

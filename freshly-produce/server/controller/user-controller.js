@@ -82,9 +82,31 @@ async function addUser(request, response) {
   }
 }
 
+function publishProduct(request, response) {
+  const args = [request.body.product_id];
+  userModel.publishProduct(args).then(res => {
+    response.json(res);
+  }).catch(error => {
+    console.error(error)
+    response.status(404).end();
+  });
+}
+
+function unpublishProduct(request, response) {
+  const args = [request.body.product_id];
+  userModel.unpublishProduct(args).then(res => {
+    response.json(res);
+  }).catch(error => {
+    console.error(error)
+    response.status(404).end();
+  });
+}
+
 module.exports = {
-  getUser: getUser,
-  getProducts: getProducts,
-  addUser: addUser,
-  addProduct: addProduct
+  getUser,
+  getProducts,
+  addUser,
+  addProduct,
+  publishProduct,
+  unpublishProduct
 }

@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import { publishProduct, unpublishProduct } from '../api/UsersApi.js'
+
 export default {
   name: 'ActionConfirmationModal',
   props: {
@@ -27,9 +29,9 @@ export default {
   computed: {
     setHeader: function() {
       if (this.selectedTask == 'publish') {
-        return 'Unpublish this product?';
-      } else if (this.selectedTask == 'unpublish') {
         return 'Publish this product?';
+      } else if (this.selectedTask == 'unpublish') {
+        return 'Unpublish this product?';
       } else if (this.selectedTask == 'delete') {
         return 'Delete this product?';
       } else if (this.selectedTask == 'unsubscribe') {
@@ -45,8 +47,10 @@ export default {
     },
     confirm() {
       if (this.selectedTask == 'publish') {
+        publishProduct({'product_id': this.selectedProduct.product_id})
         this.$emit('publish');
       } else if (this.selectedTask == 'unpublish') {
+        unpublishProduct({'product_id': this.selectedProduct.product_id})
         this.$emit('unpublish');
       } else if (this.selectedTask == 'delete') {
         this.$emit('delete');

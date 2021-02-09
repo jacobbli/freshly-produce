@@ -14,7 +14,7 @@ function addCloseToExpiryProduct(obj){
 
 async function getProducts(product_type) {
     try {
-      const query = `SELECT * FROM products WHERE product_type = $1;`;
+      const query = `SELECT * FROM products WHERE product_type = $1 AND is_published = true;`;
       const args = [product_type];
       const res = await db.query(query, args);
       console.log(res.rows)
