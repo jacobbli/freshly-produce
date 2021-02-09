@@ -36,13 +36,30 @@ async function addProduct(args){
   }
 }
 
-
 async function addUser(args) {
   try {
     const query = `INSERT INTO users (username, password, first_name, surname, role, phone, email, address, photo)
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);`;
+    const res = await db.query(query, args);
+    return Promise.resolve(res.rows);
+  } catch (error) {
+    return Promise.resolve(error);
+  }
+}
 
+async function publishProduct(args) {
+  try {
+    const query = `UPDATE products SET is_published = true WHERE product_id = $1;`;
+    const res = await db.query(query, args);
+    return Promise.resolve(res.rows);
+  } catch (error) {
+    return Promise.resolve(error);
+  }
+}
 
+async function unpublishProduct(args) {
+  try {
+    const query = `UPDATE products SET is_published = false WHERE product_id = $1;`;
     const res = await db.query(query, args);
     return Promise.resolve(res.rows);
   } catch (error) {
@@ -51,8 +68,10 @@ async function addUser(args) {
 }
 
 module.exports = {
-  getUser: getUser,
-  getProducts: getProducts,
-  addUser: addUser,
-  addProduct: addProduct
+  getUser,
+  getProducts,
+  addUser,
+  addProduct,
+  publishProduct,
+  unpublishProduct
 }
