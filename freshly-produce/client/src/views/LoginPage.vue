@@ -8,6 +8,9 @@
 export default {
   name: 'LoginPage',
   components: {
+  },
+  mounted: function() {
+    this.$router.push({name: 'RoleSelectionForm'});
   }
 }
 </script>
