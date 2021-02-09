@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '../views/HomePage.vue'
 import LoginPage from '../views/LoginPage.vue'
 import ProfilePage from '../views/ProfilePage.vue'
-import CloseToExpiry from '../views/CloseToExpiry.vue'
+import DiscountedProduce from '../views/DiscountedProduce.vue'
 import CartPage from '../views/CartPage.vue'
 import RoleSelectionForm from '../components/login-component/RoleSelectionForm.vue'
 import LoginForm from '../components/login-component/LoginForm.vue'
@@ -11,7 +11,6 @@ import FarmerSubscriptionsPage from '../views/FarmerSubscriptionsPage.vue'
 import AvailableSubscriptionsPage from '../views/AvailableSubscriptionsPage.vue'
 import MyDetail from '../components/profile-component/MyDetail.vue'
 import SubscriptionCreationPage from '../views/SubscriptionCreationPage.vue'
-import SubscriptionCreationForm from '../components/subscription-component/SubscriptionCreationForm.vue'
 import FrequencySelectionForm from '../components/subscription-component/FrequencySelectionForm.vue'
 import ProductDescriptionForm from '../components/subscription-component/ProductDescriptionForm.vue'
 import FarmerDiscountedProducePage from '../views/FarmerDiscountedProducePage.vue'
@@ -21,6 +20,7 @@ const routes = [
     path: '/',
     name: 'Home',
     component: HomePage,
+    redirect: '/discounted-produce',
     children: [
       {
         path: '/profile',
@@ -40,9 +40,9 @@ const routes = [
         ]
       },
       {
-        path: '/closetoexpiry',
-        name: 'CloseToExpiry',
-        component: CloseToExpiry,
+        path: '/discounted-produce',
+        name: 'DiscountedProduce',
+        component: DiscountedProduce,
       },
       {
         path: '/cart',
@@ -71,18 +71,15 @@ const routes = [
             children: [
               {
                 path: 'create',
-                name: 'SubscriptionCreationForm',
-                component: SubscriptionCreationForm
+                name: 'ProductDescriptionForm',
+                component: ProductDescriptionForm,
+                props: true
               },
               {
                 path: 'frequency',
                 name: 'FrequencySelectionForm',
-                component: FrequencySelectionForm
-              },
-              {
-                path: 'product',
-                name: 'ProductDescriptionForm',
-                component: ProductDescriptionForm
+                component: FrequencySelectionForm,
+                props: true
               },
             ]
           }
@@ -92,10 +89,11 @@ const routes = [
   },
   {
     path: '/login',
+    name: 'LoginPage',
     component: LoginPage,
     children: [
       {
-        path: '/login',
+        path: '/role',
         name: 'RoleSelectionForm',
         component: RoleSelectionForm
       },

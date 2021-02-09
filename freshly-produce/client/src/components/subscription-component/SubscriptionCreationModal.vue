@@ -1,23 +1,14 @@
 <template>
   <Dialog
-    header="Add a new product for users to subscribe to:" 
+    header="Add a new product for your customers to subscribe to:" 
     :visible="isVisible" 
     :modal="true"
     :closable="false"
     :contentStyle="{overflow: 'visible'}">
     <subscription-creation-page 
-      :subscription-steps="subscriptionSteps" 
-      @submitForm="confirmModalAction()" />
-    <Button 
-      label="Cancel"
-      class="p-button-danger"
-      @click="cancel"
-      iconPos="right" />
-    <Button 
-      label="Next"
-      @click="nextPage()" 
-      icon="pi pi-angle-right" 
-      iconPos="right" />
+      :subscription-steps="subscriptionSteps"
+      @on-submit="confirm"
+      @cancel="cancel"/>
     <Steps 
     :model="subscriptionSteps" 
     :readonly="false"/>
@@ -26,6 +17,7 @@
 
 <script>
 import SubscriptionCreationPage from '../../views/SubscriptionCreationPage.vue'
+
 export default {
   name: 'SubscriptionCreationModal',
   components: {
@@ -36,28 +28,21 @@ export default {
   },
   data() {
 		return {
-      pageIndex: 0,
-			subscriptionSteps: [{
-        label: 'Create Subscription Plan',
-        to: '/my-offers/new-subscription/create'
-      },
-      {
-        label: 'Set Frequency',
-        to: '/my-offers/new-subscription/frequency'
-      },
-      {
-        label: 'Choose Product',
-        to: '/my-offers/new-subscription/product'
-      }],
-      formObject: {}
+			subscriptionSteps: [
+        {
+          label: 'Add Product Information',
+          to: '/my-offers/new-subscription/create'
+        },
+        {
+          label: 'Set Subscription Frequency',
+          to: '/my-offers/new-subscription/frequency'
+        },
+      ],
+      productObject: {},
 		}
 	},
   methods: {
-    nextPage() {
-      this.pageIndex += 1;
-      this.$router.push(this.subscriptionSteps[this.pageIndex].to);
-    },
-    confirmModalAction() {
+    confirm() {
       this.$emit('confirm');
     },
     cancel() {
@@ -68,8 +53,5 @@ export default {
 </script>
 
 <style scoped>
-button {
-	margin-right: .5rem;
-}
 
 </style>

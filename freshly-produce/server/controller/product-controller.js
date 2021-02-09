@@ -1,6 +1,6 @@
 let productModel = require('../model/product-model');
 
-exports.addItem = (req,res)=>{
+addItem = (req,res)=>{
     let p_product_type = req.body.product_type;
     let p_product_name = req.body.product_name;
     let p_product_price = req.body.product_price;
@@ -18,8 +18,23 @@ exports.addItem = (req,res)=>{
         quantity: p_quantity,
         user_id: 1,
     }
-    
+
     //add to model
     productModel.add(iOject);
     res.json(req.body);
 }
+
+function getProducts(request, response) {
+    productModel.getProducts(request.query.product_type).then(res => {
+      response.json(res);
+    }).catch(error => {
+      console.error(error)
+      response.status(404).end();
+    });
+}
+
+
+module.exports = {
+    addItem,
+    getProducts
+  }

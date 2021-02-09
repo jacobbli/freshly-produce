@@ -35,7 +35,7 @@ export default {
    methods: {
        checkOutOrders(){
            this.$toast.add({severity:'success', summary: 'Purchased!', life: 3000,});
-           this.$router.push({ name: 'CloseToExpiry' });
+           this.$router.push({ name: 'DiscountedProduce' });
            //clear cart
        }
    },

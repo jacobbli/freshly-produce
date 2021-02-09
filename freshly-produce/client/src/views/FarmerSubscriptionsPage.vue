@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="listProduct.length !== 0">
     <DataView :value="listProduct" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
       <template #header>
           <div class="p-grid p-nogutter">
@@ -67,6 +67,9 @@
 <script>
 import SubscriptionCreationModal from '../components/subscription-component/SubscriptionCreationModal.vue'
 import ActionConfirmationModal from '../components/ActionConfirmationModal.vue'
+import { mapGetters } from 'vuex'
+import { getProducts } from '../api/UsersApi.js'
+import { PRODUCT_TYPE } from '../models'
 
 export default {
   name: 'FarmerSubscriptionsPage',
@@ -93,54 +96,15 @@ export default {
         "blueberries.jpg",
         "broccoli.jpg",
         "carrots.jpg"
-      ]
-      ,
-      listProduct:[
-        {
-          product_id: 1,
-          product_name: "carrots",
-          product_type: "food",
-          product_price: 15.99,
-          is_published: false,
-        },
-        {
-          product_id: 2,
-          product_name: "crrots",
-          product_type: "food",
-          product_price: 15.99,
-          is_published: true,
-        },
-        {
-          product_id: 3,
-          product_name: "carots",
-          product_type: "food",
-          product_price: 15.99,
-          is_published: true,
-        },
-        {
-          product_id: 4,
-          product_name: "carots",
-          product_type: "food",
-          product_price: 15.99,
-          is_published: false,
-        },
-        {
-          product_id: 5,
-          product_name: "carots",
-          product_type: "food",
-          product_price: 15.99,
-          is_published: false,
-        },
-        {
-          product_id: 6,
-          product_name: "carros",
-          product_type: "food",
-          product_price: 15.99,
-          is_published: false,
-        },
       ],
+      listProduct: []
 		}
 	},
+  computed: {
+    ...mapGetters('users', {
+        user_id: 'getUserId',
+    })
+  },
   methods: {
     publish() {
       let index = this.listProduct.findIndex(element => {
@@ -203,6 +167,18 @@ export default {
           this.sortKey = sortValue;
       }
     }
+  },
+  mounted: function() {
+    var reqForm = {
+      user_id: this.user_id,
+      product_type: PRODUCT_TYPE['subscription']
+    };
+    getProducts(reqForm).then(res => {
+      this.listProduct = res;
+    }).catch(err => {
+      console.log(err);
+      this.listProduct = [];
+    });
   }
 }
 </script>
