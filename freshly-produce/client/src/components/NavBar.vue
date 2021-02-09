@@ -31,7 +31,7 @@ export default {
 
     methods:{
         goToHomePage(){
-            this.$router.push({ name: 'CloseToExpiry' });
+            this.$router.push({ name: 'DiscountedProduce' });
         },        
         goToCart(){
             this.$router.push({ name: 'Cart' });
@@ -47,7 +47,7 @@ export default {
         {
           label:'Close-To-Expiry',
           icon:'pi pi-clock',
-          to: '/closetoexpiry'
+          to: '/discounted-produce'
         },                   
         {
           label:'Available Subscriptions',
@@ -71,7 +71,8 @@ export default {
         },
         {
           label:'Log Out',
-          icon:'pi pi-fw pi-power-off'
+          icon:'pi pi-fw pi-power-off',
+          to: '/login'
         }
       ]
     }
