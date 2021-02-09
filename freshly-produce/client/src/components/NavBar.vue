@@ -58,6 +58,11 @@ export default {
           label:'My Offered Subscriptions',
           icon:'pi pi-tags',
           to: '/my-offers'
+        },
+        {
+          label:'My Dicounted Produce',
+          icon:'pi pi-apple',
+          to: '/my-dicounted-produce'
         }
       ],
       itemsAvatar: [
