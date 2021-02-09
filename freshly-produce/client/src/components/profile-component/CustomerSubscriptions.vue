@@ -1,5 +1,5 @@
 <template>
- <div>
+ <div v-if="listProduct.length !== 0">
     <DataView :value="listProduct" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
       <template #header>
           <div class="p-grid p-nogutter">
@@ -41,10 +41,16 @@
       @cancel="closeConfirmationModal()"
       @unsubscribe="unsubscribe()" />
   </div>
+  <div v-else>
+    <h2>You haven't subscribed to any produce products yet!</h2>
+  </div>
 </template>
 
 <script>
 import ActionConfirmationModal from '../ActionConfirmationModal.vue'
+import { mapGetters } from 'vuex'
+import { getProducts } from '../../api/UsersApi.js'
+import { PRODUCT_TYPE } from '../../models'
 
 export default {
   name: 'CustomerSubscriptionsPage',
@@ -69,52 +75,8 @@ export default {
         "blueberries.jpg",
         "broccoli.jpg",
         "carrots.jpg"
-      ]
-      ,
-      listProduct:[
-        {
-          product_id: 1,
-          product_name: "carrots", 
-          product_type: "food",
-          product_price: 15.99,
-          is_subscribed: true,
-        }, 
-        {
-          product_id: 2,
-          product_name: "crrots", 
-          product_type: "food", 
-          product_price: 15.99,
-          is_subscribed: true,
-        }, 
-        {
-          product_id: 3,
-          product_name: "carots", 
-          product_type: "food",
-          product_price: 15.99,
-          is_subscribed: true,
-        }, 
-        {
-          product_id: 4,
-          product_name: "carots", 
-          product_type: "food",
-          product_price: 15.99,
-          is_subscribed: true,
-        }, 
-        {
-          product_id: 5,
-          product_name: "carots", 
-          product_type: "food",
-          product_price: 15.99,
-          is_subscribed: true,
-        }, 
-        {
-          product_id: 6,
-          product_name: "carros", 
-          product_type: "food",
-          product_price: 15.99,
-          is_subscribed: true,
-        },
-      ]
+      ],
+      listProduct: []
 		}
 	},
   methods: {
@@ -133,7 +95,24 @@ export default {
       })
       this.listProduct.splice(index, 1);
       this.closeConfirmationModal();
-    },
+    }
+  },
+  computed: {
+    ...mapGetters('users', {
+        user_id: 'getUserId',
+    })
+  },
+  mounted: function() {
+    var reqForm = {
+      user_id: this.user_id,
+      product_type: PRODUCT_TYPE['subscription']
+    };
+    getProducts(reqForm).then(res => {
+      this.listProduct = res;
+    }).catch(err => {
+      console.log(err);
+      this.listProduct = [];
+    });
   }
 }
 </script>
