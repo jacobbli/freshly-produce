@@ -2,8 +2,9 @@
     <router-view
       v-slot="{Component}"
       :subscription-steps="subscriptionSteps"
-      @prev-page="prevPage($event)"
-      @next-page="nextPage($event)">
+      :product-object="productObject"
+      @submit-form="onSubmit"
+      @next-page="nextPage">
       <keep-alive>
           <component :is="Component" />
       </keep-alive>
@@ -11,28 +12,26 @@
 </template>
 
 <script>
-
 export default {
   name: 'SubscriptionCreationPage',
-  data() {
-    return {
-      formObject: {},
-      pageIndex: 0
-    }
-  },
   props: {
     subscriptionSteps: Array,
   },
+  data() {
+    return {
+      pageIndex: 0,
+      productObject: {},
+    }
+  },
   methods: {
-    nextPage() {
-        // for (let field in event.formData) {
-        //     this.formObject[field] = event.formData[field];
-        // }
-        this.pageIndex += 1;
-        this.$router.push(this.subscriptionSteps[this.pageIndex].to);
+    nextPage(productObject) {
+      this.pageIndex += 1;
+      this.productObject = productObject
+      this.$router.push(this.subscriptionSteps[this.pageIndex].to);
     },
-    prevPage(event) {
-        this.$router.push(this.subscriptionSteps[event.pageIndex].to);
+    onSubmit() {
+      this.pageIndex = 0;
+      this.$emit('onSubmit');
     },
   },
   mounted: function() {
@@ -40,10 +39,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.steps {
-  vertical-align: end;
-}
-
-</style>

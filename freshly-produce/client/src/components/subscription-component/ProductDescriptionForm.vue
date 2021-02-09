@@ -1,4 +1,5 @@
 <template>
+  <div>
     <div class="p-fluid">
       <div class="p-field p-grid">
         <label
@@ -11,10 +12,10 @@
           </Card> -->
           <FileUpload
             class="p-fileupload-sm"
-            name="demo[]"
-            :showUploadButton="false"
+            name="product_photo"
+            :auto="true"
             :customUpload="true"
-            @uploader="myUploader"
+            @uploader="addFile"
             accept="image/*"
             :maxFileSize="1000000"
             chooseLabel="Upload Photo">
@@ -32,7 +33,8 @@
         <div class="p-col-12 p-md-8">
           <InputText
             id="name"
-            type="text"/>
+            type="text"
+            v-model="productObject.product_name" />
         </div>
       </div>
       <div class="p-field p-grid">
@@ -44,7 +46,22 @@
         <div class="p-col-12 p-md-8">
           <InputText
             id="description"
-            type="text"/>
+            type="text"
+            v-model="productObject.product_description" />
+        </div>
+      </div>
+      <div class="p-field p-grid">
+        <label
+          class="p-col-12 p-md-4"
+          for="price">
+          Product Price
+        </label>
+        <div class="p-col-12 p-md-8">
+          <InputNumber
+            id="price"
+            :minFractionDigits="2"
+            :maxFractionDigits="2"
+            v-model="productObject.product_price" />
         </div>
       </div>
       <div class="p-field p-grid">
@@ -55,7 +72,7 @@
         </label>
         <div class="p-col-12 p-md-8">
           <Dropdown
-            v-model="selectedUnit"
+            v-model="productObject.selectedUnit"
             :options="units"
             optionLabel="name"
             placeholder="Select a unit"
@@ -70,11 +87,22 @@
         </label>
         <div class="p-col-12 p-md-8">
           <InputNumber
-            v-model="quantity"
+            v-model="productObject.quantity"
             :minFractionDigits="minDecimal"/>
         </div>
       </div>
     </div>
+    <Button 
+      label="Cancel"
+      class="p-button-danger"
+      @click="cancel"
+      iconPos="right" />
+    <Button 
+      label="Next"
+      @click="nextPage()" 
+      icon="pi pi-angle-right" 
+      iconPos="right" />
+  </div>
 </template>
 
 <script>
@@ -83,9 +111,14 @@ export default {
   data() {
     return {
       minDecimal: 0,
-      quantity: null,
-      productPhoto: null,
-      selectedUnit: null,
+      productObject: {
+        product_name: '',
+        product_description: '',
+        product_price: null,
+        quantity: null,
+        photo: null,
+        selectedUnit: null,
+      },
       units: [
         {name: 'Unit'},
         {name: 'Kg'},
@@ -96,18 +129,22 @@ export default {
   },
   methods: {
     setMinDecimal() {
-      if (this.selectedUnit.name === 'Unit') {
+      if (this.productObject.selectedUnit.name === 'Unit') {
         this.quantity = Math.trunc(this.quantity)
         this.minDecimal = 0;
       } else {
         this.minDecimal = 2;
       }
     },
-    myUploader(event) {
-      console.log(event.files)
+    async addFile(event) {
+      let blob = await fetch(event.files[0].objectURL).then(r => r.blob());
+      this.productObject['photo'] = blob
     },
-    onSubmit() {
-      this.$emit('submitForm');
+    nextPage() {
+      this.$emit('next-page', this.productObject);
+    },
+    cancel() {
+      this.$emit('cancel');
     }
   }
 }
@@ -125,6 +162,10 @@ export default {
 
 .submit-button {
   width: 150px;
+}
+
+button {
+	margin-right: .5rem;
 }
 
 </style>

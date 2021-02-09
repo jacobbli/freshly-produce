@@ -1,4 +1,5 @@
 <template>
+  <div>
     <div class="p-fluid">
       <div class="p-field p-grid">
         <label
@@ -29,9 +30,23 @@
         </div>
       </div>
     </div>
+    <Button 
+      label="Cancel"
+      class="p-button-danger"
+      @click="cancel"
+      iconPos="right" />
+    <Button 
+      label="Submit"
+      @click="onSubmit()" 
+      icon="pi pi-check" 
+      iconPos="left" />
+  </div>
 </template>
 
 <script>
+import { addProduct } from '../../api/UsersApi.js'
+import { PRODUCT_TYPE, WEEK_DAY } from '../../models.js'
+
 export default {
   name: 'FrequencySelectionForm',
   data() {
@@ -45,10 +60,8 @@ export default {
       ],
     }
   },
-  methods: {
-    nextPage() {
-      this.$emit('next-page');
-    }
+  props: {
+    productObject: {}
   },
   computed: {
     days: function () {
@@ -56,26 +69,46 @@ export default {
         return null;
       } else if (this.selectedFrequency.frequency == 'Monthly') {
         const options = [
-          {day: 'first Monday of the month'},
-          {day: 'first Tuesday of the month'},
-          {day: 'first Wednesday of the month'},
-          {day: 'first Thursday of the month'},
-          {day: 'first Friday of the month'},
+          {day: 'first Monday of the month', code: 'Monday'},
+          {day: 'first Tuesday of the month', code: 'Tuesday'},
+          {day: 'first Wednesday of the month', code: 'Wednesday'},
+          {day: 'first Thursday of the month', code: 'Thursday'},
+          {day: 'first Friday of the month', code: 'Friday'},
         ]
         return options
         } else if (this.selectedFrequency.frequency == 'Weekly' || this.selectedFrequency.frequency == 'Bi-weekly') {
         const options = [
-          {day: 'Monday'},
-          {day: 'Tuesday'},
-          {day: 'Wednesday'},
-          {day: 'Thursday'},
-          {day: 'Friday'},
+          {day: 'Monday', code: 'Monday'},
+          {day: 'Tuesday', code: 'Tuesday'},
+          {day: 'Wednesday', code: 'Wednesday'},
+          {day: 'Thursday', code: 'Thursday'},
+          {day: 'Friday', code: 'Monday'},
         ]
         return options
       }
       return null;
     }
   },
+  methods: {
+    onSubmit() {
+      var tempObject = {
+        product_name: this.productObject.product_name,
+        product_description: this.productObject.product_description,
+        product_type: PRODUCT_TYPE['subscription'],
+        product_price: this.productObject.product_price,
+        unit: this.productObject.selectedUnit.name,
+        quantity: this.productObject.quantity,
+        photo: this.productObject.photo,
+        frequency: this.selectedFrequency.frequency,
+        delivery_day: WEEK_DAY[this.selectedDay.code]
+      }
+      addProduct(tempObject);
+      this.$emit('submitForm');
+    },
+    cancel() {
+      this.$emit('cancel');
+    }
+  }
 }
 </script>
 
@@ -85,8 +118,7 @@ export default {
   height: 500px;
 }
 
-.submit-button {
-  width: 150px;
+button {
+	margin-right: .5rem;
 }
-
 </style>
