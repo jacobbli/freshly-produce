@@ -31,7 +31,6 @@ async function deleteProduct(args) {
 
 module.exports = {
     add : addProduct,
-    addExpiry : addCloseToExpiryProduct,
     getProducts,
     deleteProduct
     // addExpiry : addCloseToExpiryProduct,

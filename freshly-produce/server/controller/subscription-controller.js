@@ -48,7 +48,6 @@ async function getSubscribedProducts(request, response) {
   try {
     const orderArgs = [request.query.user_id, request.query.product_type];
     const subscribedProducts = await subscriptionModel.getActiveSubscriptions(orderArgs);
-    console.log(subscribedProducts)
     response.json(subscribedProducts);
   } catch(error) {
     console.error(error)
