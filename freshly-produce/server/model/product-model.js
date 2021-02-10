@@ -1,14 +1,8 @@
 let db = require('../db/db');
 
 function addProduct(obj){
-    let sql = "INSERT INTO items (product_name, product_type, product_price, unit, quantity, expiration_date, user_id) values ('"+ obj.product_name +"','"+  obj.product_type +"','"+ obj.product_price +"','" +obj.unit+"','"+ obj.quantity + "','"+ obj.expiration_date + "','" + obj.user_id + ")"
- 
-    return db.query(sql);
-}
-//obsolete** 
-function addCloseToExpiryProduct(obj){
-    let sql = "INSERT INTO items (product_name, product_type, product_price, unit, quantity, expiration_date, user_id) values ('"+ obj.itemName +"','"+  obj.category +"','"+ obj.officeName +"','" +obj.dateReceived+"','"+ obj.serialNo + "','" + obj.manufacturer +"',"+ obj.jobNo + ")"
-
+    let sql = "INSERT INTO products (product_name, product_type, product_price, unit, quantity, expiration_date, user_id) values ('"+ obj.product_name +"','"+  obj.product_type +"',"+ obj.product_price +",'" +obj.unit+"',"+ obj.quantity + ",'"+ obj.expiration_date + "'," + obj.user_id + ")"
+   
     return db.query(sql);
 }
 
@@ -27,6 +21,6 @@ async function getProducts(product_type) {
 
 module.exports = {
     add : addProduct,
-    addExpiry : addCloseToExpiryProduct,
+    // addExpiry : addCloseToExpiryProduct,
     getProducts
 }

@@ -3,7 +3,7 @@ let productModel = require('../model/product-model');
 addProduct = (req,res)=>{
     let p_product_type = req.body.product_type;
     let p_product_name = req.body.product_name;
-    let p_product_price = req.body.product_price;
+    let p_product_price = parseInt(req.body.product_price);
     let p_unit = req.body.unit;
     let p_quantity = req.body.quantity;
     let p_expiration_date = req.body.expiration_date;

@@ -17,6 +17,10 @@ CREATE TABLE users (
   photo BYTEA
 );
 
+INSERT INTO public.users
+(username, first_name, surname, role, phone, email, address)
+VALUES('jc', 'jj', 'cc', 0, '23', 's1@com', 'Candy way');
+
 CREATE TABLE products (
   product_id SERIAL PRIMARY KEY NOT NULL,
   photo BYTEA,
