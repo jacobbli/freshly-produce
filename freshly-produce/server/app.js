@@ -4,11 +4,13 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors')
+require('dotenv').config()
 
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/user');
 var subscriptionRouter = require('./routes/subscription');
 var productRouter = require('./routes/product');
+
 
 var app = express();
 
@@ -28,6 +30,7 @@ app.use('/', indexRouter);
 app.use('/user', userRouter);
 app.use('/subscription', subscriptionRouter);
 app.use('/product', productRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

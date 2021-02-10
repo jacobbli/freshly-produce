@@ -1,11 +1,12 @@
 let productModel = require('../model/product-model');
 
-addItem = (req,res)=>{
+addProduct = (req,res)=>{
     let p_product_type = req.body.product_type;
     let p_product_name = req.body.product_name;
-    let p_product_price = req.body.product_price;
+    let p_product_price = parseInt(req.body.product_price);
     let p_unit = req.body.unit;
     let p_quantity = req.body.quantity;
+    let p_expiration_date = req.body.expiration_date;
     let p_user_id = req.body.user_id;
 
 
@@ -16,6 +17,7 @@ addItem = (req,res)=>{
         product_price: p_product_price,
         unit: p_unit,
         quantity: p_quantity,
+        expiration_date: p_expiration_date,
         user_id: 1,
     }
 
@@ -47,5 +49,6 @@ async function deleteProduct(request, response) {
 module.exports = {
     addItem,
     getProducts,
-    deleteProduct
+    deleteProduct,
+    addProduct,
   }

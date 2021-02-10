@@ -11,7 +11,7 @@ CREATE TABLE users (
   "password" TEXT NOT NULL,
   first_name TEXT,
   surname TEXT,
-  "role" SMALLINT NOT NULL,
+  role SMALLINT NOT NULL,
   phone TEXT,
   email TEXT,
   "address" TEXT,
