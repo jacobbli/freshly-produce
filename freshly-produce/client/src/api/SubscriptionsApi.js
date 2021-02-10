@@ -7,7 +7,6 @@ export async function getSubscribedProducts(reqObject) {
       params: reqObject
     });
     if (response.status == 200) {
-      console.log(response.data);
       return Promise.resolve(response.data);
     }
     Promise.resolve('Request failed')

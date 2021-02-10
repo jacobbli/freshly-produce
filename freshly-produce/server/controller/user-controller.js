@@ -90,7 +90,6 @@ function addSubscription(request, response) {
       next(err);
       response.status(404).end();
     }
-    console.log(fields.user_id)
     const created_at = new Date();
     const arg = [
       fields.user_id,

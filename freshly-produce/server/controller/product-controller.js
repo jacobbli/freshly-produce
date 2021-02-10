@@ -47,7 +47,6 @@ async function deleteProduct(request, response) {
 }
 
 module.exports = {
-    addItem,
     getProducts,
     deleteProduct,
     addProduct,
