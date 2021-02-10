@@ -33,8 +33,19 @@ function getProducts(request, response) {
     });
 }
 
+async function deleteProduct(request, response) {
+  try {
+    const deleteArg = [request.query.product_id];
+    const res = await productModel.deleteProduct(deleteArg);
+    response.json(res);
+  } catch(error) {
+    console.error(error)
+    response.status(404).end();
+  }
+}
 
 module.exports = {
     addItem,
-    getProducts
+    getProducts,
+    deleteProduct
   }
