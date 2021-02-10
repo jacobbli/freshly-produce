@@ -19,8 +19,7 @@
                       {{slotProps.data.product_name}}
                   </template>
                   <template  #content>
-                      <i class="pi pi-tag product-category-icon p-pr-2"></i><span class="product-category">{{slotProps.data.product_type}}</span>
-                      <div class="product-price p-pr-4">${{slotProps.data.product_price}}</div>
+                    <div class="product-price p-pr-4">${{slotProps.data.product_price}}</div>
                   </template>
                   <template #footer>
                     <Button 
