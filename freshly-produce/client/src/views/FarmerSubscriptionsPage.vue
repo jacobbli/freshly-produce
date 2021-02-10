@@ -74,7 +74,6 @@
 <script>
 import SubscriptionCreationModal from '../components/subscription-component/SubscriptionCreationModal.vue'
 import ActionConfirmationModal from '../components/ActionConfirmationModal.vue'
-import { mapGetters } from 'vuex'
 import { getProducts } from '../api/UsersApi.js'
 import { PRODUCT_TYPE } from '../models'
 
@@ -107,11 +106,6 @@ export default {
       listProduct: []
 		}
 	},
-  computed: {
-    ...mapGetters('users', {
-        user_id: 'getUserId',
-    })
-  },
   methods: {
     publish() {
       let index = this.listProduct.findIndex(element => {
@@ -177,13 +171,13 @@ export default {
   },
   mounted: function() {
     var reqForm = {
-      user_id: this.user_id,
+      user_id: JSON.parse(sessionStorage.getItem('currentUser')).user_id,
       product_type: PRODUCT_TYPE['subscription']
     };
     getProducts(reqForm).then(res => {
       this.listProduct = res;
     }).catch(err => {
-      console.log(err);
+      console.error(err);
       this.listProduct = [];
     });
   }

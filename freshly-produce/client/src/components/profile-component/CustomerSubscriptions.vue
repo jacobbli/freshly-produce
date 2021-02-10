@@ -48,7 +48,6 @@
 
 <script>
 import ActionConfirmationModal from '../ActionConfirmationModal.vue'
-import { mapGetters } from 'vuex'
 import { getSubscribedProducts } from '../../api/SubscriptionsApi.js'
 import { PRODUCT_TYPE } from '../../models'
 
@@ -97,20 +96,15 @@ export default {
       this.closeConfirmationModal();
     }
   },
-  computed: {
-    ...mapGetters('users', {
-        user_id: 'getUserId',
-    })
-  },
   mounted: function() {
     var reqForm = {
-      user_id: this.user_id,
+      user_id: JSON.parse(sessionStorage.getItem('currentUser')).user_id,
       product_type: PRODUCT_TYPE['subscription']
     };
     getSubscribedProducts(reqForm).then(res => {
       this.listProduct = res;
     }).catch(err => {
-      console.log(err);
+      console.error(err);
       this.listProduct = [];
     });
   }

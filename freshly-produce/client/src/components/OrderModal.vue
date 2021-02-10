@@ -47,7 +47,6 @@
 
 <script>
 import { subscribe } from '../api/SubscriptionsApi.js'
-import { mapGetters } from 'vuex'
 import { PRODUCT_TYPE } from '../models.js'
 
 export default {
@@ -58,9 +57,6 @@ export default {
     selectedTask: null
   },
   computed: {
-    ...mapGetters('users', {
-        user_id: 'getUserId',
-    }),
     setHeader: function() {
       if (this.selectedTask == 'subscribe') {
         return 'Please confirm your subscription';       
@@ -82,7 +78,7 @@ export default {
           product_id: this.selectedProduct.product_id,
           product_quantity: this.selectedProduct.quantity,
           product_type: PRODUCT_TYPE['subscription'],
-          user_id: this.user_id
+          user_id: JSON.parse(sessionStorage.getItem('currentUser')).user_id
         }
         subscribe(reqObject)
       }
