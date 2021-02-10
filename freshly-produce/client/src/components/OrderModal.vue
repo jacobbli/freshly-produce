@@ -46,6 +46,10 @@
 </template>
 
 <script>
+import { subscribe } from '../api/SubscriptionsApi.js'
+import { mapGetters } from 'vuex'
+import { PRODUCT_TYPE } from '../models.js'
+
 export default {
   name: 'OrderModal',
   props: {
@@ -54,6 +58,9 @@ export default {
     selectedTask: null
   },
   computed: {
+    ...mapGetters('users', {
+        user_id: 'getUserId',
+    }),
     setHeader: function() {
       if (this.selectedTask == 'subscribe') {
         return 'Please confirm your subscription';       
@@ -69,6 +76,17 @@ export default {
       this.$emit('cancel');
     },
     placeOrder() {
+      if (this.selectedTask == 'subscribe') {
+        const reqObject = {
+          transaction_cost: this.selectedProduct.product_price,
+          product_id: this.selectedProduct.product_id,
+          product_quantity: this.selectedProduct.quantity,
+          product_type: PRODUCT_TYPE['subscription'],
+          user_id: this.user_id
+        }
+        subscribe(reqObject)
+      }
+
       this.$emit('placeOrder');
     },
   }
