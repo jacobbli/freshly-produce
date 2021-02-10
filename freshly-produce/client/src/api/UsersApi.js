@@ -8,8 +8,7 @@ export async function login(loginObject) {
     let response = await axios.post(endpointUrl, loginObject, {
       headers: {'Content-Type': 'application/json' },
     });
-
-    store.dispatch('users/setUser', response.data)
+    sessionStorage.setItem('currentUser', JSON.stringify(response.data));
     return Promise.resolve('Successful request');
   } catch(err) {
     return Promise.reject('Request failed');
