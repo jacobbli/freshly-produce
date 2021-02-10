@@ -1,5 +1,6 @@
 <template>
-  <div v-if="listProduct.length !== 0">
+  <div>
+    <div v-if="listProduct.length > 0">
     <DataView :value="listProduct" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
       <template #header>
           <div class="p-grid p-nogutter">
@@ -47,6 +48,11 @@
           </div>
       </template>
     </DataView>
+    </div>
+    <div v-else>
+    <Button @click="openModal()">You haven't added any subscriptions. Click here add one!</Button>
+    </div>
+
     <subscription-creation-modal
       :is-visible="modalIsVisible"
       v-on:cancel="closeModal()"
@@ -62,6 +68,7 @@
       @unpublish="unpublish()"
       @delete="deleteProduct()" />
   </div>
+
 </template>
 
 <script>
