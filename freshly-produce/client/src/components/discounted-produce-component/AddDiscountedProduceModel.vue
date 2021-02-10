@@ -20,18 +20,20 @@
                 </div>
 
                 <div class="p-field p-col-12 p-md-6">
+                    <label for="Price">Price</label>
                     <div class="p-inputgroup">
                         <span class="p-inputgroup-addon">$</span>
-                        <InputText v-model="price" placeholder="Price" />
+                        <InputText v-model="price" placeholder="10" />
                         <span class="p-inputgroup-addon">.00</span>
                     </div>
                 </div>
                 <div class="p-field p-col-12 p-md-6">
+                    <label for="Expiry Date">Expiry Date</label>
                     <div class="p-inputgroup">
                         <span class="p-inputgroup-addon">
                             <i class="pi pi-calendar"></i>
                         </span>
-                        <InputText v-model="date" placeholder="YYYY-MM-DD" />
+                        <InputText v-model="date" placeholder="YYYY-MM-DD " />
                     </div>
                 </div>
                 <div class="p-field p-col-12">
@@ -101,9 +103,9 @@ export default {
         submit(){
             let addProductValue = {
                 product_name: this.productName,
-                product_type: this.selectedProdueType,
+                product_type: this.selectedProdueType["type"],
                 product_price: this.price,
-                unit: this.selectedUnitType,
+                unit: this.selectedUnitType["unit"],
                 quantity: this.qtyValue,
                 expiration_date: this.date,
             }

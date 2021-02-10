@@ -27,22 +27,31 @@
                       <div class="product-price p-pr-4">${{slotProps.data.product_price}}</div>
                   </template>
                   <template #footer>
-                    <Button
-                      v-if="slotProps.data.is_published"
-                      icon="pi pi-times"
-                      class="p-button-warning"
-                      label="Unpublish"
-                      @click="openConfirmationModal(slotProps.data, 'unpublish')" />
-                    <Button
-                      v-else
-                      icon="pi pi-check"
-                      label="Publish"
-                      @click="openConfirmationModal(slotProps.data, 'publish')" />
-                    <Button
-                      icon="pi pi-times"
-                      class="p-button-danger"
-                      label="Delete"
-                      @click="openConfirmationModal(slotProps.data, 'delete')" />
+                    <div class="p-grid p-col-12 p-m-0">
+                      <div class="p-col-6 p-m-0">
+                        <Button
+                          v-if="slotProps.data.is_published"
+                          icon="pi pi-times"
+                          class="p-button-warning "
+                          label="Unpublish"
+                          @click="openConfirmationModal(slotProps.data, 'unpublish')" />
+                        <Button
+                          v-else
+                          icon="pi pi-check"
+                          class="p-col-6 p-m-0"
+                          label="Publish"
+                          @click="openConfirmationModal(slotProps.data, 'publish')" />
+                      
+                      </div>
+                      <div class="p-col-6 p-m-0">
+                        <Button
+                          icon="pi pi-times"
+                          class="p-button-danger p-col-6 p-m-0"
+                          label="Delete"
+                          @click="openConfirmationModal(slotProps.data, 'delete')" />
+                      
+                      </div>
+                    </div>
                   </template>
               </Card>
           </div>
