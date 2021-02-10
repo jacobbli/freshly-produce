@@ -1,17 +1,17 @@
 export const PRODUCT_TYPE = Object.freeze({
-  "subscription":0, 
-  "discounted_produce":1
+  "subscription":1,
+  "discounted_produce":2
 })
 
 export const USER_ROLE = Object.freeze({
-  "farmer":0, 
-  "customer":1
+  "farmer":1,
+  "customer":2
 })
 
 export const WEEK_DAY = Object.freeze({
-  "Monday":0, 
-  "Tuesday":1,
-  "Wednesday":2,
-  "Thursday":3,
-  "Friday":4
+  "Monday":1,
+  "Tuesday":2,
+  "Wednesday":3,
+  "Thursday":4,
+  "Friday":5
 })
