@@ -103,6 +103,7 @@ export default {
             this.$emit('eventname', this.display)
         },
         submit(){
+            console.log(this.selectedProdueType["type"])
             let addProductValue = {
                 product_name: this.productName,
                 product_type: this.selectedProdueType["type"],
