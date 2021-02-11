@@ -1,17 +1,16 @@
-
-
+const axios = require('axios').default;
   
 export default {
-    addProduct: function(data) {
+    addProduct:async function(data) {
         let endpointUrl = `${process.env.VUE_APP_ROOT_URL}/product/add`;
-        axios.post(endpointUrl,data).then(()=>{
-            this.$toast.add({severity:'success', summary: 'Submited!', life: 3000,});
-            this.$router.push({ name: 'HomePage' });
+        console.log(endpointUrl)
+        axios.post(endpointUrl,data).then((res)=>{
+          return res.data
+        }).catch((err) => {
+          console.log(err) 
         });
     }
 }
-
-const axios = require('axios').default;
 
 export async function getProducts(reqObject) {
   try {

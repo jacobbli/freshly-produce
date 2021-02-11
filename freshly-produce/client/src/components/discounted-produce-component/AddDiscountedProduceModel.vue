@@ -78,6 +78,7 @@ export default {
             productName: null,
             selectedProdueType: null,
             selectedUnitType: null,
+            userId: null,
             produeType: [
                 {type: 'Root'},
                 {type: 'Tuber'},
@@ -95,12 +96,16 @@ export default {
             ]
 		}
 	},
+    beforeMount() {
+        this.userId = JSON.parse(sessionStorage.getItem('currentUser')).user_id;
+    },
     methods: {
         closeModal() {
             this.display = false;
             this.$emit('eventname', this.display)
         },
-        submit(){
+        async submit(){
+
             let addProductValue = {
                 product_name: this.productName,
                 product_type: this.selectedProdueType["type"],
@@ -108,8 +113,23 @@ export default {
                 unit: this.selectedUnitType["unit"],
                 quantity: this.qtyValue,
                 expiration_date: this.date,
+                user_id: this.userId,
             }
-            ProductsApi.addProduct(addProductValue);
+
+            ProductsApi.addProduct(addProductValue)
+            this.$toast.add({severity:'success', summary: 'Submited!', life: 3000,});          
+            this.resetData();
+            this.closeModal();
+        },
+        resetData(){
+            this.date = "";
+            this.qtyValue = null;
+            this.price = null;
+			this.display = this.isVisible;
+            this.productName = null;
+            this.selectedProdueType = null;
+            this.selectedUnitType = null;
+            this.userId = null;
         }
     },
 }
