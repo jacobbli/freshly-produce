@@ -15,18 +15,8 @@ addProduct = (req,res)=>{
     var yyyy = today.getFullYear();
 
     today = yyyy + '-'+ mm + '-' + dd ;
-    
-    //formate to object
-    let iOject = {
-        product_type: p_product_type,
-        product_name: p_product_name,
-        product_price: p_product_price,
-        unit: p_unit,
-        quantity: p_quantity,
-        expiration_date: p_expiration_date,
-        user_id: 1,
-    }
-    let sql = `INSERT INTO products (seller_id, product_photo, product_name, product_type, product_price, product_description, is_published, unit, quantity, frequency, delivery_day, expiration_date, created_at, is_deleted) values(3,null,'${p_product_name}', '${p_product_type}', ${p_product_price},'',false,'${p_unit}',${p_quantity},'','','${p_expiration_date}','${today}', false)`
+
+    let sql = `INSERT INTO products (seller_id, product_photo, product_name, product_type, product_price, product_description, is_published, unit, quantity, frequency, delivery_day, expiration_date, created_at, is_deleted) values(${p_user_id},null,'${p_product_name}', '${p_product_type}', ${p_product_price},'',false,'${p_unit}',${p_quantity},'','','${p_expiration_date}','${today}', false)`
 
     //add to model
     productModel.add(sql);
