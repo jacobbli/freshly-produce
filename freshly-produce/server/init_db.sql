@@ -1,8 +1,7 @@
--- DROP TABLE orders;
--- DROP TABLE transactions;
--- DROP TABLE "user_subscriptions";
--- DROP TABLE products;
--- DROP TABLE users;
+DROP TABLE orders;
+DROP TABLE transactions;
+DROP TABLE products;
+DROP TABLE users;
 
 CREATE TABLE users (
   user_id SERIAL PRIMARY KEY NOT NULL,

@@ -78,6 +78,7 @@ export default {
             productName: null,
             selectedProdueType: null,
             selectedUnitType: null,
+            userId: null,
             produeType: [
                 {type: 'Root'},
                 {type: 'Tuber'},
@@ -95,6 +96,7 @@ export default {
             ]
 		}
 	},
+    userId: () => {JSON.parse(sessionStorage.getItem('currentUser')).user_id},
     methods: {
         closeModal() {
             this.display = false;
@@ -108,7 +110,9 @@ export default {
                 unit: this.selectedUnitType["unit"],
                 quantity: this.qtyValue,
                 expiration_date: this.date,
+                user_id: this.userId,
             }
+            console.log(addProductValue)
             ProductsApi.addProduct(addProductValue);
         }
     },

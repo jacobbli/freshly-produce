@@ -1,7 +1,7 @@
 let db = require('../db/db');
 
 function addProduct(obj){
-    let sql = "INSERT INTO products (product_name, product_type, product_price, unit, quantity, expiration_date, user_id) values ('"+ obj.product_name +"','"+  obj.product_type +"',"+ obj.product_price +",'" +obj.unit+"',"+ obj.quantity + ",'"+ obj.expiration_date + "'," + obj.user_id + ")"
+    let sql = obj
    
     return db.query(sql);
 }

@@ -3,7 +3,7 @@
   
 export default {
     addProduct: function(data) {
-        let endpointUrl = `${process.env.VUE_APP_ROOT_URL}/product/add`;
+        let endpointUrl = `${process.env.VUE_APP_ROOT_URL}product/add`;
         axios.post(endpointUrl,data).then(()=>{
             this.$toast.add({severity:'success', summary: 'Submited!', life: 3000,});
             this.$router.push({ name: 'HomePage' });
