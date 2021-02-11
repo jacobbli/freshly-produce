@@ -19,16 +19,16 @@
                       {{slotProps.data.product_name}}
                   </template>
                   <template  #content>
-                    <div class="product-price p-pr-4">${{slotProps.data.product_price}}</div>
+                    <div class="product-price">${{slotProps.data.product_price}}</div>
                   </template>
                   <template #footer>
-                    <Button 
-                      v-if="slotProps.data.is_subscribed" 
-                      disabled="disabled" 
-                      icon="pi pi-times" 
+                    <Button
+                      v-if="slotProps.data.is_subscribed"
+                      disabled="disabled"
+                      icon="pi pi-times"
                       label="You're already subscribed!" />
-                    <Button v-else 
-                      icon="pi pi-check" 
+                    <Button v-else
+                      icon="pi pi-check"
                       label="Subscribe"
                       @click="openOrderModal(slotProps.data, 'subscribe')" />
                   </template>
@@ -47,7 +47,7 @@
 
 <script>
 import OrderModal from '../components/OrderModal.vue'
-import { getProducts } from '../api/ProductsApi.js'
+import { getAvailableSubscriptions } from '../api/SubscriptionsApi.js'
 import { PRODUCT_TYPE } from '../models'
 
 export default {
@@ -110,7 +110,7 @@ export default {
       user_id: JSON.parse(sessionStorage.getItem('currentUser')).user_id,
       product_type: PRODUCT_TYPE['subscription']
     };
-    getProducts(reqForm).then(res => {
+    getAvailableSubscriptions(reqForm).then(res => {
       this.listProduct = res;
     }).catch(err => {
       console.error(err);

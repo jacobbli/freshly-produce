@@ -14,43 +14,49 @@
       </template>
 
       <template #grid="slotProps">
-          <div class="p-col-3 p-p-4">
-              <Card>
-                  <template #header>
-                      <img alt="user header" src="/images/temp/carrots.jpg">
-                  </template>
-                  <template #title>
-                      {{slotProps.data.product_name}}
-                  </template>
-                  <template  #content>
-                      <i class="pi pi-tag product-category-icon p-pr-2"></i><span class="product-category">{{slotProps.data.product_type}}</span>
-                      <div class="product-price p-pr-4">${{slotProps.data.product_price}}</div>
-                  </template>
-                  <template #footer>
+          <div class="p-col-12 p-md-4">
+            <div class="product-grid-item card">
+                <div class="product-grid-item-top">
+                    <span class="product-category">
+                      <Button class="p-button-sm edit-button" icon="pi pi-pencil" />
+                      <Button 
+                        class="p-button-sm p-button-danger" 
+                        icon="pi pi-times" 
+                        @click="openConfirmationModal(slotProps.data, 'delete')"/>
+                    </span>
+                </div>
+                <div class="product-grid-item-content">
+                    <img alt="user header" src="/images/temp/carrots.jpg" style="width: 50%"/>
+                    <div class="product-name">{{slotProps.data.product_name}}</div>
+                    <div class="product-description">{{slotProps.data.product_description}}</div>
+                </div>
+                <div class="product-grid-item-bottom">
+                    <span class="product-price">${{slotProps.data.product_price}}</span>
                     <Button
-                      v-if="slotProps.data.is_published"
-                      icon="pi pi-times"
-                      class="p-button-warning"
-                      label="Unpublish"
-                      @click="openConfirmationModal(slotProps.data, 'unpublish')" />
-                    <Button
-                      v-else
-                      icon="pi pi-check"
-                      label="Publish"
-                      @click="openConfirmationModal(slotProps.data, 'publish')" />
-                    <Button
-                      icon="pi pi-times"
-                      class="p-button-danger"
-                      label="Delete"
-                      @click="openConfirmationModal(slotProps.data, 'delete')" />
-                  </template>
-              </Card>
-          </div>
+                    v-if="slotProps.data.is_published"
+                    icon="pi pi-times"
+                    class="p-button-warning"
+                    label="Unpublish"
+                    @click="openConfirmationModal(slotProps.data, 'unpublish')" />
+                  <Button
+                    v-else
+                    icon="pi pi-check"
+                    label="Publish"
+                    @click="openConfirmationModal(slotProps.data, 'publish')" />
+                </div>
+            </div>
+        </div>
       </template>
     </DataView>
     </div>
-    <div v-else>
-    <Button @click="openModal()">You haven't added any subscriptions. Click here add one!</Button>
+    <div 
+      v-else
+      class="no-subscriptions-button">
+    <Button @click="openModal()">
+      You haven't added any subscriptions.
+      <br>
+      <br>
+      Click here to add a product and start selling!</Button>
     </div>
 
     <subscription-creation-modal
@@ -64,8 +70,7 @@
       :selected-product="selectedProduct"
       :selected-task="selectedTask"
       @cancel="closeConfirmationModal()"
-      @publish="publish()"
-      @unpublish="unpublish()"
+      @change-published-status="changePublishedStatus()"
       @delete="deleteProduct()" />
   </div>
 
@@ -74,7 +79,7 @@
 <script>
 import SubscriptionCreationModal from '../components/subscription-component/SubscriptionCreationModal.vue'
 import ActionConfirmationModal from '../components/ActionConfirmationModal.vue'
-import { getProducts } from '../api/UsersApi.js'
+import { getOfferedSubscriptions } from '../api/SubscriptionsApi.js'
 import { PRODUCT_TYPE } from '../models'
 
 export default {
@@ -107,19 +112,11 @@ export default {
 		}
 	},
   methods: {
-    publish() {
+    changePublishedStatus() {
       let index = this.listProduct.findIndex(element => {
         return element.product_id == this.selectedProduct.product_id;
       })
-      this.listProduct[index].is_published = true;
-      this.closeConfirmationModal();
-    },
-
-    unpublish() {
-      let index = this.listProduct.findIndex(element => {
-        return element.product_id == this.selectedProduct.product_id;
-      })
-      this.listProduct[index].is_published = false;
+      this.listProduct[index].is_published = !this.listProduct[index].is_published;
       this.closeConfirmationModal();
     },
 
@@ -149,7 +146,20 @@ export default {
       this.modalIsVisible = false;
     },
 
+    updateOfferedSubscriptionsList() {
+      const reqForm = {
+        user_id: JSON.parse(sessionStorage.getItem('currentUser')).user_id,
+        product_type: PRODUCT_TYPE['subscription']
+      };
+      getOfferedSubscriptions(reqForm).then(res => {
+        this.listProduct = res;
+      }).catch(err => {
+        console.error(err);
+      });
+    },
+
     confirmModalAction() {
+      this.updateOfferedSubscriptionsList();
       this.closeModal();
     },
 
@@ -170,22 +180,75 @@ export default {
     }
   },
   mounted: function() {
-    var reqForm = {
-      user_id: JSON.parse(sessionStorage.getItem('currentUser')).user_id,
-      product_type: PRODUCT_TYPE['subscription']
-    };
-    getProducts(reqForm).then(res => {
-      this.listProduct = res;
-    }).catch(err => {
-      console.error(err);
-      this.listProduct = [];
-    });
+    this.updateOfferedSubscriptionsList();
   }
 }
 </script>
 
 <style scoped>
-.p-card-footer button {
+.p-dropdown {
+    width: 14rem;
+    font-weight: normal;
+}
+
+.product-name {
+	font-size: 1.5rem;
+	font-weight: 700;
+}
+
+.product-description {
+	margin: 0 0 1rem 0;
+}
+
+.edit-button {
+  margin-right: .5rem;
+}
+
+.product-category-icon {
+	vertical-align: middle;
 	margin-right: .5rem;
 }
+
+.product-category {
+	font-weight: 600;
+	vertical-align: middle;
+}
+
+.product-grid-item {
+	margin: .5rem;
+	border: 1px solid #dee2e6;
+}
+.product-grid-item-top {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: .5rem;
+}
+
+.product-grid-item-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: .5rem;
+}
+
+img {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  margin: 2rem 0;
+}
+
+.product-grid-item-content {
+  text-align: center;
+}
+
+.product-price {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.no-subscriptions-button {
+  margin-top: 300px;
+}
+
+
 </style>

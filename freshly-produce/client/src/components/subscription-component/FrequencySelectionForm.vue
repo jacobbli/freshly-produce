@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { addProduct } from '../../api/UsersApi.js'
+import { createNewSubscription } from '../../api/SubscriptionsApi.js'
 import { PRODUCT_TYPE, WEEK_DAY } from '../../models.js'
 
 export default {
@@ -102,8 +102,9 @@ export default {
         frequency: this.selectedFrequency.frequency,
         delivery_day: WEEK_DAY[this.selectedDay.code]
       }
-      addProduct(tempObject);
-      this.$emit('submitForm');
+      createNewSubscription(tempObject).then(() => {
+        this.$emit('submitForm');
+      });
     },
     cancel() {
       this.$emit('cancel');
