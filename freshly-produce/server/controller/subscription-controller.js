@@ -1,5 +1,4 @@
 let subscriptionModel = require('../model/subscription-model');
-const formidable = require('formidable');
 
 /* Customer */
 async function subscribe(request, response) {
@@ -35,7 +34,7 @@ async function subscribe(request, response) {
 async function cancelSubscription(request, response) {
   try {
     queryArgs = [request.params.order_id]
-    const res = await subscriptionModel.deleteOrder(queryArgs);
+    await subscriptionModel.deleteOrder(queryArgs);
     response.status(200).end();
   } catch (error) {
     console.error(error)
@@ -81,24 +80,22 @@ async function getAvailableSubscriptions(request, response) {
 
 /* Vendor */
 function createNewSubscription(request, response) {
-  const form = formidable();
-  form.parse(request, (err, fields, files) => {
-    if (err) {
-      next(err);
-      response.status(404).end();
-    }
     const created_at = new Date();
+    let product_photo = request.body.product_photo
+    if (product_photo === null) {
+      product_photo = "/images/temp/carrots.jpg"
+    }
     const queryArgs = [
-      fields.user_id,
-      files.product_photo,
-      fields.product_name,
-      fields.product_type,
-      fields.product_price,
-      fields.product_description,
-      fields.unit,
-      fields.quantity,
-      fields.frequency,
-      fields.delivery_day,
+      request.body.user_id,
+      product_photo,
+      request.body.product_name,
+      request.body.product_type,
+      request.body.product_price,
+      request.body.product_description,
+      request.body.unit,
+      request.body.quantity,
+      request.body.frequency,
+      request.body.delivery_day,
       false,
       false,
       created_at
@@ -109,7 +106,7 @@ function createNewSubscription(request, response) {
       console.error(error)
       response.status(404).end();
     });
-  });
+  // });
 }
 
 async function deleteSubscription(request, response) {
