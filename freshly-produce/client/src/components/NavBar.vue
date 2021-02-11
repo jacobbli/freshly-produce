@@ -77,7 +77,8 @@ export default {
         {
           label:'Log Out',
           icon:'pi pi-fw pi-power-off',
-          to: '/login'
+          to: '/login',
+          command: () => sessionStorage.removeItem('currentUser')
         }
       ]
     }
