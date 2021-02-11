@@ -19,8 +19,8 @@
                       {{slotProps.data.product_name}}
                   </template>
                   <template  #content>
-                      <i class="pi pi-tag product-category-icon p-pr-2"></i><span class="product-category">{{slotProps.data.product_type}}</span>
-                      <div class="product-price p-pr-4">${{slotProps.data.product_price}}</div>
+                      <i class="pi pi-tag product-category-icon p-pr-2"></i><span class="product-category">{{slotProps.data.order_type}}</span>
+                      <div class="product-price p-pr-4">${{slotProps.data.order_cost}}</div>
                   </template>
                   <template #footer>
                     <Button 
@@ -48,8 +48,7 @@
 
 <script>
 import ActionConfirmationModal from '../ActionConfirmationModal.vue'
-import { mapGetters } from 'vuex'
-import { getProducts } from '../../api/UsersApi.js'
+import { getSubscribedProducts } from '../../api/SubscriptionsApi.js'
 import { PRODUCT_TYPE } from '../../models'
 
 export default {
@@ -97,20 +96,15 @@ export default {
       this.closeConfirmationModal();
     }
   },
-  computed: {
-    ...mapGetters('users', {
-        user_id: 'getUserId',
-    })
-  },
   mounted: function() {
     var reqForm = {
-      user_id: this.user_id,
+      user_id: JSON.parse(sessionStorage.getItem('currentUser')).user_id,
       product_type: PRODUCT_TYPE['subscription']
     };
-    getProducts(reqForm).then(res => {
+    getSubscribedProducts(reqForm).then(res => {
       this.listProduct = res;
     }).catch(err => {
-      console.log(err);
+      console.error(err);
       this.listProduct = [];
     });
   }

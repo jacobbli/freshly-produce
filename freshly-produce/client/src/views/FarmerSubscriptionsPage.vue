@@ -1,5 +1,6 @@
 <template>
-  <div v-if="listProduct.length !== 0">
+  <div>
+    <div v-if="listProduct.length > 0">
     <DataView :value="listProduct" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
       <template #header>
           <div class="p-grid p-nogutter">
@@ -47,6 +48,11 @@
           </div>
       </template>
     </DataView>
+    </div>
+    <div v-else>
+    <Button @click="openModal()">You haven't added any subscriptions. Click here add one!</Button>
+    </div>
+
     <subscription-creation-modal
       :is-visible="modalIsVisible"
       v-on:cancel="closeModal()"
@@ -62,12 +68,12 @@
       @unpublish="unpublish()"
       @delete="deleteProduct()" />
   </div>
+
 </template>
 
 <script>
 import SubscriptionCreationModal from '../components/subscription-component/SubscriptionCreationModal.vue'
 import ActionConfirmationModal from '../components/ActionConfirmationModal.vue'
-import { mapGetters } from 'vuex'
 import { getProducts } from '../api/UsersApi.js'
 import { PRODUCT_TYPE } from '../models'
 
@@ -100,11 +106,6 @@ export default {
       listProduct: []
 		}
 	},
-  computed: {
-    ...mapGetters('users', {
-        user_id: 'getUserId',
-    })
-  },
   methods: {
     publish() {
       let index = this.listProduct.findIndex(element => {
@@ -170,13 +171,13 @@ export default {
   },
   mounted: function() {
     var reqForm = {
-      user_id: this.user_id,
+      user_id: JSON.parse(sessionStorage.getItem('currentUser')).user_id,
       product_type: PRODUCT_TYPE['subscription']
     };
     getProducts(reqForm).then(res => {
       this.listProduct = res;
     }).catch(err => {
-      console.log(err);
+      console.error(err);
       this.listProduct = [];
     });
   }

@@ -12,35 +12,47 @@ async function getUser(user_id) {
   }
 }
 
-async function getProducts(user_id, product_type) {
+async function getOrders(orderArgs) {
   try {
-    const query = `SELECT * FROM products WHERE product_type = $1 AND user_id = $2;`;
-    const args = [product_type, user_id];
-    const res = await db.query(query, args);
-    console.log(res.rows)
+    const query = `SELECT * FROM orders WHERE buyer_id = $1 AND order_type = $2 AND is_deleted = $3;`;
+    const res = await db.query(query, orderArgs);
     return Promise.resolve(res.rows);
   } catch (error) {
+    console.error(error)
     return Promise.resolve(error);
   }
 }
 
-async function addProduct(args){
+async function getProducts(productArgs) {
   try {
-    const query = `INSERT INTO products (user_id, product_name, product_description, product_type, product_price, unit, quantity, frequency, delivery_day, photo, is_published)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`;
+    const query = `SELECT * FROM products WHERE seller_id = $1 AND product_type = $2 AND is_deleted = false;;`;
+    const res = await db.query(query, productArgs);
+    return Promise.resolve(res.rows);
+  } catch (error) {
+    console.error(error)
+    return Promise.resolve(error);
+  }
+}
+
+async function insertProduct(args){
+  try {
+    const query = `INSERT INTO products (seller_id, product_photo, product_name, product_type, product_price, product_description, unit, quantity, frequency, delivery_day, is_published, is_deleted, created_at)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`;
     const res = await db.query(query, args);
 
     return Promise.resolve(res.rows);
   } catch (error) {
+    console.error(error)
     return Promise.resolve(error);
   }
 }
 
 async function addUser(args) {
   try {
-    const query = `INSERT INTO users (username, password, first_name, surname, role, phone, email, address, photo)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);`;
+    const query = `INSERT INTO users (username, password, first_name, surname, role, phone, email, address, user_photo, created_at)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);`;
     const res = await db.query(query, args);
+
     return Promise.resolve(res.rows);
   } catch (error) {
     return Promise.resolve(error);
@@ -70,8 +82,9 @@ async function unpublishProduct(args) {
 module.exports = {
   getUser,
   getProducts,
+  getOrders,
   addUser,
-  addProduct,
+  insertProduct,
   publishProduct,
-  unpublishProduct
+  unpublishProduct,
 }

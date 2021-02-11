@@ -8,8 +8,7 @@ export async function login(loginObject) {
     let response = await axios.post(endpointUrl, loginObject, {
       headers: {'Content-Type': 'application/json' },
     });
-
-    store.dispatch('users/setUser', response.data)
+    sessionStorage.setItem('currentUser', JSON.stringify(response.data));
     return Promise.resolve('Successful request');
   } catch(err) {
     return Promise.reject('Request failed');
@@ -18,11 +17,14 @@ export async function login(loginObject) {
 
 export async function getProducts(reqObject) {
   try {
-    let endpointUrl = `${process.env.VUE_APP_ROOT_URL}/user/products`;
+    let endpointUrl = `${process.env.VUE_APP_ROOT_URL}/user/products/offered`;
     let response = await axios.get(endpointUrl, {
       params: reqObject
     });
-    return Promise.resolve(response.data);
+    if (response.status == 200) {
+      return Promise.resolve(response.data);
+    }
+    Promise.resolve('Request failed')
   } catch(err) {
     return Promise.reject('Request failed');
   }
@@ -34,7 +36,7 @@ export async function addProduct(productObject) {
     for ( var key in productObject ) {
       productForm.append(key, productObject[key]);
     }
-    productObject['user_id'] = store.getters['users/getUserId'];
+    productForm.set('user_id', store.getters['users/getUserId'])
     let endpointUrl = `${process.env.VUE_APP_ROOT_URL}/user/products`;
     let response = await axios.post(endpointUrl, productForm, {
       headers: {'Content-Type': 'multipart/form-data'},

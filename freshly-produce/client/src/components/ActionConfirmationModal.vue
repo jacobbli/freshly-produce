@@ -6,7 +6,6 @@
     :closable="false">
     <div class="product-info">
       <p>Product Name: {{selectedProduct.product_name}}</p>
-      <p>Product Type: {{selectedProduct.product_type}}</p>
       <p>Product Price: {{selectedProduct.product_price}}</p>
     </div>
     <template #footer>
@@ -18,6 +17,8 @@
 
 <script>
 import { publishProduct, unpublishProduct } from '../api/UsersApi.js'
+import { unsubscribe } from '../api/SubscriptionsApi.js'
+import { deleteProduct } from '../api/ProductsApi.js'
 
 export default {
   name: 'ActionConfirmationModal',
@@ -47,14 +48,16 @@ export default {
     },
     confirm() {
       if (this.selectedTask == 'publish') {
-        publishProduct({'product_id': this.selectedProduct.product_id})
+        publishProduct({'product_id': this.selectedProduct.product_id});
         this.$emit('publish');
       } else if (this.selectedTask == 'unpublish') {
-        unpublishProduct({'product_id': this.selectedProduct.product_id})
+        unpublishProduct({'product_id': this.selectedProduct.product_id});
         this.$emit('unpublish');
       } else if (this.selectedTask == 'delete') {
+        deleteProduct({'product_id': this.selectedProduct.product_id});
         this.$emit('delete');
       } else if (this.selectedTask == 'unsubscribe') {
+        unsubscribe({'order_id': this.selectedProduct.order_id});
         this.$emit('unsubscribe');
       }
     },

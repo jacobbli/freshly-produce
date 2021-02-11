@@ -46,6 +46,9 @@
 </template>
 
 <script>
+import { subscribe } from '../api/SubscriptionsApi.js'
+import { PRODUCT_TYPE } from '../models.js'
+
 export default {
   name: 'OrderModal',
   props: {
@@ -69,6 +72,17 @@ export default {
       this.$emit('cancel');
     },
     placeOrder() {
+      if (this.selectedTask == 'subscribe') {
+        const reqObject = {
+          transaction_cost: this.selectedProduct.product_price,
+          product_id: this.selectedProduct.product_id,
+          product_quantity: this.selectedProduct.quantity,
+          product_type: PRODUCT_TYPE['subscription'],
+          user_id: JSON.parse(sessionStorage.getItem('currentUser')).user_id
+        }
+        subscribe(reqObject)
+      }
+
       this.$emit('placeOrder');
     },
   }
