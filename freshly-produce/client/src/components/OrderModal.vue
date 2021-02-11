@@ -74,6 +74,7 @@ export default {
     placeOrder() {
       if (this.selectedTask == 'subscribe') {
         const reqObject = {
+          seller_id: this.selectedProduct.seller_id,
           transaction_cost: this.selectedProduct.product_price,
           product_id: this.selectedProduct.product_id,
           product_quantity: this.selectedProduct.quantity,

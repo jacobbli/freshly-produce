@@ -19,8 +19,7 @@
                       {{slotProps.data.product_name}}
                   </template>
                   <template  #content>
-                      <i class="pi pi-tag product-category-icon p-pr-2"></i><span class="product-category">{{slotProps.data.order_type}}</span>
-                      <div class="product-price p-pr-4">${{slotProps.data.order_cost}}</div>
+                      <div class="product-price">${{slotProps.data.product_price}}</div>
                   </template>
                   <template #footer>
                     <Button 
@@ -42,7 +41,7 @@
       @unsubscribe="unsubscribe()" />
   </div>
   <div v-else>
-    <h2>You haven't subscribed to any produce products yet!</h2>
+    <h2>You haven't subscribed to any products yet!</h2>
   </div>
 </template>
 

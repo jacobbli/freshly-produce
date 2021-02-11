@@ -1,11 +1,11 @@
 <template>
     <div id="profilePage">
         <div class="p-grid">
-            <div class="p-col-4"> 
-                <Avatar id="avatarProfilePage" shape="circle" class="p-mt-4" label="P" size="xlarge"/> 
-                <h1>{{ first_name + ' ' + surname }}</h1>
-                <h3>{{ email }}</h3>
-                <h3>{{ address }}</h3>
+            <div v-if="currentUser" class="p-col-4">
+                <Avatar id="avatarProfilePage" shape="circle" class="p-mt-4" label="P" size="xlarge"/>
+                <h1>{{ currentUser.first_name + ' ' + currentUser.surname }}</h1>
+                <h3>{{ currentUser.email }}</h3>
+                <h3>{{ currentUser.address }}</h3>
             </div>
             <div class="p-col-8">
                 <ProfileTabMenu/>
@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import ProfileTabMenu from '../components/profile-component/ProfileTabMenu'
 export default {
     name:'Profile',
@@ -23,12 +22,7 @@ export default {
         ProfileTabMenu
     },
     computed: {
-        ...mapGetters('users', {
-            first_name: 'getFirstName',
-            surname: 'getSurname',
-            email: 'getEmail',
-            address: 'getAddress'
-        })
+        currentUser: () => JSON.parse(sessionStorage.getItem('currentUser'))
     }
 }
 </script>
