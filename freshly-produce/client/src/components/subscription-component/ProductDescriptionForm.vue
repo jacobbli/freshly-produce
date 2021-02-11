@@ -106,6 +106,7 @@
 </template>
 
 <script>
+import { toArrayBuffer } from '../../services/FileService'
 export default {
   name: 'ProductDescriptionForm',
   data() {
@@ -137,8 +138,8 @@ export default {
       }
     },
     async addFile(event) {
-      let blob = await fetch(event.files[0].objectURL).then(r => r.blob());
-      this.productObject['photo'] = blob
+      let image = await toArrayBuffer(event.files[0])
+      this.productObject['product_photo'] = image
     },
     nextPage() {
       this.$emit('next-page', this.productObject);
