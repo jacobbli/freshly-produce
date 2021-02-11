@@ -96,14 +96,16 @@ export default {
             ]
 		}
 	},
-    userId: () => {JSON.parse(sessionStorage.getItem('currentUser')).user_id},
+    beforeMount() {
+        this.userId = JSON.parse(sessionStorage.getItem('currentUser')).user_id;
+    },
     methods: {
         closeModal() {
             this.display = false;
             this.$emit('eventname', this.display)
         },
-        submit(){
-            console.log(this.selectedProdueType["type"])
+        async submit(){
+
             let addProductValue = {
                 product_name: this.productName,
                 product_type: this.selectedProdueType["type"],
@@ -113,8 +115,21 @@ export default {
                 expiration_date: this.date,
                 user_id: this.userId,
             }
-            console.log(addProductValue)
-            ProductsApi.addProduct(addProductValue);
+
+            ProductsApi.addProduct(addProductValue)
+            this.$toast.add({severity:'success', summary: 'Submited!', life: 3000,});          
+            this.resetData();
+            this.closeModal();
+        },
+        resetData(){
+            this.date = "";
+            this.qtyValue = null;
+            this.price = null;
+			this.display = this.isVisible;
+            this.productName = null;
+            this.selectedProdueType = null;
+            this.selectedUnitType = null;
+            this.userId = null;
         }
     },
 }
