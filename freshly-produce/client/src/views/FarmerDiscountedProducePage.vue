@@ -50,16 +50,27 @@
     </DataView>
 
     <AddDiscountedProduceModel @eventname="updateparent" v-model:isVisible="modalIsVisible" />
+    <action-confirmation-modal
+      :is-visible="confirmationModalIsVisible"
+      :selected-product="selectedProduct"
+      :selected-task="selectedTask"
+      @cancel="closeConfirmationModal()"
+      @change-published-status="changePublishedStatus()"
+      @delete="deleteProduct()" />
   </div>
 </template>
 
 <script>
 import AddDiscountedProduceModel from '../components/discounted-produce-component/AddDiscountedProduceModel.vue'
+import ActionConfirmationModal from '../components/ActionConfirmationModal.vue'
+import { getMyDiscountedProducts } from '../api/DiscountedProductApi.js'
+// import { PRODUCT_TYPE } from '../models'
 
 export default {
   name: 'FarmerDiscountedProducePage',
   components: {
     AddDiscountedProduceModel,
+    ActionConfirmationModal
   },
   data() {
 		return {
@@ -82,70 +93,20 @@ export default {
         "carrots.jpg"
       ]
       ,
-      listProduct:[
-        {
-          product_id: 1,
-          product_name: "carrots",
-          product_type: "food",
-          product_price: 15.99,
-          is_published: false,
-        },
-        {
-          product_id: 2,
-          product_name: "crrots",
-          product_type: "food",
-          product_price: 15.99,
-          is_published: true,
-        },
-        {
-          product_id: 3,
-          product_name: "carots",
-          product_type: "food",
-          product_price: 15.99,
-          is_published: true,
-        },
-        {
-          product_id: 4,
-          product_name: "carots",
-          product_type: "food",
-          product_price: 15.99,
-          is_published: false,
-        },
-        {
-          product_id: 5,
-          product_name: "carots",
-          product_type: "food",
-          product_price: 15.99,
-          is_published: false,
-        },
-        {
-          product_id: 6,
-          product_name: "carros",
-          product_type: "food",
-          product_price: 15.99,
-          is_published: false,
-        },
-      ],
+      listProduct:[],
 		}
 	},
 
   methods: {
-    updateparent(variable) {
-        this.modalIsVisible = variable
+    updateparent(variable) { 
+      this.modalIsVisible = variable;
+      this.updateDiscountedProductsList();
     },
-    publish() {
+    changePublishedStatus() {
       let index = this.listProduct.findIndex(element => {
         return element.product_id == this.selectedProduct.product_id;
       })
-      this.listProduct[index].is_published = true;
-      this.closeConfirmationModal();
-    },
-
-    unpublish() {
-      let index = this.listProduct.findIndex(element => {
-        return element.product_id == this.selectedProduct.product_id;
-      })
-      this.listProduct[index].is_published = false;
+      this.listProduct[index].is_published = !this.listProduct[index].is_published;
       this.closeConfirmationModal();
     },
 
@@ -175,7 +136,20 @@ export default {
       this.modalIsVisible = false;
     },
 
+    updateDiscountedProductsList() {
+
+      const req = {
+        user_id : JSON.parse(sessionStorage.getItem('currentUser')).user_id,
+      }
+      getMyDiscountedProducts(req).then(res => {
+        this.listProduct = res;
+      }).catch(err => {
+        console.error(err);
+      });
+    },
+
     confirmModalAction() {
+      this.updateOfferedSubscriptionsList();
       this.closeModal();
     },
 
@@ -194,6 +168,9 @@ export default {
           this.sortKey = sortValue;
       }
     }
+  },
+  mounted: function() {
+    this.updateDiscountedProductsList();
   }
 }
 </script>

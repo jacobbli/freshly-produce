@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { getDiscountedProducts } from '../api/DiscountedProductApi.js'
 export default {
     methods: {
         onSortChange(event){
@@ -56,7 +57,14 @@ export default {
                 this.sortField = value;
                 this.sortKey = sortValue;
             }
-        }
+        },
+        updateDiscountedProductsList() {
+            getDiscountedProducts().then(res => {
+                this.listProduct = res;
+            }).catch(err => {
+                console.error(err);
+            });
+        },
     },
     data() {
 		return {
@@ -68,75 +76,11 @@ export default {
                 {label: 'Price High to Low', value: '!product_price'},
                 {label: 'Price Low to High', value: 'product_price'},
             ],
-            listProduct: [
-                {
-                    product_name: "Sub",
-                    product_type: "Food",
-                    product_price: 5.12,
-                    expiration_date: "2021-02-07"
-                },
-                {
-                    product_name: "Pear",
-                    product_type: "Food",
-                    product_price: 11.12,
-                    expiration_date: "2021-01-07"
-                },
-                {
-                    product_name: "Berries",
-                    product_type: "Food",
-                    product_price: 15.12,
-                    expiration_date: "2021-01-17"
-                },
-                {
-                    product_name: "Oranges",
-                    product_type: "Food",
-                    product_price: 9.12,
-                    expiration_date: "2021-02-02"
-                },
-                {
-                    product_name: "Apple",
-                    product_type: "Food",
-                    product_price: 7.12,
-                    expiration_date: "2021-02-01"
-                },
-                {
-                    product_name: "Broccoli",
-                    product_type: "Food",
-                    product_price: 14.12,
-                    expiration_date: "2021-02-04"
-                },
-                {
-                    product_name: "Sub",
-                    product_type: "Food",
-                    product_price: 8.12,
-                    expiration_date: "2021-02-06"
-                },
-                {
-                    product_name: "Carrots",
-                    product_type: "Food",
-                    product_price: 6.12,
-                    expiration_date: "2021-01-18"
-                },
-                {
-                    product_name: "Carrots",
-                    product_type: "Food",
-                    product_price: 9.12,
-                    expiration_date: "2021-01-18"
-                },
-                {
-                    product_name: "Carrots",
-                    product_type: "Food",
-                    product_price: 10.12,
-                    expiration_date: "2021-01-18"
-                },
-                {
-                    product_name: "Carrots",
-                    product_type: "Food",
-                    product_price: 9.45,
-                    expiration_date: "2021-01-18"
-                }
-            ]
+            listProduct: []
         }
+    },
+    mounted: function() {
+        this.updateDiscountedProductsList();
     }
 }
 </script>
