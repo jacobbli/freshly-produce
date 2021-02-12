@@ -98,7 +98,7 @@ export default {
         product_price: this.productObject.product_price,
         unit: this.productObject.selectedUnit.name,
         quantity: this.productObject.quantity,
-        product_photo: this.productObject.photo,
+        product_photo: this.productObject.product_photo,
         frequency: this.selectedFrequency.frequency,
         delivery_day: WEEK_DAY[this.selectedDay.code]
       }

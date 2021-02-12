@@ -73,14 +73,10 @@ export async function getOfferedSubscriptions(reqObject) {
 
 export async function createNewSubscription(productObject) {
   try {
-    var productForm = new FormData();
-    for ( var key in productObject ) {
-      productForm.append(key, productObject[key]);
-    }
-    productForm.set('user_id', JSON.parse(sessionStorage.getItem('currentUser')).user_id);
+    productObject['user_id'] = JSON.parse(sessionStorage.getItem('currentUser')).user_id;
     let apiUrl = `${process.env.VUE_APP_ROOT_URL}/subscription/my-offers`;
-    let response = await axios.post(apiUrl, productForm, {
-      headers: {'Content-Type': 'multipart/form-data'},
+    let response = await axios.post(apiUrl, productObject, {
+      headers: {'Content-Type': 'application/json'},
     });
     return response.data;
   } catch(error) {

@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <div v-if="listProduct.length > 0">
-    <DataView :value="listProduct" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
+    <div class="layout-content">
+    <h1>My Offered Subscriptions</h1>
+    <DataView v-if="listProduct.length > 0" :value="listProduct" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
       <template #header>
           <div class="p-grid p-nogutter">
               <div class="p-col-6" style="text-align: left">
@@ -19,14 +19,14 @@
                 <div class="product-grid-item-top">
                     <span class="product-category">
                       <Button class="p-button-sm edit-button" icon="pi pi-pencil" />
-                      <Button 
-                        class="p-button-sm p-button-danger" 
-                        icon="pi pi-times" 
+                      <Button
+                        class="p-button-sm p-button-danger"
+                        icon="pi pi-times"
                         @click="openConfirmationModal(slotProps.data, 'delete')"/>
                     </span>
                 </div>
                 <div class="product-grid-item-content">
-                    <img alt="user header" src="/images/temp/carrots.jpg" style="width: 50%"/>
+                    <img alt="user header" :src="slotProps.data.product_photo" />
                     <div class="product-name">{{slotProps.data.product_name}}</div>
                     <div class="product-description">{{slotProps.data.product_description}}</div>
                 </div>
@@ -48,8 +48,7 @@
         </div>
       </template>
     </DataView>
-    </div>
-    <div 
+      <div
       v-else
       class="no-subscriptions-button">
     <Button @click="openModal()">
@@ -58,7 +57,6 @@
       <br>
       Click here to add a product and start selling!</Button>
     </div>
-
     <subscription-creation-modal
       :is-visible="modalIsVisible"
       v-on:cancel="closeModal()"
@@ -73,7 +71,6 @@
       @change-published-status="changePublishedStatus()"
       @delete="deleteProduct()" />
   </div>
-
 </template>
 
 <script>
@@ -241,6 +238,11 @@ img {
   text-align: center;
 }
 
+.product-grid-item-content img {
+  width: 75%
+
+}
+
 .product-price {
   font-size: 1.5rem;
   font-weight: 600;
@@ -250,5 +252,12 @@ img {
   margin-top: 300px;
 }
 
+.layout-content .card {
+  background: #ffffff;
+  padding: 2rem;
+  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+  border-radius: 4px;
+  margin-bottom: 2rem;
+}
 
 </style>

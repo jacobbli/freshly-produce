@@ -4,7 +4,7 @@ export async function login(loginObject) {
   try {
     let endpointUrl = `${process.env.VUE_APP_ROOT_URL}/user/login`;
     let response = await axios.post(endpointUrl, loginObject, {
-      headers: {'Content-Type': 'application/json' },
+      headers: {'Content-Type': 'application/json'},
     });
     sessionStorage.setItem('currentUser', JSON.stringify(response.data));
     return Promise.resolve('Successful request');
