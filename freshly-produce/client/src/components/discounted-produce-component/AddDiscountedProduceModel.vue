@@ -115,12 +115,10 @@ export default {
                     expiration_date: this.date,
                     user_id: this.userId,
                 }
-
                 ProductsApi.addProduct(addProductValue)
                 this.$toast.add({severity:'success', summary: 'Submited!', life: 3000,});          
                 this.resetData();
                 this.closeModal();
-
             }catch(err){
                 console.log(err)
             }
