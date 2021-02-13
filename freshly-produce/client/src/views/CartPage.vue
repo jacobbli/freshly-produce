@@ -16,7 +16,6 @@
                                 <Button icon="pi pi-times-circle" @click="openConfirmationModal(slotProps.data, 'delete')" label=" Delete" />
                             </div>
                         </div>
-                        
                     </div>
                 </div>
             </template>
@@ -32,12 +31,9 @@
 <script>
 
 export default {
-
     mounted() {
         this.myCart = JSON.parse(localStorage.getItem('myCart'));
         console.log(JSON.parse(localStorage.getItem('myCart')))
-        // let data = this.$route.params.data;
-        // console.log("data is", data);
     },
    methods: {
        checkOutOrders(){
