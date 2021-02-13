@@ -63,14 +63,7 @@ export default {
             sortOrder: null,
             sortField: null,
             selectedProduct: null,
-            listphotos:[
-                "blueberries.jpg",
-                "broccoli.jpg",
-                "carrots.jpg",
-                "fruit.jpg",
-                "root.jpg",
-                "tuber.jpg"
-            ],
+            
             sortOptions: [
                 {label: 'Price High to Low', value: '!product_price'},
                 {label: 'Price Low to High', value: 'product_price'},
