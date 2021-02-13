@@ -30,7 +30,7 @@
                 </div>
                 <div class="product-grid-item-bottom">
                     <span class="product-price">${{slotProps.data.product_price}}</span>
-                    <Button icon="pi pi-shopping-cart" label="Add to Cart" />
+                    <Button icon="pi pi-shopping-cart" label="Add to Cart" @click="addToCart(slotProps.data.product_id)"/>
                 </div>
             </div>
         </div>
@@ -65,6 +65,13 @@ export default {
                 console.error(err);
             });
         },
+        addToCart(productID){
+            let item = this.listProduct.filter(item => item.product_id == productID)
+            this.myCart = JSON.parse(localStorage.getItem('myCart'));
+            this.myCart.push(item[0])
+            localStorage.setItem('myCart',JSON.stringify(this.myCart))
+            this.$emit('updateCartParent', this.myCart)
+        }
     },
     data() {
 		return {
@@ -76,6 +83,7 @@ export default {
                 {label: 'Price High to Low', value: '!product_price'},
                 {label: 'Price Low to High', value: 'product_price'},
             ],
+            myCart: [],
             listProduct: []
         }
     },

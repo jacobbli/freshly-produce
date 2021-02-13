@@ -6,6 +6,7 @@
         </Sidebar>
         <Menubar>
             <template #start>
+            {{myCart}}
                 <Button  icon="pi pi-bars" @click="visibleLeft = true" />
                 <img id="freshlyLogo" @click="goToHomePage" alt="logo" src="/images/freshlyproduce.png" height="40" class="p-mx-4">
             </template>
@@ -20,6 +21,7 @@
                     </div>
                 </div>
                 <TieredMenu id="overlay_tmenu" ref="menu" :model="itemsAvatar" :popup="true" />
+            
             </template>
         </Menubar>
     </div>
@@ -29,20 +31,23 @@
 
 export default {
 
-    methods:{
-        goToHomePage(){
-            this.$router.push({ name: 'DiscountedProduce' });
-        },        
-        goToCart(){
-            this.$router.push({ name: 'Cart' });
-        },
-        toggle(event) {
-            this.$refs.menu.toggle(event);
-        }
+  methods:{
+      goToHomePage(){
+          this.$router.push({ name: 'DiscountedProduce' });
+      },        
+      goToCart(){
+          this.$router.push({ name: 'Cart'});
+      },
+      toggle(event) {
+          this.$refs.menu.toggle(event);
+      }
   },
   data() {
     return {
       visibleLeft : false,
+      props: {
+        myCart: Object,
+      },
       menuitems: [
         {
           label:'Close-To-Expiry',

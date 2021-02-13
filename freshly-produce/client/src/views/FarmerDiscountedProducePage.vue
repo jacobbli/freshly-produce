@@ -31,13 +31,13 @@
                     <div class="product-description">{{slotProps.data.product_description}}</div>
                 </div>
                 <div class="product-grid-item-bottom">
-                    <span class="product-price">${{slotProps.data.product_price}}</span>
-                    <Button
-                    v-if="slotProps.data.is_published"
-                    icon="pi pi-times"
-                    class="p-button-warning"
-                    label="Unpublish"
-                    @click="openConfirmationModal(slotProps.data, 'unpublish')" />
+                  <span class="product-price">${{slotProps.data.product_price}}</span>
+                  <Button
+                  v-if="slotProps.data.is_published"
+                  icon="pi pi-times"
+                  class="p-button-warning"
+                  label="Unpublish"
+                  @click="openConfirmationModal(slotProps.data, 'unpublish')" />
                   <Button
                     v-else
                     icon="pi pi-check"
@@ -64,7 +64,6 @@
 import AddDiscountedProduceModel from '../components/discounted-produce-component/AddDiscountedProduceModel.vue'
 import ActionConfirmationModal from '../components/ActionConfirmationModal.vue'
 import { getMyDiscountedProducts } from '../api/DiscountedProductApi.js'
-// import { PRODUCT_TYPE } from '../models'
 
 export default {
   name: 'FarmerDiscountedProducePage',
@@ -91,8 +90,7 @@ export default {
         "blueberries.jpg",
         "broccoli.jpg",
         "carrots.jpg"
-      ]
-      ,
+      ],
       listProduct:[],
 		}
 	},

@@ -4,10 +4,12 @@ export default {
     addProduct:async function(data) {
         let endpointUrl = `${process.env.VUE_APP_ROOT_URL}/product/add`;
         await axios.post(endpointUrl,data).then((res)=>{
-          console.log(res)
-          return  Promise.resolve(res.data);
+          console.log(res.status)
+          let status = res.status
+          return  Promise.resolve(status);
         }).catch((err) => {
           console.log(err) 
+          return Promise.reject('Request failed');
         });
     }
 }
