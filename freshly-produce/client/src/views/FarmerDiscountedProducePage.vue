@@ -26,18 +26,19 @@
                     </span>
                 </div>
                 <div class="product-grid-item-content">
-                    <img alt="user header" :src="slotProps.data.product_photo" />
+                    <img v-if="productPhotoEmpty" alt="user header" :src="slotProps.data.product_photo"/>
+                    <img v-else alt="user header" :src="slotProps.data.product_photo" />
                     <div class="product-name">{{slotProps.data.product_name}}</div>
                     <div class="product-description">{{slotProps.data.product_description}}</div>
                 </div>
                 <div class="product-grid-item-bottom">
-                    <span class="product-price">${{slotProps.data.product_price}}</span>
-                    <Button
-                    v-if="slotProps.data.is_published"
-                    icon="pi pi-times"
-                    class="p-button-warning"
-                    label="Unpublish"
-                    @click="openConfirmationModal(slotProps.data, 'unpublish')" />
+                  <span class="product-price">${{slotProps.data.product_price}}</span>
+                  <Button
+                  v-if="slotProps.data.is_published"
+                  icon="pi pi-times"
+                  class="p-button-warning"
+                  label="Unpublish"
+                  @click="openConfirmationModal(slotProps.data, 'unpublish')" />
                   <Button
                     v-else
                     icon="pi pi-check"
@@ -64,7 +65,6 @@
 import AddDiscountedProduceModel from '../components/discounted-produce-component/AddDiscountedProduceModel.vue'
 import ActionConfirmationModal from '../components/ActionConfirmationModal.vue'
 import { getMyDiscountedProducts } from '../api/DiscountedProductApi.js'
-// import { PRODUCT_TYPE } from '../models'
 
 export default {
   name: 'FarmerDiscountedProducePage',
@@ -78,6 +78,7 @@ export default {
       sortKey: null,
       sortOrder: null,
       sortField: null,
+      productPhotoEmpty:false,
       sortOptions: [
           {label: 'Price High to Low', value: '!product_price'},
           {label: 'Price Low to High', value: 'product_price'},
@@ -86,13 +87,14 @@ export default {
       confirmationModalIsVisible: false,
       selectedProduct: null,
       selectedTask: null,
-      listproduce:[
-        "berries.jpg",
+      listphotos:[
         "blueberries.jpg",
         "broccoli.jpg",
-        "carrots.jpg"
-      ]
-      ,
+        "carrots.jpg",
+        "fruit.jpg",
+        "root.jpg",
+        "tuber.jpg"
+      ],
       listProduct:[],
 		}
 	},
@@ -137,11 +139,15 @@ export default {
     },
 
     updateDiscountedProductsList() {
-
       const req = {
         user_id : JSON.parse(sessionStorage.getItem('currentUser')).user_id,
       }
       getMyDiscountedProducts(req).then(res => {
+        res.forEach((item) => {
+          if(item.product_photo == null){
+            item.product_photo = "/images/temp/"+this.listphotos[Math.floor(Math.random() * 6)]
+          }
+        })
         this.listProduct = res;
       }).catch(err => {
         console.error(err);

@@ -38,7 +38,18 @@
                 </div>
                 <div class="p-field p-col-12">
                     <label for="Upload Photo">Upload Produce Photo</label>
-                    <FileUpload name="demo[]" url="./upload" />
+                    <FileUpload
+                        class="p-fileupload-sm"
+                        name="product_photo"
+                        :auto="true"
+                        :customUpload="true"
+                        @uploader="addFile"
+                        accept="image/*"
+                        :maxFileSize="1000000"
+                        chooseLabel="Upload Photo">
+                        <template>
+                        </template>
+                    </FileUpload>
                 </div>
 
             </div>
@@ -58,6 +69,7 @@
 </template>
 
 <script>
+import { toArrayBuffer } from '../../services/FileService'
 import ProductsApi from '../../api/ProductsApi.js'
 export default {
     props: {
@@ -104,6 +116,10 @@ export default {
             this.display = false;
             this.$emit('eventname', this.display)
         },
+        async addFile(event) {
+            let image = await toArrayBuffer(event.files[0])
+            this.productObject['product_photo'] = image
+        },
         submit(){
             try{
                 let addProductValue = {
@@ -115,9 +131,7 @@ export default {
                     expiration_date: this.date,
                     user_id: this.userId,
                 }
-
-                const res = ProductsApi.addProduct(addProductValue)
-                console.log(res)
+                ProductsApi.addProduct(addProductValue)
                 this.$toast.add({severity:'success', summary: 'Submited!', life: 3000,});          
                 this.resetData();
                 this.closeModal();

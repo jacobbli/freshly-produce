@@ -1,6 +1,6 @@
 <template>
   <NavBar />
-  <router-view ></router-view>
+  <router-view @updateCartParent="updateparent" ></router-view>
   <div v-if="this.$route['fullPath'] == '/'">
     <DiscountedProduce/>
   </div>
@@ -15,7 +15,21 @@ export default {
   components: {
     NavBar,
     DiscountedProduce
-  }
+  },
+  data(){
+    return{
+      myCart: []
+    }
+  },
+  beforeMount() {
+    this.myCart = JSON.parse(localStorage.getItem('myCart'))[0]
+  },
+  methods: {
+    updateparent(variable) { 
+      this.myCart = variable 
+      console.log(this.myCart)
+    }
+  },
 }
 </script>
 

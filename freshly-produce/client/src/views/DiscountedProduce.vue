@@ -23,14 +23,15 @@
                     </span>
                 </div>
                 <div class="product-grid-item-content">
-                    <img alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
+                    <img v-if="productPhotoEmpty" alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
+                    <img v-else alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
                     <div class="product-name">{{slotProps.data.product_name}}</div>
                     <div>Expiry Date: {{slotProps.data.expiration_date}}</div>
                     <div class="product-description">{{slotProps.data.product_description}}</div>
                 </div>
                 <div class="product-grid-item-bottom">
                     <span class="product-price">${{slotProps.data.product_price}}</span>
-                    <Button icon="pi pi-shopping-cart" label="Add to Cart" />
+                    <Button icon="pi pi-shopping-cart" label="Add to Cart" @click="addToCart(slotProps.data.product_id)"/>
                 </div>
             </div>
         </div>
@@ -60,11 +61,26 @@ export default {
         },
         updateDiscountedProductsList() {
             getDiscountedProducts().then(res => {
+                res.forEach((item) => {
+                  if(item.product_photo == null){
+                    item.product_photo = "/images/temp/"+this.listphotos[Math.floor(Math.random() * 6)]
+                  }
+                  let indexT = item.expiration_date.indexOf("T")
+                  item.expiration_date = item.expiration_date.substring(0,indexT)
+                })
+
                 this.listProduct = res;
             }).catch(err => {
                 console.error(err);
             });
         },
+        addToCart(productID){
+            let item = this.listProduct.filter(item => item.product_id == productID)
+            this.myCart = JSON.parse(localStorage.getItem('myCart'));
+            this.myCart.push(item[0])
+            localStorage.setItem('myCart',JSON.stringify(this.myCart))
+            this.$emit('updateCartParent', this.myCart)
+        }
     },
     data() {
 		return {
@@ -72,10 +88,20 @@ export default {
             sortKey: null,
             sortOrder: null,
             sortField: null,
+            productPhotoEmpty: false,
             sortOptions: [
                 {label: 'Price High to Low', value: '!product_price'},
                 {label: 'Price Low to High', value: 'product_price'},
             ],
+            listphotos:[
+              "blueberries.jpg",
+              "broccoli.jpg",
+              "carrots.jpg",
+              "fruit.jpg",
+              "root.jpg",
+              "tuber.jpg"
+            ],
+            myCart: [],
             listProduct: []
         }
     },

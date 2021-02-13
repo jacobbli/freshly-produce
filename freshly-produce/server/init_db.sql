@@ -20,7 +20,7 @@ CREATE TABLE users (
 CREATE TABLE products (
   product_id SERIAL PRIMARY KEY NOT NULL,
   seller_id INTEGER NOT NULL,
-  product_photo BYTEA,
+  product_photo TEXT,
   product_name TEXT NOT NULL,
   product_type TEXT NOT NULL,
   product_price NUMERIC,
