@@ -104,22 +104,27 @@ export default {
             this.display = false;
             this.$emit('eventname', this.display)
         },
-        async submit(){
+        submit(){
+            try{
+                let addProductValue = {
+                    product_name: this.productName,
+                    product_type: this.selectedProdueType["type"],
+                    product_price: this.price,
+                    unit: this.selectedUnitType["unit"],
+                    quantity: this.qtyValue,
+                    expiration_date: this.date,
+                    user_id: this.userId,
+                }
 
-            let addProductValue = {
-                product_name: this.productName,
-                product_type: this.selectedProdueType["type"],
-                product_price: this.price,
-                unit: this.selectedUnitType["unit"],
-                quantity: this.qtyValue,
-                expiration_date: this.date,
-                user_id: this.userId,
+                const res = ProductsApi.addProduct(addProductValue)
+                console.log(res)
+                this.$toast.add({severity:'success', summary: 'Submited!', life: 3000,});          
+                this.resetData();
+                this.closeModal();
+            }catch(err){
+                console.log(err)
             }
-
-            ProductsApi.addProduct(addProductValue)
-            this.$toast.add({severity:'success', summary: 'Submited!', life: 3000,});          
-            this.resetData();
-            this.closeModal();
+            
         },
         resetData(){
             this.date = "";

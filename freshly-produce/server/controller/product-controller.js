@@ -1,6 +1,7 @@
 let productModel = require('../model/product-model');
 
-addProduct = (req,res)=>{
+async function addProduct (req,res){
+  try {
     let p_product_type = req.body.product_type;
     let p_product_name = req.body.product_name;
     let p_product_price = parseInt(req.body.product_price);
@@ -16,11 +17,45 @@ addProduct = (req,res)=>{
 
     today = yyyy + '-'+ mm + '-' + dd ;
 
-    let sql = `INSERT INTO products (seller_id, product_photo, product_name, product_type, product_price, product_description, is_published, unit, quantity, frequency, delivery_day, expiration_date, created_at, is_deleted) values(${p_user_id},null,'${p_product_name}', '${p_product_type}', ${p_product_price},'',false,'${p_unit}',${p_quantity},'','','${p_expiration_date}','${today}', false)`
+    const arg = [
+      p_user_id,
+      p_product_name,
+      p_product_type,
+      p_product_price,
+      p_unit,
+      p_quantity,
+      p_expiration_date,
+      today
+    ]
 
     //add to model
-    productModel.add(sql);
-    res.json(req.body);
+    const data = await productModel.add(arg);
+    res.json(data);
+  }catch(error) {
+    console.error(error)
+    response.status(404).end();
+  }
+}
+
+function getDiscountProducts(request, response) {
+  productModel.getDiscountProducts(request.query.product_type).then(res => {
+    response.json(res);
+  }).catch(error => {
+    console.error(error)
+    response.status(404).end();
+  });
+}
+
+async function getMyDiscountProducts(request, response) {
+  try{
+    const userIDArg = [request.query.user_id];
+    const res = await productModel.getMyDiscountProducts(userIDArg);
+    response.json(res);
+  }catch(err){
+    console.error(error)
+    response.status(404).end();
+  }
+  
 }
 
 function getProducts(request, response) {
@@ -47,4 +82,6 @@ module.exports = {
     getProducts,
     deleteProduct,
     addProduct,
+    getDiscountProducts,
+    getMyDiscountProducts
   }

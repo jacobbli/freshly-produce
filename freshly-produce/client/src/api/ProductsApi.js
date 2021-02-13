@@ -3,14 +3,29 @@ const axios = require('axios').default;
 export default {
     addProduct:async function(data) {
         let endpointUrl = `${process.env.VUE_APP_ROOT_URL}/product/add`;
-        console.log(endpointUrl)
-        axios.post(endpointUrl,data).then((res)=>{
-          return res.data
+        await axios.post(endpointUrl,data).then((res)=>{
+          console.log(res)
+          return  Promise.resolve(res.data);
         }).catch((err) => {
           console.log(err) 
         });
     }
 }
+
+// export async function getDiscountedProducts() {
+//   try {
+//     let products = []
+//     let endpointUrl = `${process.env.VUE_APP_ROOT_URL}/product/discountProducts`;
+//     let response = await axios.get(endpointUrl);
+
+//     if (response.status == 200) {
+//       products = response.data;
+//     }
+//     return products;
+//   } catch(error) {
+//     return error;
+//   }
+// }
 
 export async function getProducts(reqObject) {
   try {
