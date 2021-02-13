@@ -26,7 +26,8 @@
                     </span>
                 </div>
                 <div class="product-grid-item-content">
-                    <img alt="user header" :src="slotProps.data.product_photo" />
+                    <img v-if="productPhotoEmpty" alt="user header" :src="slotProps.data.product_photo"/>
+                    <img v-else alt="user header" :src="slotProps.data.product_photo" />
                     <div class="product-name">{{slotProps.data.product_name}}</div>
                     <div class="product-description">{{slotProps.data.product_description}}</div>
                 </div>
@@ -77,6 +78,7 @@ export default {
       sortKey: null,
       sortOrder: null,
       sortField: null,
+      productPhotoEmpty:false,
       sortOptions: [
           {label: 'Price High to Low', value: '!product_price'},
           {label: 'Price Low to High', value: 'product_price'},
@@ -85,11 +87,13 @@ export default {
       confirmationModalIsVisible: false,
       selectedProduct: null,
       selectedTask: null,
-      listproduce:[
-        "berries.jpg",
+      listphotos:[
         "blueberries.jpg",
         "broccoli.jpg",
-        "carrots.jpg"
+        "carrots.jpg",
+        "fruit.jpg",
+        "root.jpg",
+        "tuber.jpg"
       ],
       listProduct:[],
 		}
@@ -135,11 +139,15 @@ export default {
     },
 
     updateDiscountedProductsList() {
-
       const req = {
         user_id : JSON.parse(sessionStorage.getItem('currentUser')).user_id,
       }
       getMyDiscountedProducts(req).then(res => {
+        res.forEach((item) => {
+          if(item.product_photo == null){
+            item.product_photo = "/images/temp/"+this.listphotos[Math.floor(Math.random() * 6)]
+          }
+        })
         this.listProduct = res;
       }).catch(err => {
         console.error(err);

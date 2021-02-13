@@ -5,7 +5,7 @@
                 <div class="p-col-12">
                     <div class="product-list-item">
                         <div class="p-grid">
-                            <img class="p-col-4 p-mt-2" :src="'/images/temp/carrots.jpg'" :alt="'user header'"/>
+                            <img class="p-col-4 p-mt-2" :src="slotProps.data.product_photo" :alt="'user header'"/>
                             <div class="product-list-detail p-col-4 p-mt-6">
                                 <div class="product-name">{{slotProps.data.product_name}}</div>
                                 <div class="product-description">{{slotProps.data.expiration_date}}</div>
@@ -63,6 +63,14 @@ export default {
             sortOrder: null,
             sortField: null,
             selectedProduct: null,
+            listphotos:[
+                "blueberries.jpg",
+                "broccoli.jpg",
+                "carrots.jpg",
+                "fruit.jpg",
+                "root.jpg",
+                "tuber.jpg"
+            ],
             sortOptions: [
                 {label: 'Price High to Low', value: '!product_price'},
                 {label: 'Price Low to High', value: 'product_price'},
