@@ -122,11 +122,6 @@ export default {
       product_type: PRODUCT_TYPE['subscription']
     };
     getAvailableSubscriptions(reqForm).then(res => {
-      res.forEach((item) => {
-        if(item.product_photo == null){
-          item.product_photo = "/images/temp/"+this.listphotos[Math.floor(Math.random() * 6)]
-        }
-      })
       this.listProduct = res;
     }).catch(err => {
       console.error(err);
