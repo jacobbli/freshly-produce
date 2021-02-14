@@ -2,7 +2,7 @@ let db = require('../db/db');
 
 async function addProduct(args){
   try{
-    const query = `INSERT INTO products (seller_id, product_photo, product_name, product_type, product_price, product_description, is_published, unit, quantity, frequency, delivery_day, expiration_date, created_at, is_deleted) values($1, null, $2, $3, $4,'',false,$5,$6,'','',$7,$8, false)`
+    const query = `INSERT INTO products (seller_id, product_photo, product_name, product_type, product_price, product_description, is_published, unit, quantity, frequency, delivery_day, expiration_date, created_at, is_deleted) values($1, $9, $2, $3, $4,'',false,$5,$6,'','',$7,$8, false)`
     const res = await db.query(query,args);
     return Promise.resolve(res.rows);
   }catch(error){

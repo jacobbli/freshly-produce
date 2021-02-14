@@ -9,6 +9,7 @@ async function addProduct (req,res){
     let p_quantity = req.body.quantity;
     let p_expiration_date = req.body.expiration_date;
     let p_user_id = req.body.user_id;
+    let p_product_photo = req.body.product_photo;
 
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
@@ -25,7 +26,8 @@ async function addProduct (req,res){
       p_unit,
       p_quantity,
       p_expiration_date,
-      today
+      today,
+      p_product_photo
     ]
 
     //add to model
