@@ -5,10 +5,19 @@
       <template #header>
           <div class="p-grid p-nogutter">
               <div class="p-col-6" style="text-align: left">
-                  <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="Sort By Price" @change="onSortChange($event)"/>
+                  <Dropdown
+                    v-model="sortKey"
+                    :options="sortOptions"
+                    optionLabel="label"
+                    placeholder="Sort By Price"
+                    @change="onSortChange($event)"/>
               </div>
               <div class="p-col-6" style="text-align: right">
-                <Button label="Add Product" icon="pi pi-plus" class="p-button" @click="openModal()"/>
+                <Button
+                  label="Add Product"
+                  icon="pi pi-plus"
+                  class="p-button"
+                  @click="openModal()"/>
               </div>
           </div>
       </template>
@@ -18,7 +27,10 @@
             <div class="product-grid-item card">
                 <div class="product-grid-item-top">
                     <span class="product-category">
-                      <Button class="p-button-sm edit-button" icon="pi pi-pencil" />
+                      <Button
+                        class="p-button-sm edit-button"
+                        icon="pi pi-pencil"
+                        @click="openEditModal(slotProps.data)" />
                       <Button
                         class="p-button-sm p-button-danger"
                         icon="pi pi-times"
@@ -63,6 +75,12 @@
       @confirm="confirmModalAction($event)"
       @cancel="closeConfirmationModal()" />
 
+    <edit-modal
+      :is-visible="editModalIsVisible"
+      :selected-product="selectedProduct"
+      @cancel="closeEditModal()"
+      @editProduct="editProduct()" />
+
     <action-confirmation-modal
       :is-visible="confirmationModalIsVisible"
       :selected-product="selectedProduct"
@@ -76,6 +94,7 @@
 <script>
 import SubscriptionCreationModal from '../components/subscription-component/SubscriptionCreationModal.vue'
 import ActionConfirmationModal from '../components/ActionConfirmationModal.vue'
+import EditModal from '../components/EditModal.vue'
 import { getOfferedSubscriptions } from '../api/SubscriptionsApi.js'
 import { PRODUCT_TYPE } from '../models'
 
@@ -83,7 +102,8 @@ export default {
   name: 'FarmerSubscriptionsPage',
   components: {
     SubscriptionCreationModal,
-    ActionConfirmationModal
+    ActionConfirmationModal,
+    EditModal
   },
   data() {
 		return {
@@ -97,14 +117,9 @@ export default {
       ],
       modalIsVisible: false,
       confirmationModalIsVisible: false,
+      editModalIsVisible: false,
       selectedProduct: null,
       selectedTask: null,
-      listproduce:[
-        "berries.jpg",
-        "blueberries.jpg",
-        "broccoli.jpg",
-        "carrots.jpg"
-      ],
       listProduct: []
 		}
 	},
@@ -117,6 +132,11 @@ export default {
       this.closeConfirmationModal();
     },
 
+    editProduct() {
+      this.updateOfferedSubscriptionsList();
+      this.closeEditModal();
+    },
+
     deleteProduct() {
       let index = this.listProduct.findIndex(element => {
         return element.product_id == this.selectedProduct.product_id;
@@ -124,6 +144,12 @@ export default {
       this.listProduct.splice(index, 1);
       this.closeConfirmationModal();
     },
+
+    openEditModal(product) {
+        this.selectedProduct = product
+        this.editModalIsVisible = true;
+    },
+
 
     openConfirmationModal(product, task) {
       this.selectedProduct = product;
@@ -133,6 +159,10 @@ export default {
 
     closeConfirmationModal() {
       this.confirmationModalIsVisible = false;
+    },
+
+    closeEditModal() {
+      this.editModalIsVisible = false;
     },
 
     openModal() {
@@ -240,7 +270,6 @@ img {
 
 .product-grid-item-content img {
   width: 75%
-
 }
 
 .product-price {
