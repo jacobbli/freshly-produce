@@ -6,15 +6,7 @@
 <script>
 
 export default {
-  name: 'App',
-  beforeMount() {
-    if(JSON.parse(sessionStorage.getItem('currentUser')) == null){
-      this.$router.push({ name: 'LoginPage' });
-    }
-  },
-  components: {
-
-  }
+  name: 'App'
 }
 </script>
 

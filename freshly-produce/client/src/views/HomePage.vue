@@ -26,7 +26,6 @@ export default {
     if (localItem !== null) {
       this.myCart = localItem[0];
     }
-
   },
   methods: {
     updateparent(variable) { 
