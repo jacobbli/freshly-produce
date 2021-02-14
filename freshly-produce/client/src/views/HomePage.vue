@@ -22,7 +22,10 @@ export default {
     }
   },
   beforeMount() {
-    this.myCart = JSON.parse(localStorage.getItem('myCart'))[0]
+    const localItem = JSON.parse(localStorage.getItem('myCart'));
+    if (localItem !== null) {
+      this.myCart = localItem[0];
+    }
   },
   methods: {
     updateparent(variable) { 
