@@ -1,12 +1,72 @@
 <template>
-  <Dialog 
-    :header="setHeader" 
-    :visible="isVisible" 
+  <Dialog
+    :header="setHeader"
+    :visible="isVisible"
     :modal="true"
     :closable="false">
     <div class="product-info">
-      <p>Product Name: {{selectedProduct.product_name}}</p>
-      <p>Product Price: {{selectedProduct.product_price}}</p>
+      <div class="p-fluid">
+        <div class="p-field p-grid">
+          <label
+            class="p-col-6"
+            for="name">
+            Product Name
+          </label>
+          <div class="p-col-6">
+            {{selectedProduct.product_name}}
+          </div>
+        </div>
+        <div class="p-field p-grid">
+          <label
+            class="p-col-6"
+            for="name">
+            Product Description
+          </label>
+          <div class="p-col-6">
+            {{selectedProduct.product_description}}
+          </div>
+        </div>
+        <div class="p-field p-grid">
+          <label
+            class="p-col-6"
+            for="name">
+            Product Price
+          </label>
+          <div class="p-col-6">
+            ${{selectedProduct.product_price}}
+          </div>
+        </div>
+          <div class="p-field p-grid">
+          <label
+            class="p-col-6"
+            for="name">
+            Quantity
+          </label>
+          <div class="p-col-6">
+            {{selectedProduct.quantity}} {{selectedProduct.unit}}
+          </div>
+        </div>
+        <div class="p-field p-grid">
+          <label
+            class="p-col-6"
+            for="name">
+            Frequency
+          </label>
+          <div class="p-col-6">
+            {{selectedProduct.frequency}}
+          </div>
+        </div>
+        <div class="p-field p-grid">
+          <label
+            class="p-col-6"
+            for="name">
+            Delivery Day
+          </label>
+          <div class="p-col-6">
+            {{displayedDay[selectedProduct.delivery_day]}}
+          </div>
+        </div>
+      </div>
     </div>
     <template #footer>
       <Button label="No" icon="pi pi-times" @click="cancel" class="p-button-text"/>
@@ -36,7 +96,7 @@ export default {
       } else if (this.selectedTask == 'delete') {
         return 'Delete this product?';
       } else if (this.selectedTask == 'unsubscribe') {
-        return 'Remove this subscription?';        
+        return 'Remove this subscription?';
       } else {
         return null;
       }
@@ -58,13 +118,28 @@ export default {
         this.$emit('unsubscribe');
       }
     },
+  },
+  data() {
+    return {
+      displayedDay: {
+        1: 'Monday',
+        2: 'Tuesday',
+        3: 'Wednesday',
+        4: 'Thursday',
+        5: 'Friday'
+      }
+    }
   }
 }
 </script>
 
 <style>
-.product-info {
-  display: block;
+.p-fluid {
+  width: 300px;
+}
+
+.p-field {
+  text-align: start;
 }
 
 </style>
