@@ -1,21 +1,21 @@
 <template>
-    <div>
-        <Dialog header="Header" v-model:visible="display" :closable=false class="p-col-6">
-            <template #header>
-                <h2>Add Discounted Produce</h2>
-            </template>
-            <div class="p-fluid p-formgrid p-grid ">
+    <div id="addProduce">
+        <Dialog header="Add Discounted Produce" v-model:visible="display" :closable=false class="p-col-8 p-p-0">
+            <div class="p-fluid p-field p-grid" style="width:100%">
                 <div class="p-field p-col-12 p-mt-2">
                     <InputText v-model="productName" placeholder="Product Name" id="product_name" type="text" />
+                </div>
+                <div class="p-field p-col-12">
+                    <InputText id="qty" placeholder="Product Description" v-model="product_description" />
                 </div>
                 <div class="p-field p-col-12 ">
                     <Dropdown v-model="selectedProdueType" :options="produeType" optionLabel="type" placeholder="Select a Produce Type" />
                 </div>
 
-                <div class="p-field p-col-12 p-md-6">
+                <div class="p-field p-col-6 ">
                     <InputNumber id="qty" placeholder="Qty" v-model="qtyValue" mode="decimal" showButtons :min="0" :max="1000" />
                 </div>
-                <div class="p-field p-col-12 p-md-6">
+                <div class="p-field p-col-6">
                     <Dropdown v-model="selectedUnitType" :options="unitType" optionLabel="unit" placeholder="Select unit" />
                 </div>
 
@@ -51,18 +51,11 @@
                         </template>
                     </FileUpload>
                 </div>
-
             </div>
             <template #footer>
-            <div class="p-grid">
-                <div class="p-field p-col-6 ">
-                    <Button label="Cancel" icon="pi pi-times-circle" @click="closeModal" autofocus />
-                </div>
-                <div class="p-field p-col-6">
-                    <Button label="Submit" icon="pi pi-check" @click="submit" autofocus />
-                </div>
-            
-            </div>
+                <Button label="Cancel" class="p-button-danger" icon="pi pi-times-circle" @click="closeModal" autofocus />
+                <Button label="Submit" icon="pi pi-check" @click="submit" autofocus />
+ 
             </template>
         </Dialog>
     </div>
@@ -86,6 +79,7 @@ export default {
             date: "",
             qtyValue: null,
             price: null,
+            product_description: "",
 			display: this.isVisible,
             productName: null,
             selectedProdueType: null,
@@ -161,3 +155,10 @@ export default {
     },
 }
 </script>
+
+<style >
+    #addProduce {
+        background-color: coral;
+        width: 300px;
+    }
+</style>

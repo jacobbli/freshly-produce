@@ -69,7 +69,7 @@
 
 <script>
 import AddDiscountedProduceModel from '../components/discounted-produce-component/AddDiscountedProduceModel.vue'
-import ActionConfirmationModal from '../components/ActionConfirmationModal.vue'
+import ActionConfirmationModal from '../components/discounted-produce-component/ActionConfirmationModalDiscount.vue'
 import { getMyDiscountedProducts } from '../api/DiscountedProductApi.js'
 import EditModal from '../components/discounted-produce-component/EditModalDiscount.vue'
 
