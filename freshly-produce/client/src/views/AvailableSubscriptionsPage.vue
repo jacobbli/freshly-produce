@@ -15,7 +15,6 @@
             <div class="product-grid-item card">
                 <div class="product-grid-item-top">
                     <span class="product-category">
-                      <Button class="p-button-sm edit-button" icon="pi pi-pencil" />
                       <Button
                         class="p-button-sm p-button-danger"
                         icon="pi pi-times"
