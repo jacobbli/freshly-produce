@@ -26,8 +26,8 @@
                     </span>
                 </div>
                 <div class="product-grid-item-content">
-                    <img v-if="productPhotoEmpty" alt="user header" :src="slotProps.data.product_photo"/>
-                    <img v-else alt="user header" :src="slotProps.data.product_photo" />
+                    <img v-if="productPhotoEmpty" alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
+                    <img v-else alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
                     <div class="product-name">{{slotProps.data.product_name}}</div>
                     <div class="product-description">{{slotProps.data.product_description}}</div>
                 </div>
@@ -239,6 +239,8 @@ export default {
 
 img {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  width:  100px;
+  height: 125px;
   margin: 2rem 0;
 }
 

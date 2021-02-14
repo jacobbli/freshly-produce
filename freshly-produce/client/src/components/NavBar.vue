@@ -40,19 +40,28 @@ export default {
       },
       toggle(event) {
           this.$refs.menu.toggle(event);
+      },
+      isUserFarmer(){
+        console.log(JSON.parse(sessionStorage.getItem('currentUser')).role)
+        if(JSON.parse(sessionStorage.getItem('currentUser')).role != 1){
+          return false
+        }else{
+          return true
+        }
       }
   },
   data() {
     return {
       visibleLeft : false,
+      isFarmer: true,
       props: {
         myCart: Object,
       },
       menuitems: [
         {
-          label:'Close-To-Expiry',
+          label:'Discounted Produce',
           icon:'pi pi-clock',
-          to: '/discounted-produce'
+          to: '/discounted-produce',
         },                   
         {
           label:'Available Subscriptions',
@@ -62,12 +71,14 @@ export default {
         {
           label:'My Offered Subscriptions',
           icon:'pi pi-tags',
-          to: '/my-offers'
+          to: '/my-offers',
+          visible: () => this.isUserFarmer()
         },
         {
           label:'My Dicounted Produce',
           icon:'pi pi-apple',
-          to: '/my-dicounted-produce'
+          to: '/my-dicounted-produce',
+          visible: () => this.isUserFarmer()
         }
       ],
       itemsAvatar: [

@@ -105,11 +105,21 @@ export default {
                 {unit: 'count'},
                 {unit: 'kg'},
                 {unit: 'g'},
-            ]
+            ],
+            addProductValue: {
+                    product_name: "",
+                    product_type: "",
+                    product_price: "",
+                    unit: "",
+                    quantity: "",
+                    expiration_date: "",
+                    user_id: "",
+                    product_photo: null,
+                }
 		}
 	},
     beforeMount() {
-        this.userId = JSON.parse(sessionStorage.getItem('currentUser')).user_id;
+        this.addProductValue["user_id"] = JSON.parse(sessionStorage.getItem('currentUser')).user_id;
     },
     methods: {
         closeModal() {
@@ -117,21 +127,21 @@ export default {
             this.$emit('eventname', this.display)
         },
         async addFile(event) {
+            console.log(event)
             let image = await toArrayBuffer(event.files[0])
-            this.productObject['product_photo'] = image
+            this.addProductValue['product_photo'] = image
         },
         submit(){
             try{
-                let addProductValue = {
-                    product_name: this.productName,
-                    product_type: this.selectedProdueType["type"],
-                    product_price: this.price,
-                    unit: this.selectedUnitType["unit"],
-                    quantity: this.qtyValue,
-                    expiration_date: this.date,
-                    user_id: this.userId,
-                }
-                ProductsApi.addProduct(addProductValue)
+                this.addProductValue["product_name"] = this.productName;
+                this.addProductValue["product_price"] = this.price;
+                this.addProductValue["quantity"] = this.qtyValue;
+                this.addProductValue["expiration_date"] = this.date;
+                this.addProductValue["this.userId"] = this.userId;
+                this.addProductValue["product_type"] = this.selectedUnitType["unit"];
+                this.addProductValue["unit"] = this.selectedProdueType["type"];
+                console.log(this.addProductValue)
+                ProductsApi.addProduct(this.addProductValue)
                 this.$toast.add({severity:'success', summary: 'Submited!', life: 3000,});          
                 this.resetData();
                 this.closeModal();

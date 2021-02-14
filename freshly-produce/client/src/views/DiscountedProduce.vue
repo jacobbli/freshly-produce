@@ -15,8 +15,7 @@
             <div class="product-grid-item card">
                 <div class="product-grid-item-top">
                     <div>
-                        <i class="pi pi-tag product-category-icon"></i>
-                        <span class="product-category">TODO: ADD</span>
+                      
                     </div>
                     <span>
                         Discount: 10%
@@ -160,6 +159,8 @@ export default {
 
 img {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  width:  100px;
+  height: 125px;
   margin: 2rem 0;
 }
 

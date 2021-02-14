@@ -41,17 +41,15 @@ export default {
            this.$router.push({ name: 'DiscountedProduce' });
            let cart = []
            localStorage.setItem('myCart',JSON.stringify(cart));
-           //clear cart
        },
        openConfirmationModal(product, task) {
             this.selectedProduct = product;
             this.selectedTask = task;
-            console.log(product)
             this.$toast.add({severity:'info', summary: 'Removed!', life: 3000,});          
 
             this.myCart = this.myCart.filter(e => e !== product)
             localStorage.setItem('myCart',JSON.stringify(this.myCart));
-            console.log(this.myCart)
+
         },
    },
     data() {
