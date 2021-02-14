@@ -28,6 +28,7 @@ import TieredMenu from 'primevue/tieredmenu';
 import DataView from 'primevue/dataview';
 import Calendar from 'primevue/calendar';
 import BadgeDirective from 'primevue/badgedirective';
+import Textarea from 'primevue/textarea';
 
 
 const app = createApp(App);
@@ -55,6 +56,7 @@ app.component('Chart', Chart);
 app.component('TieredMenu', TieredMenu);
 app.component('DataView', DataView);
 app.component('Calendar', Calendar);
+app.component('Textarea', Textarea);
 
 
 app.directive('badge', BadgeDirective);

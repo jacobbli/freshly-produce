@@ -59,7 +59,7 @@ async function getOrders(args) {
 
 async function getActiveSubscriptions(args) {
   try {
-    const query = 
+    const query =
     `SELECT O.order_id, P.product_id, P.product_name, P.product_photo, P.product_price, P.product_description
       FROM orders O, products P
       WHERE O.buyer_id = $1 AND O.order_type = $2 AND O.is_deleted = false and O.product_id = P.product_id;`;
@@ -74,7 +74,7 @@ async function getActiveSubscriptions(args) {
 
 async function insertProduct(args){
   try {
-    const query = 
+    const query =
     `INSERT INTO products (seller_id, product_photo, product_name, product_type, product_price, product_description, unit, quantity, frequency, delivery_day, is_published, is_deleted, created_at)
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`;
     const res = await db.query(query, args);
@@ -86,13 +86,36 @@ async function insertProduct(args){
   }
 }
 
+async function updateProduct(args){
+  try {
+    const query =
+    `UPDATE products SET
+    product_photo = $1,
+    product_name = $2,
+    product_price = $3,
+    product_description = $4,
+    unit = $5,
+    quantity = $6,
+    frequency = $7,
+    delivery_day = $8
+    WHERE product_id = $9`;
+
+    const res = await db.query(query, args);
+
+    return res.rows;
+  } catch (error) {
+    console.error(error)
+    return error;
+  }
+}
+
 async function getOfferedSubscriptions(args) {
   try {
-    const query = 
-    `SELECT product_id, product_photo, product_name, product_price, product_description, unit, quantity, frequency, delivery_day, is_published 
-    FROM products 
+    const query =
+    `SELECT product_id, product_photo, product_name, product_price, product_description, unit, quantity, frequency, delivery_day, is_published
+    FROM products
     WHERE seller_id = $1 AND product_type = $2 AND is_deleted = false;`;
-    
+
     const res = await db.query(query, args);
     return res.rows;
   } catch (error) {
@@ -133,5 +156,6 @@ module.exports = {
   insertProduct,
   getOfferedSubscriptions,
   setSubscriptionPublishStatus,
-  deleteSubscription
+  deleteSubscription,
+  updateProduct
 }

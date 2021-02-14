@@ -80,33 +80,32 @@ async function getAvailableSubscriptions(request, response) {
 
 /* Vendor */
 function createNewSubscription(request, response) {
-    const created_at = new Date();
-    let product_photo = request.body.product_photo
-    if (product_photo === null) {
-      product_photo = "/images/temp/carrots.jpg"
-    }
-    const queryArgs = [
-      request.body.user_id,
-      product_photo,
-      request.body.product_name,
-      request.body.product_type,
-      request.body.product_price,
-      request.body.product_description,
-      request.body.unit,
-      request.body.quantity,
-      request.body.frequency,
-      request.body.delivery_day,
-      false,
-      false,
-      created_at
-    ]
-    subscriptionModel.insertProduct(queryArgs).then(res => {
-      response.json(res);
-    }).catch(error => {
-      console.error(error)
-      response.status(404).end();
-    });
-  // });
+  const created_at = new Date();
+  let product_photo = request.body.product_photo
+  if (!product_photo) {
+    product_photo = "/images/temp/carrots.jpg"
+  }
+  const queryArgs = [
+    request.body.user_id,
+    product_photo,
+    request.body.product_name,
+    request.body.product_type,
+    request.body.product_price,
+    request.body.product_description,
+    request.body.unit,
+    request.body.quantity,
+    request.body.frequency,
+    request.body.delivery_day,
+    false,
+    false,
+    created_at
+  ]
+  subscriptionModel.insertProduct(queryArgs).then(res => {
+    response.json(res);
+  }).catch(error => {
+    console.error(error)
+    response.status(404).end();
+  });
 }
 
 async function deleteSubscription(request, response) {
@@ -118,6 +117,28 @@ async function deleteSubscription(request, response) {
     console.error(error)
     response.status(404).end();
   }
+}
+
+function updateSubscription(request, response) {
+  const created_at = new Date();
+
+  const queryArgs = [
+    request.body.product_photo,
+    request.body.product_name,
+    request.body.product_price,
+    request.body.product_description,
+    request.body.unit,
+    request.body.quantity,
+    request.body.frequency,
+    request.body.delivery_day,
+    request.body.product_id,
+  ]
+  subscriptionModel.updateProduct(queryArgs).then(res => {
+    response.json(res);
+  }).catch(error => {
+    console.error(error)
+    response.status(404).end();
+  });
 }
 
 async function setSubscriptionPublishStatus(request, response) {
@@ -151,5 +172,6 @@ module.exports = {
   createNewSubscription, // vendor
   deleteSubscription, // vendor
   getOfferedSubscriptions, // Vendor
-  setSubscriptionPublishStatus // Vendor
+  setSubscriptionPublishStatus, // Vendor
+  updateSubscription // Vendor
 }

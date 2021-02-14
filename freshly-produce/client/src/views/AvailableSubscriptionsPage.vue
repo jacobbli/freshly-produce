@@ -15,7 +15,6 @@
             <div class="product-grid-item card">
                 <div class="product-grid-item-top">
                     <span class="product-category">
-                      <Button class="p-button-sm edit-button" icon="pi pi-pencil" />
                       <Button
                         class="p-button-sm p-button-danger"
                         icon="pi pi-times"
@@ -123,12 +122,6 @@ export default {
       product_type: PRODUCT_TYPE['subscription']
     };
     getAvailableSubscriptions(reqForm).then(res => {
-      res.forEach((item) => {
-        if(item.product_photo == null){
-          item.product_photo = "/images/temp/"+this.listphotos[Math.floor(Math.random() * 6)]
-        }
-      })
-      // console.log(res)
       this.listProduct = res;
     }).catch(err => {
       console.error(err);

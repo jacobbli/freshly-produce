@@ -42,7 +42,6 @@ export default {
           this.$refs.menu.toggle(event);
       },
       isUserFarmer(){
-        console.log(JSON.parse(sessionStorage.getItem('currentUser')).role)
         if(JSON.parse(sessionStorage.getItem('currentUser')).role != 1){
           return false
         }else{

@@ -23,6 +23,7 @@ CREATE TABLE products (
   product_photo TEXT,
   product_name TEXT NOT NULL,
   product_type TEXT NOT NULL,
+  product_category TEXT,
   product_price NUMERIC,
   product_description TEXT,
   is_published BOOLEAN,
