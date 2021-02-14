@@ -121,7 +121,7 @@ export default {
         selectedUnit: null,
       },
       units: [
-        {name: 'Unit'},
+        {name: 'Units'},
         {name: 'Kg'},
         {name: 'Lbs'}
       ],
@@ -138,8 +138,13 @@ export default {
       }
     },
     async addFile(event) {
-      let image = await toArrayBuffer(event.files[0])
-      this.productObject['product_photo'] = image
+      try {
+        let image = await toArrayBuffer(event.files[0])
+        this.productObject['product_photo'] = image
+      } catch(error) {
+        console.error(error)
+      }
+
     },
     nextPage() {
       this.$emit('next-page', this.productObject);

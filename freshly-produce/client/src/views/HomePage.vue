@@ -29,8 +29,7 @@ export default {
   },
   methods: {
     updateparent(variable) { 
-      this.myCart = variable 
-      console.log(this.myCart)
+      this.myCart = variable;
     }
   },
 }

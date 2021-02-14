@@ -33,7 +33,6 @@
 export default {
     mounted() {
         this.myCart = JSON.parse(localStorage.getItem('myCart'));
-        console.log(JSON.parse(localStorage.getItem('myCart')))
     },
    methods: {
        checkOutOrders(){

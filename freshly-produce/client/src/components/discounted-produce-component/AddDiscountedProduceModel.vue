@@ -127,7 +127,6 @@ export default {
             this.$emit('eventname', this.display)
         },
         async addFile(event) {
-            console.log(event)
             let image = await toArrayBuffer(event.files[0])
             this.addProductValue['product_photo'] = image
         },
@@ -140,7 +139,6 @@ export default {
                 this.addProductValue["this.userId"] = this.userId;
                 this.addProductValue["product_type"] = this.selectedUnitType["unit"];
                 this.addProductValue["unit"] = this.selectedProdueType["type"];
-                console.log(this.addProductValue)
                 ProductsApi.addProduct(this.addProductValue)
                 this.$toast.add({severity:'success', summary: 'Submited!', life: 3000,});          
                 this.resetData();

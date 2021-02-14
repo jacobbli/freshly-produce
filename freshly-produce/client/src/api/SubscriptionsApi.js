@@ -84,6 +84,18 @@ export async function createNewSubscription(productObject) {
   }
 }
 
+export async function editSubscription(productObject) {
+  try {
+    let apiUrl = `${process.env.VUE_APP_ROOT_URL}/subscription/my-offers/${productObject.product_id}`;
+    let response = await axios.patch(apiUrl, productObject, {
+      headers: {'Content-Type': 'application/json'},
+    });
+    return response.data;
+  } catch(error) {
+    return error;
+  }
+}
+
 export async function setPublishedStatus(product_id) {
   try {
     let apiUrl = `${process.env.VUE_APP_ROOT_URL}/subscription/my-offers/is-published/${product_id}`;

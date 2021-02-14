@@ -15,15 +15,10 @@
             <div class="product-grid-item card">
                 <div class="product-grid-item-top">
                     <span class="product-category">
-                      <Button class="p-button-sm edit-button" icon="pi pi-pencil" />
-                      <Button
-                        class="p-button-sm p-button-danger"
-                        icon="pi pi-times"
-                        @click="openConfirmationModal(slotProps.data, 'delete')"/>
                     </span>
                 </div>
                 <div class="product-grid-item-content">
-                    <img v-if="productPhotoEmpty" alt="user header" :src="slotProps.data.product_photo.data" style="width: 50%"/>
+                    <img v-if="productPhotoEmpty" alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
                     <img v-else alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
         
                     <div class="product-name">{{slotProps.data.product_name}}</div>
@@ -79,6 +74,7 @@ export default {
       orderModalIsVisible: false,
       selectedProduct: null,
       selectedTask: null,
+      listProduct:[],
       listphotos:[
         "blueberries.jpg",
         "broccoli.jpg",
@@ -86,8 +82,7 @@ export default {
         "fruit.jpg",
         "root.jpg",
         "tuber.jpg"
-      ],
-      listProduct:[]
+      ]
 		}
 	},
   methods: {
@@ -128,7 +123,6 @@ export default {
           item.product_photo = "/images/temp/"+this.listphotos[Math.floor(Math.random() * 6)]
         }
       })
-      // console.log(res)
       this.listProduct = res;
     }).catch(err => {
       console.error(err);

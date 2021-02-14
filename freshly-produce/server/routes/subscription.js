@@ -24,6 +24,9 @@ router.get('/my-offers', subscriptionController.getOfferedSubscriptions);
 /*Create new subscription */
 router.post('/my-offers', subscriptionController.createNewSubscription);
 
+/* Update existing subscription */
+router.patch('/my-offers/:product_id', subscriptionController.updateSubscription);
+
 /* Delete subscription */
 router.delete('/my-offers/:product_id', subscriptionController.deleteSubscription);
 
