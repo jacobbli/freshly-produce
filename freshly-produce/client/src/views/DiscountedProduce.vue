@@ -15,22 +15,22 @@
             <div class="product-grid-item card">
                 <div class="product-grid-item-top">
                     <div>
-                        <i class="pi pi-tag product-category-icon"></i>
-                        <span class="product-category">TODO: ADD</span>
+                      
                     </div>
                     <span>
                         Discount: 10%
                     </span>
                 </div>
                 <div class="product-grid-item-content">
-                    <img alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
+                    <img v-if="productPhotoEmpty" alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
+                    <img v-else alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
                     <div class="product-name">{{slotProps.data.product_name}}</div>
                     <div>Expiry Date: {{slotProps.data.expiration_date}}</div>
                     <div class="product-description">{{slotProps.data.product_description}}</div>
                 </div>
                 <div class="product-grid-item-bottom">
                     <span class="product-price">${{slotProps.data.product_price}}</span>
-                    <Button icon="pi pi-shopping-cart" label="Add to Cart" />
+                    <Button icon="pi pi-shopping-cart" label="Add to Cart" @click="addToCart(slotProps.data.product_id)"/>
                 </div>
             </div>
         </div>
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { getDiscountedProducts } from '../api/DiscountedProductApi.js'
 export default {
     methods: {
         onSortChange(event){
@@ -56,6 +57,28 @@ export default {
                 this.sortField = value;
                 this.sortKey = sortValue;
             }
+        },
+        updateDiscountedProductsList() {
+            getDiscountedProducts().then(res => {
+                res.forEach((item) => {
+                  if(item.product_photo == null){
+                    item.product_photo = "/images/temp/"+this.listphotos[Math.floor(Math.random() * 6)]
+                  }
+                  let indexT = item.expiration_date.indexOf("T")
+                  item.expiration_date = item.expiration_date.substring(0,indexT)
+                })
+
+                this.listProduct = res;
+            }).catch(err => {
+                console.error(err);
+            });
+        },
+        addToCart(productID){
+            let item = this.listProduct.filter(item => item.product_id == productID)
+            this.myCart = JSON.parse(localStorage.getItem('myCart'));
+            this.myCart.push(item[0])
+            localStorage.setItem('myCart',JSON.stringify(this.myCart))
+            this.$emit('updateCartParent', this.myCart)
         }
     },
     data() {
@@ -64,79 +87,25 @@ export default {
             sortKey: null,
             sortOrder: null,
             sortField: null,
+            productPhotoEmpty: false,
             sortOptions: [
                 {label: 'Price High to Low', value: '!product_price'},
                 {label: 'Price Low to High', value: 'product_price'},
             ],
-            listProduct: [
-                {
-                    product_name: "Sub",
-                    product_type: "Food",
-                    product_price: 5.12,
-                    expiration_date: "2021-02-07"
-                },
-                {
-                    product_name: "Pear",
-                    product_type: "Food",
-                    product_price: 11.12,
-                    expiration_date: "2021-01-07"
-                },
-                {
-                    product_name: "Berries",
-                    product_type: "Food",
-                    product_price: 15.12,
-                    expiration_date: "2021-01-17"
-                },
-                {
-                    product_name: "Oranges",
-                    product_type: "Food",
-                    product_price: 9.12,
-                    expiration_date: "2021-02-02"
-                },
-                {
-                    product_name: "Apple",
-                    product_type: "Food",
-                    product_price: 7.12,
-                    expiration_date: "2021-02-01"
-                },
-                {
-                    product_name: "Broccoli",
-                    product_type: "Food",
-                    product_price: 14.12,
-                    expiration_date: "2021-02-04"
-                },
-                {
-                    product_name: "Sub",
-                    product_type: "Food",
-                    product_price: 8.12,
-                    expiration_date: "2021-02-06"
-                },
-                {
-                    product_name: "Carrots",
-                    product_type: "Food",
-                    product_price: 6.12,
-                    expiration_date: "2021-01-18"
-                },
-                {
-                    product_name: "Carrots",
-                    product_type: "Food",
-                    product_price: 9.12,
-                    expiration_date: "2021-01-18"
-                },
-                {
-                    product_name: "Carrots",
-                    product_type: "Food",
-                    product_price: 10.12,
-                    expiration_date: "2021-01-18"
-                },
-                {
-                    product_name: "Carrots",
-                    product_type: "Food",
-                    product_price: 9.45,
-                    expiration_date: "2021-01-18"
-                }
-            ]
+            listphotos:[
+              "blueberries.jpg",
+              "broccoli.jpg",
+              "carrots.jpg",
+              "fruit.jpg",
+              "root.jpg",
+              "tuber.jpg"
+            ],
+            myCart: [],
+            listProduct: []
         }
+    },
+    mounted: function() {
+        this.updateDiscountedProductsList();
     }
 }
 </script>
@@ -190,6 +159,8 @@ export default {
 
 img {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  width:  100px;
+  height: 125px;
   margin: 2rem 0;
 }
 

@@ -179,6 +179,11 @@ export default {
         product_type: PRODUCT_TYPE['subscription']
       };
       getOfferedSubscriptions(reqForm).then(res => {
+        res.forEach((item) => {
+          if(item.product_photo == null){
+            item.product_photo = "/images/temp/"+this.listphotos[Math.floor(Math.random() * 6)]
+          }
+        })
         this.listProduct = res;
       }).catch(err => {
         console.error(err);
@@ -261,6 +266,8 @@ export default {
 
 img {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  width:  100px;
+  height: 125px;
   margin: 2rem 0;
 }
 

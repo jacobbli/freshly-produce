@@ -26,18 +26,19 @@
                     </span>
                 </div>
                 <div class="product-grid-item-content">
-                    <img alt="user header" :src="slotProps.data.product_photo" />
+                    <img v-if="productPhotoEmpty" alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
+                    <img v-else alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
                     <div class="product-name">{{slotProps.data.product_name}}</div>
                     <div class="product-description">{{slotProps.data.product_description}}</div>
                 </div>
                 <div class="product-grid-item-bottom">
-                    <span class="product-price">${{slotProps.data.product_price}}</span>
-                    <Button
-                    v-if="slotProps.data.is_published"
-                    icon="pi pi-times"
-                    class="p-button-warning"
-                    label="Unpublish"
-                    @click="openConfirmationModal(slotProps.data, 'unpublish')" />
+                  <span class="product-price">${{slotProps.data.product_price}}</span>
+                  <Button
+                  v-if="slotProps.data.is_published"
+                  icon="pi pi-times"
+                  class="p-button-warning"
+                  label="Unpublish"
+                  @click="openConfirmationModal(slotProps.data, 'unpublish')" />
                   <Button
                     v-else
                     icon="pi pi-check"
@@ -50,16 +51,26 @@
     </DataView>
 
     <AddDiscountedProduceModel @eventname="updateparent" v-model:isVisible="modalIsVisible" />
+    <action-confirmation-modal
+      :is-visible="confirmationModalIsVisible"
+      :selected-product="selectedProduct"
+      :selected-task="selectedTask"
+      @cancel="closeConfirmationModal()"
+      @change-published-status="changePublishedStatus()"
+      @delete="deleteProduct()" />
   </div>
 </template>
 
 <script>
 import AddDiscountedProduceModel from '../components/discounted-produce-component/AddDiscountedProduceModel.vue'
+import ActionConfirmationModal from '../components/ActionConfirmationModal.vue'
+import { getMyDiscountedProducts } from '../api/DiscountedProductApi.js'
 
 export default {
   name: 'FarmerDiscountedProducePage',
   components: {
     AddDiscountedProduceModel,
+    ActionConfirmationModal
   },
   data() {
 		return {
@@ -67,6 +78,7 @@ export default {
       sortKey: null,
       sortOrder: null,
       sortField: null,
+      productPhotoEmpty:false,
       sortOptions: [
           {label: 'Price High to Low', value: '!product_price'},
           {label: 'Price Low to High', value: 'product_price'},
@@ -75,77 +87,28 @@ export default {
       confirmationModalIsVisible: false,
       selectedProduct: null,
       selectedTask: null,
-      listproduce:[
-        "berries.jpg",
+      listphotos:[
         "blueberries.jpg",
         "broccoli.jpg",
-        "carrots.jpg"
-      ]
-      ,
-      listProduct:[
-        {
-          product_id: 1,
-          product_name: "carrots",
-          product_type: "food",
-          product_price: 15.99,
-          is_published: false,
-        },
-        {
-          product_id: 2,
-          product_name: "crrots",
-          product_type: "food",
-          product_price: 15.99,
-          is_published: true,
-        },
-        {
-          product_id: 3,
-          product_name: "carots",
-          product_type: "food",
-          product_price: 15.99,
-          is_published: true,
-        },
-        {
-          product_id: 4,
-          product_name: "carots",
-          product_type: "food",
-          product_price: 15.99,
-          is_published: false,
-        },
-        {
-          product_id: 5,
-          product_name: "carots",
-          product_type: "food",
-          product_price: 15.99,
-          is_published: false,
-        },
-        {
-          product_id: 6,
-          product_name: "carros",
-          product_type: "food",
-          product_price: 15.99,
-          is_published: false,
-        },
+        "carrots.jpg",
+        "fruit.jpg",
+        "root.jpg",
+        "tuber.jpg"
       ],
+      listProduct:[],
 		}
 	},
 
   methods: {
-    updateparent(variable) {
-        this.modalIsVisible = variable
+    updateparent(variable) { 
+      this.modalIsVisible = variable;
+      this.updateDiscountedProductsList();
     },
-    publish() {
+    changePublishedStatus() {
       let index = this.listProduct.findIndex(element => {
         return element.product_id == this.selectedProduct.product_id;
       })
-      this.listProduct[index].is_published = true;
-      this.closeConfirmationModal();
-    },
-
-    unpublish() {
-      let index = this.listProduct.findIndex(element => {
-        return element.product_id == this.selectedProduct.product_id;
-      })
-      this.listProduct[index].is_published = false;
+      this.listProduct[index].is_published = !this.listProduct[index].is_published;
       this.closeConfirmationModal();
     },
 
@@ -175,7 +138,24 @@ export default {
       this.modalIsVisible = false;
     },
 
+    updateDiscountedProductsList() {
+      const req = {
+        user_id : JSON.parse(sessionStorage.getItem('currentUser')).user_id,
+      }
+      getMyDiscountedProducts(req).then(res => {
+        res.forEach((item) => {
+          if(item.product_photo == null){
+            item.product_photo = "/images/temp/"+this.listphotos[Math.floor(Math.random() * 6)]
+          }
+        })
+        this.listProduct = res;
+      }).catch(err => {
+        console.error(err);
+      });
+    },
+
     confirmModalAction() {
+      this.updateOfferedSubscriptionsList();
       this.closeModal();
     },
 
@@ -194,6 +174,9 @@ export default {
           this.sortKey = sortValue;
       }
     }
+  },
+  mounted: function() {
+    this.updateDiscountedProductsList();
   }
 }
 </script>
@@ -247,6 +230,8 @@ export default {
 
 img {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  width:  100px;
+  height: 125px;
   margin: 2rem 0;
 }
 

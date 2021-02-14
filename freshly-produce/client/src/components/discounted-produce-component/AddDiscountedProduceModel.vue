@@ -38,7 +38,18 @@
                 </div>
                 <div class="p-field p-col-12">
                     <label for="Upload Photo">Upload Produce Photo</label>
-                    <FileUpload name="demo[]" url="./upload" />
+                    <FileUpload
+                        class="p-fileupload-sm"
+                        name="product_photo"
+                        :auto="true"
+                        :customUpload="true"
+                        @uploader="addFile"
+                        accept="image/*"
+                        :maxFileSize="1000000"
+                        chooseLabel="Upload Photo">
+                        <template>
+                        </template>
+                    </FileUpload>
                 </div>
 
             </div>
@@ -58,6 +69,7 @@
 </template>
 
 <script>
+import { toArrayBuffer } from '../../services/FileService'
 import ProductsApi from '../../api/ProductsApi.js'
 export default {
     props: {
@@ -93,33 +105,48 @@ export default {
                 {unit: 'count'},
                 {unit: 'kg'},
                 {unit: 'g'},
-            ]
+            ],
+            addProductValue: {
+                    product_name: "",
+                    product_type: "",
+                    product_price: "",
+                    unit: "",
+                    quantity: "",
+                    expiration_date: "",
+                    user_id: "",
+                    product_photo: null,
+                }
 		}
 	},
     beforeMount() {
-        this.userId = JSON.parse(sessionStorage.getItem('currentUser')).user_id;
+        this.addProductValue["user_id"] = JSON.parse(sessionStorage.getItem('currentUser')).user_id;
     },
     methods: {
         closeModal() {
             this.display = false;
             this.$emit('eventname', this.display)
         },
-        async submit(){
-
-            let addProductValue = {
-                product_name: this.productName,
-                product_type: this.selectedProdueType["type"],
-                product_price: this.price,
-                unit: this.selectedUnitType["unit"],
-                quantity: this.qtyValue,
-                expiration_date: this.date,
-                user_id: this.userId,
+        async addFile(event) {
+            let image = await toArrayBuffer(event.files[0])
+            this.addProductValue['product_photo'] = image
+        },
+        submit(){
+            try{
+                this.addProductValue["product_name"] = this.productName;
+                this.addProductValue["product_price"] = this.price;
+                this.addProductValue["quantity"] = this.qtyValue;
+                this.addProductValue["expiration_date"] = this.date;
+                this.addProductValue["this.userId"] = this.userId;
+                this.addProductValue["product_type"] = this.selectedUnitType["unit"];
+                this.addProductValue["unit"] = this.selectedProdueType["type"];
+                ProductsApi.addProduct(this.addProductValue)
+                this.$toast.add({severity:'success', summary: 'Submited!', life: 3000,});          
+                this.resetData();
+                this.closeModal();
+            }catch(err){
+                console.log(err)
             }
-
-            ProductsApi.addProduct(addProductValue)
-            this.$toast.add({severity:'success', summary: 'Submited!', life: 3000,});          
-            this.resetData();
-            this.closeModal();
+            
         },
         resetData(){
             this.date = "";
