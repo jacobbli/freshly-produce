@@ -18,9 +18,7 @@
                     </span>
                 </div>
                 <div class="product-grid-item-content">
-                    <img v-if="productPhotoEmpty" alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
-                    <img v-else alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
-        
+                    <img alt="user header" :src="slotProps.data.product_photo" />
                     <div class="product-name">{{slotProps.data.product_name}}</div>
                     <div class="product-description">{{slotProps.data.product_description}}</div>
                 </div>
