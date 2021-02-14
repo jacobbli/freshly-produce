@@ -38,7 +38,8 @@
                     </span>
                 </div>
                 <div class="product-grid-item-content">
-                    <img alt="user header" :src="slotProps.data.product_photo" />
+                    <img v-if="productPhotoEmpty" alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
+                    <img v-else alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
                     <div class="product-name">{{slotProps.data.product_name}}</div>
                     <div class="product-description">{{slotProps.data.product_description}}</div>
                 </div>
@@ -120,7 +121,15 @@ export default {
       editModalIsVisible: false,
       selectedProduct: null,
       selectedTask: null,
-      listProduct: []
+      listProduct: [],
+      listphotos:[
+        "blueberries.jpg",
+        "broccoli.jpg",
+        "carrots.jpg",
+        "fruit.jpg",
+        "root.jpg",
+        "tuber.jpg"
+      ]
 		}
 	},
   methods: {
@@ -179,6 +188,11 @@ export default {
         product_type: PRODUCT_TYPE['subscription']
       };
       getOfferedSubscriptions(reqForm).then(res => {
+        res.forEach((item) => {
+          if(item.product_photo == null){
+            item.product_photo = "/images/temp/"+this.listphotos[Math.floor(Math.random() * 6)]
+          }
+        })
         this.listProduct = res;
       }).catch(err => {
         console.error(err);
