@@ -193,6 +193,7 @@ export default {
             item.product_photo = "/images/temp/"+this.listphotos[Math.floor(Math.random() * 6)]
           }
         })
+        
         this.listProduct = res;
       }).catch(err => {
         console.error(err);

@@ -102,9 +102,9 @@ export default {
                 {type: 'Stem'},
             ],
             unitType: [
-                {unit: 'count'},
-                {unit: 'kg'},
-                {unit: 'g'},
+                {unit: 'Units'},
+                {unit: 'Kg'},
+                {unit: 'Lbs'}
             ],
             addProductValue: {
                     product_name: "",
@@ -137,8 +137,8 @@ export default {
                 this.addProductValue["quantity"] = this.qtyValue;
                 this.addProductValue["expiration_date"] = this.date;
                 this.addProductValue["this.userId"] = this.userId;
-                this.addProductValue["product_type"] = this.selectedUnitType["unit"];
-                this.addProductValue["unit"] = this.selectedProdueType["type"];
+                this.addProductValue["unit"] = this.selectedUnitType["unit"];
+                this.addProductValue["product_type"] = this.selectedProdueType["type"];
                 ProductsApi.addProduct(this.addProductValue)
                 this.$toast.add({severity:'success', summary: 'Submited!', life: 3000,});          
                 this.resetData();

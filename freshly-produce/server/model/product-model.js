@@ -51,6 +51,27 @@ async function deleteProduct(args) {
     return Promise.resolve(error);
   }
 }
+async function updateProduct(args){
+  try {
+    const query =
+    `UPDATE products SET
+    product_photo = $1,
+    product_name = $2,
+    product_price = $3,
+    product_description = $4,
+    unit = $5,
+    quantity = $6,
+    expiration_date = $7
+    WHERE product_id = $8`;
+
+    const res = await db.query(query, args);
+
+    return res.rows;
+  } catch (error) {
+    console.error(error)
+    return error;
+  }
+}
 
 
 module.exports = {
@@ -58,6 +79,7 @@ module.exports = {
     getProducts,
     deleteProduct,
     getDiscountProducts,
-    getMyDiscountProducts
+    getMyDiscountProducts,
+    updateProduct
     // addExpiry : addCloseToExpiryProduct,
 }
