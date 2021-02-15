@@ -11,7 +11,7 @@
       </template>
 
      <template #grid="slotProps">
-          <div class="p-col-12 p-lg-4 p-xl-3">
+          <div class="p-col-12 p-md-2 p-lg-4 p-xl-3">
             <div class="product-grid-item card  ">
                 <div class="product-grid-item-top">
                     <div>
@@ -26,7 +26,7 @@
                     <img v-else alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
                     <div class="product-name">{{slotProps.data.product_name}}</div>
                     <div>Expiry Date: {{slotProps.data.expiration_date}}</div>
-                    <div class="product-description">{{slotProps.data.product_description}}</div>
+                    <div class="product-description" style="height:50px">{{slotProps.data.product_description}}</div>
                 </div>
                 <div class="product-grid-item-bottom">
                     <span class="product-price">${{slotProps.data.product_price}}</span>

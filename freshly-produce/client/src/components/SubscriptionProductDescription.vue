@@ -1,6 +1,6 @@
 <template>
   <div v-if="selectedProduct" class="product-grid-item-content">
-      <img  alt="user header" :src="selectedProduct.product_photo" />
+      <img  alt="user header" :src="selectedProduct.product_photo" style="width: 50%"/>
       <div class="product-name">{{selectedProduct.product_name}}</div>
       <div class="product-description">{{selectedProduct.product_description}}</div>
       <div class="quantity"> 
@@ -101,6 +101,8 @@ h4 {
 
 img {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  width:  100px;
+  height: 125px;
   margin: 2rem 0;
 }
 
