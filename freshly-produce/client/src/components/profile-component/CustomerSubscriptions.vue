@@ -16,6 +16,11 @@
                     <img alt="user header" :src="slotProps.data.product_photo" />
                     <div class="product-name">{{slotProps.data.product_name}}</div>
                     <div class="product-description">{{slotProps.data.product_description}}</div>
+                    <div class="quantity"> {{slotProps.data.quantity + ' ' + slotProps.data.unit }} </div>
+                    <div class="delivery-frequency">
+                      <i class="pi pi-clock"></i>
+                      {{setDeliveryFrequencyDescription(slotProps.data.frequency, slotProps.data.delivery_day)}}
+                    </div>
                 </div>
                 <div class="product-grid-item-bottom">
                     <span class="product-price">${{slotProps.data.product_price}}</span>
@@ -65,24 +70,26 @@ export default {
       confirmationModalIsVisible: false,
       selectedProduct: null,
       selectedTask: null,
-      listproduce:[
-        "berries.jpg",
-        "blueberries.jpg",
-        "broccoli.jpg",
-        "carrots.jpg"
-      ],
       listProduct: [],
-      listphotos:[
-        "blueberries.jpg",
-        "broccoli.jpg",
-        "carrots.jpg",
-        "fruit.jpg",
-        "root.jpg",
-        "tuber.jpg"
-      ],
+      displayedDate: {
+        1: 'Monday',
+        2: 'Tuesday',
+        3: 'Wednesday',
+        4: 'Thursday',
+        5: 'Friday'
+      }
 		}
 	},
   methods: {
+    setDeliveryFrequencyDescription(frequency, date) {
+      if (frequency == 'Monthly') {
+        return `Delivers on the first ${this.displayedDate[date]} of each month`;
+      } else if (frequency == 'Bi-weekly') {
+        return `Delivers on the FIRST and THIRD ${this.displayedDate[date]}s of each month`;
+      } else {
+        return `Delivers each week on ${this.displayedDate[date]}`;
+      }
+    },
     openConfirmationModal(product, task) {
       this.selectedProduct = product;
       this.selectedTask = task;
@@ -172,7 +179,8 @@ img {
 }
 
 .product-grid-item-content img {
-  width: 75%
+  width: 75%;
+  height: 250px;
 }
 
 .product-price {
