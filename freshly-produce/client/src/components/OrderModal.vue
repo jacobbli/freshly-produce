@@ -89,7 +89,7 @@
                 <Calendar 
                   id="basic"
                   v-model="expirationDate"
-                  placeholder="Expiration Date"/>
+                  placeholder="Expiration Date (mm/dd/yyyy)"/>
             </div>
         </div>
 
@@ -103,7 +103,7 @@
         </div>
     </div>
     <template #footer>
-      <Button label="Cancel" icon="pi pi-times" @click="cancel" class="p-button-text"/>
+      <Button label="Cancel" icon="pi pi-times-circle" @click="cancel" class="p-button-danger"/>
       <Button label="Place Order" icon="pi pi-check" @click="placeOrder" autofocus />
     </template>
   </Dialog>
