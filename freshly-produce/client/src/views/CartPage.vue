@@ -6,14 +6,14 @@
                     <div class="product-list-item">
                         <div class="p-grid">
                             <img class="p-col-4 p-mt-2" :src="slotProps.data.product_photo" :alt="'user header'"/>
-                            <div class="product-list-detail p-col-4 p-mt-6">
-                                <div class="product-name">{{slotProps.data.product_name}}</div>
-                                <div class="product-description">{{slotProps.data.expiration_date}}</div>
-                                <i class="pi pi-tag product-category-icon"></i><span class="product-category">{{slotProps.data.product_type}}</span>
+                            <div class="product-list-detail p-col-4 p-mx-4">
+                                <div class="product-name"><h4>{{slotProps.data.product_name}}</h4></div>
+                                <div class="product-description">Expiry date: {{slotProps.data.expiration_date}}</div>
+                                <i class="pi pi-tag product-category-icon"></i><span class="product-category p-pl-2"> {{slotProps.data.product_category}}</span>
                             </div>
-                            <div class="product-list-action p-col-4 p-mt-6">
-                                <span class="product-price p-col-12">${{slotProps.data.product_price}}</span>
-                                <Button icon="pi pi-times-circle" @click="openConfirmationModal(slotProps.data, 'delete')" label=" Delete" />
+                            <div class="product-list-action p-col-4">
+                                <h3 class="product-price p-col-12">${{slotProps.data.product_price}}</h3>
+                               <Button icon="pi pi-times-circle" @click="openConfirmationModal(slotProps.data, 'delete')" label=" Delete" />
                             </div>
                         </div>
                     </div>
@@ -22,18 +22,19 @@
         </DataView>
         <div class="p-col-4 p-pt-4">
             <h1>Total Cost:</h1>
-            <h3><span>$555.25</span></h3>
+            <h2>${{this.totalCost}}</h2>
             <Button icon="pi pi-check-circle" label="Check Out" @click="checkOutOrders" ></Button>
         </div>
 
     </div>
 </template>
 <script>
-
+import {  computed } from "vue";
 export default {
     mounted() {
         this.myCart = JSON.parse(localStorage.getItem('myCart'));
     },
+
    methods: {
        checkOutOrders(){
            this.$toast.add({severity:'success', summary: 'Purchased!', life: 3000,});
@@ -51,10 +52,19 @@ export default {
 
         },
    },
+   
     data() {
 		return {
             confirmationModalIsVisible: false,
             myCart: [],
+            totalCost: computed(()=>{
+                let sum = 0;
+                this.myCart.forEach((item) =>{
+                    sum += parseInt(item.product_price)
+                })
+                return sum
+                
+            }),
             layout: 'list',
             sortKey: null,
             sortOrder: null,

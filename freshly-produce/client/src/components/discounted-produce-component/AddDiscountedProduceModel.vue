@@ -108,6 +108,7 @@ export default {
                     product_name: "",
                     product_type: "",
                     product_price: "",
+                    product_description: "",
                     unit: "",
                     quantity: "",
                     expiration_date: "",
@@ -135,6 +136,7 @@ export default {
                 this.addProductValue["quantity"] = this.qtyValue;
                 this.addProductValue["expiration_date"] = this.date;
                 this.addProductValue["this.userId"] = this.userId;
+                this.addProductValue["product_description"] = this.product_description;
                 this.addProductValue["unit"] = this.selectedUnitType["unit"];
                 this.addProductValue["product_category"] = this.selectedProdueType["type"];
                 this.addProductValue["product_type"] = PRODUCT_TYPE.discounted_produce;
