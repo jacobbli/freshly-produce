@@ -26,7 +26,7 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
     #avatarProfilePage{
         width: 250px;
         height: 250px;
