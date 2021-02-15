@@ -1,119 +1,123 @@
 <template>
   <Dialog
-    header="Make changes to your product:"
     :visible="isVisible"
+    :showHeader="false"
     :modal="true"
     :closable="false"
-    :contentStyle="{overflow: 'visible'}"
-    @show="updateFormValues">
-        <div class="p-fluid">
-          <div class="p-field p-grid">
-            <label
-              class="p-col-4"
-              for="name">
-              Product Photo
-            </label>
-            <div class="p-col-8">
-              <img
-                class="product-photo"
-                alt="product photo"
-                :src="productObject.product_photo" />
-              <FileUpload
-                mode="basic"
-                name="product_photo"
-                url=""
-                :auto="true"
-                :customUpload="true"
-                @uploader="addFile"
-                accept="image/*"
-                :maxFileSize="1000000"
-                chooseLabel="Change Photo" />
-            </div>
-          </div>
-          <div class="p-field p-grid">
-            <label
-              class="p-col-4"
-              for="name">
-              Product Name
-            </label>
-            <div class="p-col-8">
-              <InputText
-                id="name"
-                type="text"
-                v-model="productObject.product_name" />
-            </div>
-          </div>
-          <div class="p-field p-grid">
-            <label
-              class="p-col-4"
-              for="description">
-              Product Description
-            </label>
-            <div class="p-col-8">
-              <Textarea
-                id="description"
-                :autoResize="true"
-                v-model="productObject.product_description" />
-            </div>
-          </div>
-          <div class="p-field p-grid">
-            <label
-              class="p-col-4"
-              for="price">
-              Product Price
-            </label>
-            <div class="p-col-8">
-              <div class="p-inputgroup">
-                <span class="p-inputgroup-addon">$</span>
-                <InputNumber
-                  id="price"
-                  v-model="productObject.product_price"
-                  :minFractionDigits="2"
-                  :maxFractionDigits="2"/>
-            </div>
-          </div>
+    @show="updateFormValues" >
+    <h2>Modify Your Subscription Plan</h2>
+    <h3>Product Information</h3>
+    <div class="p-fluid">
+      <div class="p-field p-grid">
+        <label
+          class="p-col-4"
+          for="name">
+          Product Photo
+        </label>
+        <div class="p-col-8">
+          <img
+            class="product-photo"
+            alt="product photo"
+            :src="productObject.product_photo" />
+          <FileUpload
+            mode="basic"
+            name="product_photo"
+            url=""
+            :auto="true"
+            :customUpload="true"
+            @uploader="addFile"
+            accept="image/*"
+            :maxFileSize="1000000"
+            chooseLabel="Change Photo" />
         </div>
-        <div class="p-field p-grid">
-          <label
-            class="p-col-4"
-            for="unit">
-            Unit of Measurement
-          </label>
-          <div class="p-col-8">
-            <Dropdown
-              v-model="productObject.unit"
-              :options="unitOfMeasurement"
-              optionLabel="unit"
-              optionValue="unit"
-              @change="setMinDecimal()" />
-          </div>
+      </div>
+      <div class="p-field p-grid">
+        <label
+          class="p-col-4"
+          for="name">
+          Product Name
+        </label>
+        <div class="p-col-8">
+          <InputText
+            id="name"
+            type="text"
+            v-model="productObject.product_name" />
         </div>
-        <div class="p-field p-grid">
-          <label
-            class="p-col-4"
-            for="quantity">
-          Quantity
-          </label>
-          <div class="p-col-8" >
+      </div>
+      <div class="p-field p-grid">
+        <label
+          class="p-col-4"
+          for="description">
+          Product Description
+        </label>
+        <div class="p-col-8">
+          <Textarea
+            id="description"
+            :autoResize="true"
+            v-model="productObject.product_description" />
+        </div>
+      </div>
+      <div class="p-field p-grid">
+        <label
+          class="p-col-4"
+          for="price">
+          Product Price
+        </label>
+        <div class="p-col-8">
+          <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">$</span>
             <InputNumber
-              v-model="productObject.quantity"
-              :minFractionDigits="minDecimal" />
+              id="price"
+              v-model="productObject.product_price"
+              :minFractionDigits="2"
+              :maxFractionDigits="2"/>
           </div>
         </div>
-        <div class="p-field p-grid">
-          <label
-            class="p-col-4"
-            for="frequency">
-            Delivery Frequency
-          </label>
-          <div class="p-col-8">
-            <Dropdown
-              v-model="productObject.frequency"
-              :options="frequencyOfDelivery"
-              optionLabel="frequency"
-              optionValue="frequency" />
-          </div>
+      </div>
+      <div class="p-field p-grid">
+        <label
+          class="p-col-4"
+          for="unit">
+          Unit of Measurement
+        </label>
+        <div class="p-col-8">
+          <Dropdown
+            v-model="productObject.unit"
+            :options="unitOfMeasurement"
+            optionLabel="unit"
+            optionValue="unit"
+            @change="setMinDecimal()" />
         </div>
+      </div>
+      <div class="p-field p-grid">
+        <label
+          class="p-col-4"
+          for="quantity">
+        Quantity
+        </label>
+        <div class="p-col-8" >
+          <InputNumber
+            v-model="productObject.quantity"
+            :minFractionDigits="minDecimal" />
+        </div>
+      </div>
+    </div>
+    <div class="p-fluid">
+      <h3>Subscription Terms</h3>
+      <div class="p-field p-grid">
+        <label
+          class="p-col-4"
+          for="frequency">
+          Delivery Frequency
+        </label>
+        <div class="p-col-8">
+          <Dropdown
+            v-model="productObject.frequency"
+            :options="frequencyOfDelivery"
+            optionLabel="frequency"
+            optionValue="frequency" />
+        </div>
+      </div>
       <div class="p-field p-grid">
         <label
           class="p-col-4"
@@ -128,19 +132,19 @@
             optionValue="code" />
         </div>
       </div>
-      <div class="button-group">
-        <Button
-          label="Cancel"
-          class="p-button-danger"
-          @click="cancel"
-          icon="pi pi-times"
-          iconPos="left" />
-        <Button
-          label="Confirm"
-          @click="editProduct()"
-          icon="pi pi-pencil"
-          iconPos="left" />
-      </div>
+    </div>
+    <div class="button-group">
+      <Button
+        label="Cancel"
+        class="p-button-danger"
+        @click="cancel"
+        icon="pi pi-times"
+        iconPos="left" />
+      <Button
+        label="Confirm"
+        @click="editProduct()"
+        icon="pi pi-pencil"
+        iconPos="left" />
     </div>
   </Dialog>
 </template>
@@ -202,9 +206,6 @@ export default {
         frequency: '',
         delivery_day: ''
       },
-      selectedUnit: {name: ''},
-      selectedFrequency: {frequency: ''},
-      selectedDay: Number,
       minDecimal: 0,
       unitOfMeasurement: [
         {unit: 'Units'},
@@ -257,8 +258,9 @@ export default {
 }
 
 .button-group {
-  display: inline-flex;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .p-dropdown	 {
@@ -270,6 +272,11 @@ button {
 }
 
 .product-photo {
-  width: 75%;
+  width: 50%;
 }
+
+h2, h3 {
+  text-align: start;
+}
+
 </style>

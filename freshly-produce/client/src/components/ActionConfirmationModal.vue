@@ -1,10 +1,12 @@
 <template>
   <Dialog
-    :header="setHeader"
+    :showHeader="false"
     :visible="isVisible"
     :modal="true"
     :closable="false">
+    <h2>{{setHeader}}</h2>
     <div class="product-info">
+      <h3>Product Information</h3>
       <div class="p-fluid">
         <div class="p-field p-grid">
           <label
@@ -46,11 +48,12 @@
             {{selectedProduct.quantity}} {{selectedProduct.unit}}
           </div>
         </div>
+        <h3>Subscription Terms</h3>
         <div class="p-field p-grid">
           <label
             class="p-col-6"
             for="name">
-            Frequency
+            Delivery Frequency
           </label>
           <div class="p-col-6">
             {{selectedProduct.frequency}}
@@ -69,8 +72,10 @@
       </div>
     </div>
     <template #footer>
-      <Button label="No" icon="pi pi-times" @click="cancel" class="p-button-text"/>
-      <Button label="Yes" icon="pi pi-check" @click="confirm" autofocus />
+      <div class="button-group">
+        <Button label="No" icon="pi pi-times" @click="cancel" class="p-button-danger" />
+        <Button label="Yes" icon="pi pi-check" @click="confirm" autofocus />
+      </div>
     </template>
   </Dialog>
 </template>
@@ -133,13 +138,22 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .p-fluid {
-  width: 300px;
+  width: 400px;
 }
 
 .p-field {
   text-align: start;
 }
 
+h2, h3 {
+  text-align: start;
+}
+
+.button-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 </style>

@@ -3,9 +3,9 @@
     :visible="isVisible"
     :modal="true"
     :closable="false"
-    :showHeader="false" >
-    <h2>Add a new product for your customers to subscribe to:</h2>
-
+    :showHeader="false"
+    @show="onShow" >
+    <h2>Create a New Subscription Plan</h2>
     <div>
       <h3>Product Information</h3>
       <div class="p-fluid">
@@ -37,7 +37,7 @@
               </template>
             </FileUpload>
             <sub>
-              *If you don't upload a photo now,
+              *If you don't upload a photo,
               a random photo will be shown for your product.
               You can always upload a photo later!
             </sub>
@@ -53,7 +53,9 @@
             <InputText
               id="name"
               type="text"
-              v-model="productObject.product_name" />
+              v-model="productObject.product_name"
+              :class="{ 'p-invalid': !productObject.product_name }"
+              placeholder="What are you selling?" />
           </div>
         </div>
         <div class="p-field p-grid">
@@ -66,7 +68,9 @@
             <Textarea
               id="description"
               :autoResize="true"
-              v-model="productObject.product_description" />
+              v-model="productObject.product_description"
+              :class="{ 'p-invalid': !productObject.product_description }"
+              placeholder="Briefly describe your product" />
           </div>
         </div>
         <div class="p-field p-grid">
@@ -82,7 +86,9 @@
                 id="price"
                 v-model="productObject.product_price"
                 :minFractionDigits="2"
-                :maxFractionDigits="2" />
+                :maxFractionDigits="2"
+                :class="{ 'p-invalid': !productObject.product_price }"
+                placeholder="What is the price of your product?" />
             </div>
           </div>
         </div>
@@ -98,8 +104,9 @@
               :options="unitOfMeasurement"
               optionLabel="unit"
               optionValue="unit"
-              placeholder="Select a unit"
-              @change="setMinDecimal()" />
+              placeholder="Unit of Measurement"
+              @change="setMinDecimal()"
+              :class="{ 'p-invalid': !productObject.unit }" />
           </div>
         </div>
         <div class="p-field p-grid">
@@ -111,12 +118,14 @@
           <div class="p-col-8" >
             <InputNumber
               v-model="productObject.quantity"
-              :minFractionDigits="minDecimal"/>
+              :minFractionDigits="minDecimal"
+              :class="{ 'p-invalid': !productObject.quantity }"
+              placeholder="How much are you selling per subscription?" />
           </div>
         </div>
       </div>
       <div class="p-fluid">
-      <h3>Subscription Plan Terms</h3>
+      <h3>Subscription Terms</h3>
         <div class="p-field p-grid">
           <label
             class="p-col-12 p-md-4"
@@ -129,7 +138,8 @@
               :options="frequencyOfDelivery"
               optionLabel="frequency"
               optionValue="frequency"
-              placeholder="Select a Frequency" />
+              placeholder="How often will you ship your products?"
+              :class="{ 'p-invalid': !productObject.frequency }" />
           </div>
         </div>
         <div class="p-field p-grid">
@@ -144,11 +154,12 @@
               :options="days"
               optionLabel="day"
               optionValue="code"
-              placeholder="Select the day of the week" />
+              placeholder="On which day of the week will you ship?"
+              :class="{ 'p-invalid': !productObject.delivery_day }" />
           </div>
         </div>
       </div>
-      <div class="action-buttons">
+      <div class="button-group">
         <Button
           label="Cancel"
           class="p-button-danger"
@@ -159,7 +170,8 @@
           label="Submit"
           @click="onSubmit"
           icon="pi pi-check"
-          iconPos="left" />
+          iconPos="left"
+          :disabled="isDisabled" />
       </div>
     </div>
   </Dialog>
@@ -179,15 +191,15 @@ export default {
     return {
       minDecimal: 0,
       productObject: {
-        product_photo: null,
-        product_name: '',
-        product_description: '',
+        product_photo: '',
+        product_name: null,
+        product_description: null,
         product_price: null,
         product_type: PRODUCT_TYPE['subscription'],
         quantity: null,
-        unit: '',
-        frequency: '',
-        delivery_day: '',
+        unit: null,
+        frequency: null,
+        delivery_day: null,
       },
       unitOfMeasurement: [
         {unit: 'Units'},
@@ -202,6 +214,14 @@ export default {
     }
   },
   computed: {
+    isDisabled: function () {
+      let hasNull = Object.keys(this.productObject).find(keys => this.productObject[keys] === null);
+      if (hasNull) {
+        return true;
+      }
+      return false;
+    },
+
     days: function () {
       if (this.productObject === null) {
         return null;
@@ -245,6 +265,20 @@ export default {
       }
     },
 
+    onShow() {
+      this.productObject = {
+        product_photo: '',
+        product_name: null,
+        product_description: null,
+        product_price: null,
+        product_type: PRODUCT_TYPE['subscription'],
+        quantity: null,
+        unit: null,
+        frequency: null,
+        delivery_day: null,
+      }
+    },
+
     onCancel() {
       this.$emit('closeModal');
     },
@@ -261,7 +295,7 @@ export default {
 <style scoped>
 
 .p-fluid {
-  width: 700px;
+  width: 600px;
 }
 
 .p-field {
@@ -272,7 +306,7 @@ h2, h3 {
   text-align: start;
 }
 
-.action-buttons {
+.button-group {
   display: flex;
   align-items: center;
   justify-content: space-between;
