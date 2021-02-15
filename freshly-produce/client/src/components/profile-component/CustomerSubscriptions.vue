@@ -10,20 +10,26 @@
       </template>
 
      <template #grid="slotProps">
-          <div class="p-col-12 p-md-4">
-            <div class="product-grid-item card">
-                <div class="product-grid-item-content">
-                  <subscription-product-description :selected-product="slotProps.data" />
-                </div>
-                <div class="product-grid-item-bottom">
-                    <span class="product-price">${{slotProps.data.product_price}}</span>
-                    <Button 
-                      icon="pi pi-times" 
-                      class="p-button-danger" 
-                      label="Unsubscribe" 
-                      @click="openConfirmationModal(slotProps.data, 'unsubscribe')" />
-                </div>
+        <div class="p-col-12 p-md-4">
+          <div class="product-grid-item card">
+            <div class="product-grid-item-top">
+              <div>
+                <i class="pi pi-tag product-category-icon"></i>
+                <span class="product-category">{{slotProps.data.product_category}}</span>
+              </div>
             </div>
+            <div class="product-grid-item-content">
+              <subscription-product-description :selected-product="slotProps.data" />
+            </div>
+            <div class="product-grid-item-bottom">
+              <span class="product-price">${{slotProps.data.product_price}}</span>
+                <Button
+                  icon="pi pi-times"
+                  class="p-button-danger"
+                  label="Unsubscribe"
+                  @click="openConfirmationModal(slotProps.data, 'unsubscribe')" />
+            </div>
+          </div>
         </div>
       </template>
     </DataView>
@@ -154,7 +160,7 @@ export default {
 .product-grid-item-top {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin: .5rem;
 }
 

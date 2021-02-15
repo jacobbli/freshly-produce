@@ -1,75 +1,79 @@
 <template>
-    <div class="layout-content">
-    <h1>My Offered Subscriptions</h1>
-    <DataView v-if="listProduct.length > 0" :value="listProduct" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
-      <template #header>
-          <div class="p-grid p-nogutter">
-              <div class="p-col-6" style="text-align: left">
-                  <Dropdown
-                    v-model="sortKey"
-                    :options="sortOptions"
-                    optionLabel="label"
-                    placeholder="Sort By Price"
-                    @change="onSortChange($event)"/>
-              </div>
-              <div class="p-col-6" style="text-align: right">
-                <Button
-                  label="Add Product"
-                  icon="pi pi-plus"
-                  class="p-button"
-                  @click="openSubscriptionCreationModal()"/>
-              </div>
-          </div>
-      </template>
-
-      <template #grid="slotProps">
-          <div class="p-col-12 p-md-4">
-            <div class="product-grid-item card">
-                <div class="product-grid-item-top">
-                    <span class="product-category">
-                      <Button
-                        class="p-button-sm edit-button"
-                        icon="pi pi-pencil"
-                        @click="openEditModal(slotProps.data)" />
-                      <Button
-                        class="p-button-sm p-button-danger"
-                        icon="pi pi-times"
-                        @click="openConfirmationModal(slotProps.data, 'delete')"/>
-                    </span>
-                </div>
-                <div class="product-grid-item-content">
-                  <subscription-product-description :selected-product="slotProps.data" />
-                </div>
-                <div class="product-grid-item-bottom">
-                    <span class="product-price">${{slotProps.data.product_price}}</span>
-                    <Button
-                    v-if="slotProps.data.is_published"
-                    icon="pi pi-times"
-                    class="p-button-warning"
-                    label="Unpublish"
-                    @click="openConfirmationModal(slotProps.data, 'unpublish')" />
-                  <Button
-                    v-else
-                    icon="pi pi-check"
-                    label="Publish"
-                    @click="openConfirmationModal(slotProps.data, 'publish')" />
-                </div>
-            </div>
+  <div class="layout-content">
+  <h1>My Offered Subscriptions</h1>
+  <DataView v-if="listProduct.length > 0" :value="listProduct" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
+    <template #header>
+      <div class="p-grid p-nogutter">
+        <div class="p-col-6" style="text-align: left">
+          <Dropdown
+            v-model="sortKey"
+            :options="sortOptions"
+            optionLabel="label"
+            placeholder="Sort By Price"
+            @change="onSortChange($event)"/>
         </div>
-      </template>
-    </DataView>
-    <div
-      v-else
-      class="no-subscriptions-button">
-      <Button @click="openSubscriptionCreationModal()">
-        <i class="pi pi-plus" style="fontSize: 2rem"></i>
-        <span class="empty-button-label">
-          You haven't added any subscriptions.
-          <br>
-          Click here to add a product and start selling!
-        </span>
-      </Button>
-    </div>
+        <div class="p-col-6" style="text-align: right">
+          <Button
+            label="Add Product"
+            icon="pi pi-plus"
+            class="p-button"
+            @click="openSubscriptionCreationModal()"/>
+        </div>
+      </div>
+    </template>
+
+    <template #grid="slotProps">
+      <div class="p-col-12 p-lg-4 p-xl-3">
+        <div class="product-grid-item card">
+          <div class="product-grid-item-top">
+            <div>
+              <i class="pi pi-tag product-category-icon"></i>
+              <span class="product-category">{{slotProps.data.product_category}}</span>
+            </div>
+            <span>
+              <Button
+                class="p-button-sm edit-button"
+                icon="pi pi-pencil"
+                @click="openEditModal(slotProps.data)" />
+              <Button
+                class="p-button-sm p-button-danger"
+                icon="pi pi-times"
+                @click="openConfirmationModal(slotProps.data, 'delete')"/>
+            </span>
+          </div>
+          <div class="product-grid-item-content">
+            <subscription-product-description :selected-product="slotProps.data" />
+          </div>
+          <div class="product-grid-item-bottom">
+            <span class="product-price">${{slotProps.data.product_price}}</span>
+            <Button
+              v-if="slotProps.data.is_published"
+              icon="pi pi-times"
+              class="p-button-warning"
+              label="Unpublish"
+              @click="openConfirmationModal(slotProps.data, 'unpublish')" />
+            <Button
+              v-else
+              icon="pi pi-check"
+              label="Publish"
+              @click="openConfirmationModal(slotProps.data, 'publish')" />
+          </div>
+        </div>
+      </div>
+    </template>
+  </DataView>
+  <div
+    v-else
+    class="no-subscriptions-button">
+    <Button @click="openSubscriptionCreationModal()">
+      <i class="pi pi-plus" style="fontSize: 2rem"></i>
+      <span class="empty-button-label">
+        You haven't added any subscriptions.
+        <br>
+        Click here to add a product and start selling!
+      </span>
+    </Button>
+  </div>
     <subscription-creation-modal
       :is-visible="modalIsVisible"
       @submit-form="createSubscription()"
@@ -266,7 +270,7 @@ export default {
 .product-grid-item-top {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin: .5rem;
 }
 

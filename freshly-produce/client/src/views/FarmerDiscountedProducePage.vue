@@ -1,7 +1,7 @@
 <template>
   <div class="layout-content">
     <h1>My Discounted Produce</h1>
-    <DataView :value="listProduct" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
+    <DataView v-if="listProduct.length > 0" :value="listProduct" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
       <template #header>
           <div class="p-grid p-nogutter">
               <div class="p-col-6" style="text-align: left">
@@ -16,8 +16,12 @@
       <template #grid="slotProps">
           <div class="p-col-12 p-lg-4 p-xl-3">
             <div class="product-grid-item card ">
-                <div class="product-grid-item-top">
-                    <span class="product-category">
+              <div class="product-grid-item-top">
+                <div>
+                  <i class="pi pi-tag product-category-icon"></i>
+                  <span class="product-category">{{slotProps.data.product_category}}</span>
+                </div>
+                    <span>
                       <Button class="p-button-sm edit-button" icon="pi pi-pencil"  @click="openEditModal(slotProps.data)"/>
                       <Button
                         class="p-button-sm p-button-danger"
@@ -49,6 +53,18 @@
         </div>
       </template>
     </DataView>
+    <div
+      v-else
+      class="no-products-button">
+      <Button @click="openModal()">
+        <i class="pi pi-plus-circle" style="fontSize: 2rem"></i>
+        <span class="empty-button-label">
+          You haven't added any discounted produce.
+          <br>
+          Click here to add a product and start selling!
+        </span>
+      </Button>
+    </div>
 
     <AddDiscountedProduceModel @eventname="updateparent" v-model:isVisible="modalIsVisible" />
     <action-confirmation-modal
@@ -173,7 +189,6 @@ export default {
           let indexT = item.expiration_date.indexOf("T")
           item.expiration_date = item.expiration_date.substring(0,indexT)
         })
-        console.log(res)
         this.listProduct = res;
       }).catch(err => {
         console.error(err);
@@ -243,7 +258,7 @@ export default {
 .product-grid-item-top {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin: .5rem;
 }
 
@@ -283,4 +298,14 @@ export default {
   border-radius: 4px;
   margin-bottom: 2rem;
 }
+
+.no-products-button {
+  margin-top: 300px;
+}
+
+.empty-button-label {
+  text-align: start;
+  margin-left: 10px;
+}
+
 </style>
