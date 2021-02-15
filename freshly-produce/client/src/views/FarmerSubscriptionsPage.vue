@@ -17,7 +17,7 @@
                   label="Add Product"
                   icon="pi pi-plus"
                   class="p-button"
-                  @click="openModal()"/>
+                  @click="openSubscriptionCreationModal()"/>
               </div>
           </div>
       </template>
@@ -38,10 +38,14 @@
                     </span>
                 </div>
                 <div class="product-grid-item-content">
-                    <img v-if="productPhotoEmpty" alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
-                    <img v-else alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
-                    <div class="product-name">{{slotProps.data.product_name}}</div>
-                    <div class="product-description">{{slotProps.data.product_description}}</div>
+                  <img alt="user header" :src="slotProps.data.product_photo" />
+                  <div class="product-name">{{slotProps.data.product_name}}</div>
+                  <div class="product-description">{{slotProps.data.product_description}}</div>
+                    <div class="quantity"> {{slotProps.data.quantity + ' ' + slotProps.data.unit }} </div>
+                  <div class="delivery-frequency">
+                    <i class="pi pi-clock"></i>
+                    {{setDeliveryFrequencyDescription(slotProps.data.frequency, slotProps.data.delivery_day)}}
+                  </div>
                 </div>
                 <div class="product-grid-item-bottom">
                     <span class="product-price">${{slotProps.data.product_price}}</span>
@@ -61,20 +65,22 @@
         </div>
       </template>
     </DataView>
-      <div
+    <div
       v-else
       class="no-subscriptions-button">
-    <Button @click="openModal()">
-      You haven't added any subscriptions.
-      <br>
-      <br>
-      Click here to add a product and start selling!</Button>
+      <Button @click="openSubscriptionCreationModal()">
+        <i class="pi pi-plus" style="fontSize: 2rem"></i>
+        <span class="empty-button-label">
+          You haven't added any subscriptions.
+          <br>
+          Click here to add a product and start selling!
+        </span>
+      </Button>
     </div>
     <subscription-creation-modal
       :is-visible="modalIsVisible"
-      v-on:cancel="closeModal()"
-      @confirm="confirmModalAction($event)"
-      @cancel="closeConfirmationModal()" />
+      @submit-form="createSubscription()"
+      @close-modal="closeSubscriptionCreationModal()" />
 
     <edit-modal
       :is-visible="editModalIsVisible"
@@ -93,7 +99,7 @@
 </template>
 
 <script>
-import SubscriptionCreationModal from '../components/subscription-component/SubscriptionCreationModal.vue'
+import SubscriptionCreationModal from '../components/SubscriptionCreationModal.vue'
 import ActionConfirmationModal from '../components/ActionConfirmationModal.vue'
 import EditModal from '../components/EditModal.vue'
 import { getOfferedSubscriptions } from '../api/SubscriptionsApi.js'
@@ -122,17 +128,25 @@ export default {
       selectedProduct: null,
       selectedTask: null,
       listProduct: [],
-      listphotos:[
-        "blueberries.jpg",
-        "broccoli.jpg",
-        "carrots.jpg",
-        "fruit.jpg",
-        "root.jpg",
-        "tuber.jpg"
-      ]
+      displayedDate: {
+        1: 'Monday',
+        2: 'Tuesday',
+        3: 'Wednesday',
+        4: 'Thursday',
+        5: 'Friday'
+      }
 		}
 	},
   methods: {
+    setDeliveryFrequencyDescription(frequency, date) {
+      if (frequency == 'Monthly') {
+        return `Delivers on the first ${this.displayedDate[date]} of each month`;
+      } else if (frequency == 'Bi-weekly') {
+        return `Delivers on the FIRST and THIRD ${this.displayedDate[date]}s of each month`;
+      } else {
+        return `Delivers each week on ${this.displayedDate[date]}`;
+      }
+    },
     changePublishedStatus() {
       let index = this.listProduct.findIndex(element => {
         return element.product_id == this.selectedProduct.product_id;
@@ -159,7 +173,6 @@ export default {
         this.editModalIsVisible = true;
     },
 
-
     openConfirmationModal(product, task) {
       this.selectedProduct = product;
       this.selectedTask = task;
@@ -174,11 +187,11 @@ export default {
       this.editModalIsVisible = false;
     },
 
-    openModal() {
+    openSubscriptionCreationModal() {
       this.modalIsVisible = true;
     },
 
-    closeModal() {
+    closeSubscriptionCreationModal() {
       this.modalIsVisible = false;
     },
 
@@ -188,21 +201,15 @@ export default {
         product_type: PRODUCT_TYPE['subscription']
       };
       getOfferedSubscriptions(reqForm).then(res => {
-        res.forEach((item) => {
-          if(item.product_photo == null){
-            item.product_photo = "/images/temp/"+this.listphotos[Math.floor(Math.random() * 6)]
-          }
-        })
-        
         this.listProduct = res;
       }).catch(err => {
         console.error(err);
       });
     },
 
-    confirmModalAction() {
+    createSubscription() {
       this.updateOfferedSubscriptionsList();
-      this.closeModal();
+      this.closeSubscriptionCreationModal();
     },
 
     onSortChange(event){
@@ -276,8 +283,6 @@ export default {
 
 img {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  width:  100px;
-  height: 125px;
   margin: 2rem 0;
 }
 
@@ -286,7 +291,8 @@ img {
 }
 
 .product-grid-item-content img {
-  width: 75%
+  width: 75%;
+  height: 250px;
 }
 
 .product-price {
@@ -306,4 +312,8 @@ img {
   margin-bottom: 2rem;
 }
 
+.empty-button-label {
+  text-align: start;
+  margin-left: 10px;
+}
 </style>

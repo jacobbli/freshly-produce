@@ -11,9 +11,6 @@ import CustomerSubscriptions from '../components/profile-component/CustomerSubsc
 import FarmerSubscriptionsPage from '../views/FarmerSubscriptionsPage.vue'
 import AvailableSubscriptionsPage from '../views/AvailableSubscriptionsPage.vue'
 import MyDetail from '../components/profile-component/MyDetail.vue'
-import SubscriptionCreationPage from '../views/SubscriptionCreationPage.vue'
-import FrequencySelectionForm from '../components/subscription-component/FrequencySelectionForm.vue'
-import ProductDescriptionForm from '../components/subscription-component/ProductDescriptionForm.vue'
 import FarmerDiscountedProducePage from '../views/FarmerDiscountedProducePage.vue'
 
 const routes = [
@@ -72,32 +69,8 @@ const routes = [
         path: 'my-offers',
         name: 'FarmerSubscriptionsPage',
         component: FarmerSubscriptionsPage,
-        meta: { requiresVendorAuth: true },
-        children: [
-          {
-            path: 'new-subscription',
-            name: 'SubscriptionCreationPage',
-            component: SubscriptionCreationPage,
-            meta: { requiresVendorAuth: true },
-            children: [
-              {
-                path: 'create',
-                name: 'ProductDescriptionForm',
-                component: ProductDescriptionForm,
-                meta: { requiresVendorAuth: true },
-                props: true
-              },
-              {
-                path: 'frequency',
-                name: 'FrequencySelectionForm',
-                component: FrequencySelectionForm,
-                meta: { requiresVendorAuth: true },
-                props: true
-              },
-            ]
-          }
-        ]
-      },
+        meta: { requiresVendorAuth: true }
+      }
     ]
   },
   {

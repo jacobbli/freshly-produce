@@ -1,13 +1,14 @@
 <template>
   <Dialog
     :visible="isVisible"
-    :showHeader="false"
     :modal="true"
     :closable="false"
-    @show="updateFormValues" 
-    class="p-col-8 p-p-0" >
-    <h2>Modify Your Subscription Plan</h2>
-    <h3>Product Information</h3>
+    :showHeader="false"
+    class="p-col-8 p-p-0"
+    @show="onShow" >
+    <h2>Create a New Subscription Plan</h2>
+    <div>
+      <h3>Product Information</h3>
       <div class="p-fluid p-field p-grid" style="width:100%">
         <div class="p-field p-col-12 p-mt-2">
           <InputText
@@ -124,80 +125,48 @@
               :class="{ 'p-invalid': !productObject.delivery_day }" />
         </div>
       </div>
-    <div class="button-group">
-      <Button
-        label="Cancel"
-        class="p-button-danger"
-        @click="cancel"
-        icon="pi pi-times-circle"
-        iconPos="left" />
-      <Button
-        label="Submit"
-        @click="editProduct()"
-        icon="pi pi-check"
-        iconPos="left" />
+      <div class="button-group">
+        <Button
+          label="Cancel"
+          class="p-button-danger"
+          @click="onCancel"
+          icon="pi pi-times-circle"
+          iconPos="left" />
+        <Button
+          label="Submit"
+          @click="onSubmit"
+          icon="pi pi-check"
+          iconPos="left"
+          :disabled="isDisabled" />
+      </div>
     </div>
   </Dialog>
 </template>
 
 <script>
-import { editSubscription } from '../api/SubscriptionsApi.js'
 import { toArrayBuffer } from '../services/FileService'
+import { createNewSubscription } from '../api/SubscriptionsApi.js'
+import { PRODUCT_TYPE } from '../models.js'
 
 export default {
-  name: 'EditModal',
+  name: 'SubscriptionCreationModal',
   props: {
     isVisible: Boolean,
-    selectedProduct: null
-  },
-  methods: {
-    cancel() {
-      this.$emit('cancel');
-    },
-    editProduct() {
-      editSubscription(this.productObject).then(() => {
-        this.$emit('editProduct');
-      })
-    },
-    setMinDecimal() {
-      if (this.productObject.unit === 'Unit') {
-        this.quantity = Math.trunc(this.quantity)
-        this.minDecimal = 0;
-      } else {
-        this.minDecimal = 2;
-      }
-    },
-
-    updateFormValues() {
-      Object.assign(this.productObject, this.selectedProduct);
-      this.productObject.product_price = parseFloat(this.productObject.product_price);
-      this.productObject.quantity = parseFloat(this.productObject.quantity);
-      this.productObject.delivery_day = parseFloat(this.productObject.delivery_day);
-    },
-
-    async addFile(event) {
-      try {
-        let image = await toArrayBuffer(event.files[0])
-        this.productObject['product_photo'] = image
-      } catch(error) {
-        console.error(error)
-      }
-    }
   },
   data() {
     return {
-      productObject: {
-        product_id: '',
-        product_name: '',
-        product_description: '',
-        product_price: 0,
-        product_photo: '',
-        unit: '',
-        quantity: 0,
-        frequency: '',
-        delivery_day: ''
-      },
       minDecimal: 0,
+      productObject: {
+        product_photo: '',
+        product_name: null,
+        product_description: null,
+        product_price: null,
+        product_category: PRODUCT_TYPE['subscription'],
+        quantity: null,
+        unit: null,
+        frequency: null,
+        delivery_day: null,
+      },
       unitOfMeasurement: [
         {unit: 'Units'},
         {unit: 'Kg'},
@@ -221,40 +190,95 @@ export default {
     }
   },
   computed: {
-    days: function () {
-      let options = [];
-      if (this.productObject === null) {
-        return options;
+    isDisabled: function () {
+      let hasNull = Object.keys(this.productObject).find(keys => this.productObject[keys] === null);
+      if (hasNull) {
+        return true;
       }
-      if (this.productObject.frequency == 'Monthly') {
-        options = [
+      return false;
+    },
+
+    days: function () {
+      if (this.productObject === null) {
+        return null;
+      } else if (this.productObject.frequency == 'Monthly') {
+        const options = [
           {day: 'first Monday of the month', code: 1},
           {day: 'first Tuesday of the month', code: 2},
           {day: 'first Wednesday of the month', code: 3},
           {day: 'first Thursday of the month', code: 4},
           {day: 'first Friday of the month', code: 5},
         ]
-      } else if (this.productObject.frequency == 'Weekly' || this.productObject.frequency == 'Bi-weekly') {
-        options = [
+        return options
+        } else if (this.productObject.frequency == 'Weekly' || this.productObject.frequency == 'Bi-weekly') {
+        const options = [
           {day: 'Monday', code: 1},
           {day: 'Tuesday', code: 2},
           {day: 'Wednesday', code: 3},
           {day: 'Thursday', code: 4},
           {day: 'Friday', code: 5},
         ]
+        return options
       }
-      return options;
+      return null;
+    }
+  },
+  methods: {
+    setMinDecimal() {
+      if (this.productObject.unit === 'Units') {
+        this.quantity = Math.trunc(this.quantity)
+        this.minDecimal = 0;
+      } else {
+        this.minDecimal = 2;
+      }
+    },
+    async addFile(event) {
+      try {
+        let image = await toArrayBuffer(event.files[0])
+        this.productObject['product_photo'] = image
+      } catch(error) {
+        console.error(error)
+      }
+    },
+
+    onShow() {
+      this.productObject = {
+        product_photo: '',
+        product_name: null,
+        product_description: null,
+        product_price: null,
+        product_type: PRODUCT_TYPE['subscription'],
+        quantity: null,
+        unit: null,
+        frequency: null,
+        delivery_day: null,
+      }
+    },
+
+    onCancel() {
+      this.$emit('closeModal');
+    },
+
+    onSubmit() {
+      createNewSubscription(this.productObject).then(() => {
+        this.$emit('submitForm');
+      });
     }
   }
 }
 </script>
 
 <style scoped>
+
 .p-fluid {
   width: 600px;
 }
 
 .p-field {
+  text-align: start;
+}
+
+h2, h3 {
   text-align: start;
 }
 
@@ -275,9 +299,4 @@ button {
 .product-photo {
   width: 50%;
 }
-
-h2, h3 {
-  text-align: start;
-}
-
 </style>

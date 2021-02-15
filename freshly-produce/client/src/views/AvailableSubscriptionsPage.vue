@@ -1,7 +1,7 @@
 <template>
   <div class="layout-content" >
     <h1>Available Subscriptions</h1>
-    <DataView v-if="listProduct.length !== 0" :value="listProduct" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
+    <DataView v-if="listProduct.length > 0" :value="listProduct" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
       <template #header>
           <div class="p-grid p-nogutter">
               <div class="p-col-6" style="text-align: left">
@@ -18,11 +18,14 @@
                     </span>
                 </div>
                 <div class="product-grid-item-content">
-                    <img v-if="productPhotoEmpty" alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
-                    <img v-else alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
-        
+                    <img alt="user header" :src="slotProps.data.product_photo" />
                     <div class="product-name">{{slotProps.data.product_name}}</div>
                     <div class="product-description">{{slotProps.data.product_description}}</div>
+                    <div class="quantity"> {{slotProps.data.quantity + ' ' + slotProps.data.unit }} </div>
+                    <div class="delivery-frequency">
+                      <i class="pi pi-clock"></i>
+                      {{setDeliveryFrequencyDescription(slotProps.data.frequency, slotProps.data.delivery_day)}}
+                    </div>
                 </div>
                 <div class="product-grid-item-bottom">
                     <span class="product-price">${{slotProps.data.product_price}}</span>
@@ -39,8 +42,14 @@
             </div>
         </div>
       </template>
-
     </DataView>
+    <div
+      v-else
+      class="no-subscriptions-label">
+      <h3>
+        More subscription plans coming soon!
+      </h3>
+    </div>
     <order-modal
       :is-visible="orderModalIsVisible"
       :selected-product="selectedProduct"
@@ -75,14 +84,13 @@ export default {
       selectedProduct: null,
       selectedTask: null,
       listProduct:[],
-      listphotos:[
-        "blueberries.jpg",
-        "broccoli.jpg",
-        "carrots.jpg",
-        "fruit.jpg",
-        "root.jpg",
-        "tuber.jpg"
-      ]
+      displayedDate: {
+        1: 'Monday',
+        2: 'Tuesday',
+        3: 'Wednesday',
+        4: 'Thursday',
+        5: 'Friday'
+      }
 		}
 	},
   methods: {
@@ -91,7 +99,15 @@ export default {
       this.selectedTask = task;
       this.orderModalIsVisible = true;
     },
-
+    setDeliveryFrequencyDescription(frequency, date) {
+      if (frequency == 'Monthly') {
+        return `Delivers on the first ${this.displayedDate[date]} of each month`;
+      } else if (frequency == 'Bi-weekly') {
+        return `Delivers on the FIRST and THIRD ${this.displayedDate[date]}s of each month`;
+      } else {
+        return `Delivers each week on ${this.displayedDate[date]}`;
+      }
+    },
     closeOrderModal() {
       this.orderModalIsVisible = false;
     },
@@ -181,8 +197,6 @@ export default {
 
 img {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  width:  100px;
-  height: 125px;
   margin: 2rem 0;
 }
 
@@ -191,7 +205,8 @@ img {
 }
 
 .product-grid-item-content img {
-  width: 75%
+  width: 75%;
+  height: 250px;
 }
 
 .product-price {
@@ -205,5 +220,9 @@ img {
   box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
   border-radius: 4px;
   margin-bottom: 2rem;
+}
+
+.no-subscriptions-label {
+  margin-top: 300px;
 }
 </style>

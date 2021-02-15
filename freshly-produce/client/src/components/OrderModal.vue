@@ -1,17 +1,78 @@
 <template>
   <Dialog 
-    :header="setHeader" 
+    :showHeader="false"
     :visible="isVisible" 
     :modal="true"
-    :closable="false">
-    <div class="product-info">
-      <p>Product Name: {{selectedProduct.product_name}}</p>
-      <p>Product Type: {{selectedProduct.product_type}}</p>
-      <p>Product Price: {{selectedProduct.product_price}}</p>
+    :closable="false"
+    :contentStyle="{overflow: 'visible'}" >
+    <h2>Subscribe to Product</h2>
+    <h3>Product Information</h3>
+    <div class="p-fluid">
+      <div class="p-field p-grid">
+        <label
+          class="p-col-6"
+          for="name">
+          Product Name
+        </label>
+        <div class="p-col-6">
+          {{selectedProduct.product_name}}
+        </div>
+      </div>
+      <div class="p-field p-grid">
+        <label
+          class="p-col-6"
+          for="name">
+          Product Description
+        </label>
+        <div class="p-col-6">
+          {{selectedProduct.product_description}}
+        </div>
+      </div>
+      <div class="p-field p-grid">
+        <label
+          class="p-col-6"
+          for="name">
+          Product Price
+        </label>
+        <div class="p-col-6">
+          ${{selectedProduct.product_price}}
+        </div>
+      </div>
+        <div class="p-field p-grid">
+        <label
+          class="p-col-6"
+          for="name">
+          Quantity
+        </label>
+        <div class="p-col-6">
+          {{selectedProduct.quantity}} {{selectedProduct.unit}}
+        </div>
+      </div>
+      <h3>Subscription Terms</h3>
+      <div class="p-field p-grid">
+        <label
+          class="p-col-6"
+          for="name">
+          Delivery Frequency
+        </label>
+        <div class="p-col-6">
+          {{selectedProduct.frequency}}
+        </div>
+      </div>
+      <div class="p-field p-grid">
+        <label
+          class="p-col-6"
+          for="name">
+          Delivery Day
+        </label>
+        <div class="p-col-6">
+          {{displayedDay[selectedProduct.delivery_day]}}
+        </div>
+      </div>
     </div>
-    <h3>Please enter your payment information</h3>
-    <div class="p-grid ">
-        <div class="p-col-12 p-md-4">
+    <h3>Payment Information</h3>
+    <div class="p-fluid ">
+        <div class="p-col-12">
             <div class="p-inputgroup">
             <span class="p-inputgroup-addon">
                 <i class="pi pi-credit-card"></i>
@@ -20,21 +81,24 @@
             </div>
         </div>
 
-        <div class="p-col-12 p-md-4">
+        <div class="p-col-12">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon">
                   <i class="pi pi-calendar"></i>
                 </span>
-                <InputText placeholder="Credit Card Expiration Date" />
+                <Calendar 
+                  id="basic"
+                  v-model="expirationDate"
+                  placeholder="Expiration Date"/>
             </div>
         </div>
 
-        <div class="p-col-12 p-md-4">
+        <div class="p-col-12">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon">
                   <i class="pi pi-key"></i>                  
                 </span>
-                <InputNumber placeholder="Credit Card Security Code" />
+                <InputNumber placeholder="Security Code" />
             </div>
         </div>
     </div>
@@ -55,6 +119,18 @@ export default {
     isVisible: Boolean,
     selectedProduct: null,
     selectedTask: null
+  },
+  data() {
+    return {
+      expirationDate: null,
+      displayedDay: {
+        1: 'Monday',
+        2: 'Tuesday',
+        3: 'Wednesday',
+        4: 'Thursday',
+        5: 'Friday'
+      }
+    }
   },
   computed: {
     setHeader: function() {
@@ -90,6 +166,16 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.p-fluid {
+  width: 600px;
+}
 
+.p-field {
+  text-align: start;
+}
+
+h2, h3 {
+  text-align: start;
+}
 </style>
