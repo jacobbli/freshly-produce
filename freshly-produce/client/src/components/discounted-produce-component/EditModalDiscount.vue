@@ -161,14 +161,12 @@ export default {
 
     updateFormValues() {
       Object.assign(this.productObject, this.selectedProduct);
-      console.log(this.productObject.unit)
       this.productObject.product_price = parseFloat(this.productObject.product_price);
       this.productObject.quantity = parseFloat(this.productObject.quantity);
       this.productObject.delivery_day = parseFloat(this.productObject.delivery_day);
     },
 
     async addFile(event) {
-      console.log(this.productObject.unit)
       try {
         let image = await toArrayBuffer(event.files[0])
         this.productObject['product_photo'] = image
