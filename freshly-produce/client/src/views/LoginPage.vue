@@ -1,16 +1,16 @@
 <template>
   <div class="container p-grid p-ai-center p-jc-center">
-      <router-view></router-view>
+      <login-form></login-form>
   </div>
 </template>
 
 <script>
+import LoginForm from '../components/login-component/LoginForm.vue';
+
 export default {
   name: 'LoginPage',
   components: {
-  },
-  mounted: function() {
-    this.$router.push({name: 'RoleSelectionForm'});
+    LoginForm
   }
 }
 </script>
