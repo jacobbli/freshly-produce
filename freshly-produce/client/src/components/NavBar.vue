@@ -74,7 +74,7 @@ export default {
           visible: () => this.isUserFarmer()
         },
         {
-          label:'My Dicounted Produce',
+          label:'My Discounted Produce',
           icon:'pi pi-apple',
           to: '/my-dicounted-produce',
           visible: () => this.isUserFarmer()
