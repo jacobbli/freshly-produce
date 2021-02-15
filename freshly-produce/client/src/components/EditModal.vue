@@ -4,146 +4,137 @@
     :showHeader="false"
     :modal="true"
     :closable="false"
-    @show="updateFormValues" >
+    @show="updateFormValues" 
+    class="p-col-8 p-p-0" >
     <h2>Modify Your Subscription Plan</h2>
     <h3>Product Information</h3>
-    <div class="p-fluid">
-      <div class="p-field p-grid">
-        <label
-          class="p-col-4"
-          for="name">
-          Product Photo
-        </label>
-        <div class="p-col-8">
-          <img
-            class="product-photo"
-            alt="product photo"
-            :src="productObject.product_photo" />
-          <FileUpload
-            mode="basic"
-            name="product_photo"
-            url=""
-            :auto="true"
-            :customUpload="true"
-            @uploader="addFile"
-            accept="image/*"
-            :maxFileSize="1000000"
-            chooseLabel="Change Photo" />
-        </div>
-      </div>
-      <div class="p-field p-grid">
-        <label
-          class="p-col-4"
-          for="name">
-          Product Name
-        </label>
-        <div class="p-col-8">
+      <div class="p-fluid p-field p-grid" style="width:100%">
+        <div class="p-field p-col-12 p-mt-2">
           <InputText
-            id="name"
+            v-model="productObject.product_name"
+            placeholder="Product Name"
             type="text"
-            v-model="productObject.product_name" />
+            :class="{ 'p-invalid': !productObject.product_name }"/>
         </div>
-      </div>
-      <div class="p-field p-grid">
-        <label
-          class="p-col-4"
-          for="description">
-          Product Description
-        </label>
-        <div class="p-col-8">
+        <div class="p-field p-col-12">
           <Textarea
             id="description"
             :autoResize="true"
-            v-model="productObject.product_description" />
+            placeholder="Product Description"
+            v-model="productObject.product_description"
+            :class="{ 'p-invalid': !productObject.product_description }" />
         </div>
-      </div>
-      <div class="p-field p-grid">
-        <label
-          class="p-col-4"
-          for="price">
-          Product Price
-        </label>
-        <div class="p-col-8">
+        <div class="p-field p-col-12 ">
+          <Dropdown
+            v-model="productObject.product_category"
+            :options="productCategory"
+            optionLabel="type"
+            placeholder="Select a Product Category"
+            :class="{ 'p-invalid': !productObject.product_category }" />
+        </div>
+        <div class="p-field p-col-6 ">
+            <InputNumber id="qty" placeholder="Quantity"
+              :minFractionDigits="minDecimal"
+              :class="{ 'p-invalid': !productObject.quantity }"
+              v-model="productObject.quantity"
+              mode="decimal"
+              showButtons
+              :min="0"
+              :max="1000" />
+        </div>
+        <div class="p-field p-col-6">
+            <Dropdown
+              v-model="productObject.unit"
+              :options="unitOfMeasurement"
+              optionLabel="unit"
+              optionValue="unit"
+              placeholder="Unit of Measurement"
+              @change="setMinDecimal()"
+              :class="{ 'p-invalid': !productObject.unit }" />
+        </div>
+        <div class="p-field p-col-12 p-md-6">
           <div class="p-inputgroup">
-            <span class="p-inputgroup-addon">$</span>
-            <InputNumber
-              id="price"
-              v-model="productObject.product_price"
-              :minFractionDigits="2"
-              :maxFractionDigits="2"/>
+              <span class="p-inputgroup-addon">$</span>
+              <InputNumber
+                id="price"
+                v-model="productObject.product_price"
+                :minFractionDigits="2"
+                :maxFractionDigits="2"
+                :class="{ 'p-invalid': !productObject.product_price }"
+                placeholder="Price" />
           </div>
         </div>
-      </div>
-      <div class="p-field p-grid">
-        <label
-          class="p-col-4"
-          for="unit">
-          Unit of Measurement
-        </label>
-        <div class="p-col-8">
-          <Dropdown
-            v-model="productObject.unit"
-            :options="unitOfMeasurement"
-            optionLabel="unit"
-            optionValue="unit"
-            @change="setMinDecimal()" />
+
+        <div class="p-field p-col-12">
+          <label
+            class="p-col-4"
+            for="photo">
+            Upload Product Photo
+          </label>
+          <div class="p-col-8">
+            <FileUpload
+              mode="basic"
+              id="photo"
+              class="p-fileupload-sm"
+              name="product_photo"
+              url=""
+              :auto="true"
+              :customUpload="true"
+              @uploader="addFile"
+              accept="image/*"
+              :maxFileSize="1000000"
+              chooseLabel="Upload Photo">
+              <template>
+              </template>
+            </FileUpload>
+            <sub>
+              *If you don't upload a photo,
+              a random photo will be shown for your product.
+              You can always upload a photo later!
+            </sub>
+            <div>
+            <img
+              v-if="productObject.product_photo"
+              class="product-photo"
+              alt="product photo"
+              :src="productObject.product_photo" />
+              </div>
+          </div>
+        </div>
+        </div>
+        <h3>Subscription Terms</h3>
+        <div class="p-fluid p-field p-grid" style="width:100%">
+
+        <div class="p-field p-col-6 ">
+            <Dropdown
+              v-model="productObject.frequency"
+              :options="frequencyOfDelivery"
+              optionLabel="frequency"
+              optionValue="frequency"
+              placeholder="How often will you ship your products?"
+              :class="{ 'p-invalid': !productObject.frequency }" />
+        </div>
+        <div class="p-field p-col-6">
+            <Dropdown
+              v-model="productObject.delivery_day"
+              :options="days"
+              optionLabel="day"
+              optionValue="code"
+              placeholder="On which day of the week will you ship?"
+              :class="{ 'p-invalid': !productObject.delivery_day }" />
         </div>
       </div>
-      <div class="p-field p-grid">
-        <label
-          class="p-col-4"
-          for="quantity">
-        Quantity
-        </label>
-        <div class="p-col-8" >
-          <InputNumber
-            v-model="productObject.quantity"
-            :minFractionDigits="minDecimal" />
-        </div>
-      </div>
-    </div>
-    <div class="p-fluid">
-      <h3>Subscription Terms</h3>
-      <div class="p-field p-grid">
-        <label
-          class="p-col-4"
-          for="frequency">
-          Delivery Frequency
-        </label>
-        <div class="p-col-8">
-          <Dropdown
-            v-model="productObject.frequency"
-            :options="frequencyOfDelivery"
-            optionLabel="frequency"
-            optionValue="frequency" />
-        </div>
-      </div>
-      <div class="p-field p-grid">
-        <label
-          class="p-col-4"
-          for="price">
-          Delivery Day
-        </label>
-        <div class="p-col-8">
-          <Dropdown
-            v-model="productObject.delivery_day"
-            :options="days"
-            optionLabel="day"
-            optionValue="code" />
-        </div>
-      </div>
-    </div>
     <div class="button-group">
       <Button
         label="Cancel"
         class="p-button-danger"
         @click="cancel"
-        icon="pi pi-times"
+        icon="pi pi-times-circle"
         iconPos="left" />
       <Button
-        label="Confirm"
+        label="Submit"
         @click="editProduct()"
-        icon="pi pi-pencil"
+        icon="pi pi-check"
         iconPos="left" />
     </div>
   </Dialog>
@@ -217,6 +208,16 @@ export default {
         {frequency: 'Bi-weekly'},
         {frequency: 'Monthly'}
       ],
+      productCategory: [
+        {type: 'Root'},
+        {type: 'Tuber'},
+        {type: 'Fruit'},
+        {type: 'Flower'},
+        {type: 'Bulb'},
+        {type: 'Seed'},
+        {type: 'Leave'},
+        {type: 'Stem'},
+      ]
     }
   },
   computed: {

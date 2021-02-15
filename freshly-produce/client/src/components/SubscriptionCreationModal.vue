@@ -4,23 +4,75 @@
     :modal="true"
     :closable="false"
     :showHeader="false"
+    class="p-col-8 p-p-0"
     @show="onShow" >
     <h2>Create a New Subscription Plan</h2>
     <div>
       <h3>Product Information</h3>
-      <div class="p-fluid">
-        <div class="p-field p-grid">
+      <div class="p-fluid p-field p-grid" style="width:100%">
+        <div class="p-field p-col-12 p-mt-2">
+          <InputText
+            v-model="productObject.product_name"
+            placeholder="Product Name"
+            type="text"
+            :class="{ 'p-invalid': !productObject.product_name }"/>
+        </div>
+        <div class="p-field p-col-12">
+          <Textarea
+            id="description"
+            :autoResize="true"
+            placeholder="Product Description"
+            v-model="productObject.product_description"
+            :class="{ 'p-invalid': !productObject.product_description }" />
+        </div>
+        <div class="p-field p-col-12 ">
+          <Dropdown
+            v-model="productObject.product_category"
+            :options="productCategory"
+            optionLabel="type"
+            placeholder="Select a Product Category"
+            :class="{ 'p-invalid': !productObject.product_category }" />
+        </div>
+        <div class="p-field p-col-6 ">
+            <InputNumber id="qty" placeholder="Quantity"
+              :minFractionDigits="minDecimal"
+              :class="{ 'p-invalid': !productObject.quantity }"
+              v-model="productObject.quantity"
+              mode="decimal"
+              showButtons
+              :min="0"
+              :max="1000" />
+        </div>
+        <div class="p-field p-col-6">
+            <Dropdown
+              v-model="productObject.unit"
+              :options="unitOfMeasurement"
+              optionLabel="unit"
+              optionValue="unit"
+              placeholder="Unit of Measurement"
+              @change="setMinDecimal()"
+              :class="{ 'p-invalid': !productObject.unit }" />
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+          <div class="p-inputgroup">
+              <span class="p-inputgroup-addon">$</span>
+              <InputNumber
+                id="price"
+                v-model="productObject.product_price"
+                :minFractionDigits="2"
+                :maxFractionDigits="2"
+                :class="{ 'p-invalid': !productObject.product_price }"
+                placeholder="Price" />
+          </div>
+        </div>
+
+        <div class="p-field p-col-12">
           <label
             class="p-col-4"
             for="photo">
-            Product Photo
+            Upload Product Photo
           </label>
           <div class="p-col-8">
-            <img
-              v-if="productObject.product_photo"
-              class="product-photo"
-              alt="product photo"
-              :src="productObject.product_photo" />
             <FileUpload
               mode="basic"
               id="photo"
@@ -41,98 +93,20 @@
               a random photo will be shown for your product.
               You can always upload a photo later!
             </sub>
+            <div>
+            <img
+              v-if="productObject.product_photo"
+              class="product-photo"
+              alt="product photo"
+              :src="productObject.product_photo" />
+              </div>
           </div>
         </div>
-        <div class="p-field p-grid">
-          <label
-            class="p-col-4"
-            for="name">
-            Product Name
-          </label>
-          <div class="p-col-8">
-            <InputText
-              id="name"
-              type="text"
-              v-model="productObject.product_name"
-              :class="{ 'p-invalid': !productObject.product_name }"
-              placeholder="What are you selling?" />
-          </div>
         </div>
-        <div class="p-field p-grid">
-          <label
-            class="p-col-4"
-            for="description">
-            Product Description
-          </label>
-          <div class="p-col-8">
-            <Textarea
-              id="description"
-              :autoResize="true"
-              v-model="productObject.product_description"
-              :class="{ 'p-invalid': !productObject.product_description }"
-              placeholder="Briefly describe your product" />
-          </div>
-        </div>
-        <div class="p-field p-grid">
-          <label
-            class="p-col-4"
-            for="price">
-            Product Price
-          </label>
-          <div class="p-col-8">
-            <div class="p-inputgroup">
-              <span class="p-inputgroup-addon">$</span>
-              <InputNumber
-                id="price"
-                v-model="productObject.product_price"
-                :minFractionDigits="2"
-                :maxFractionDigits="2"
-                :class="{ 'p-invalid': !productObject.product_price }"
-                placeholder="What is the price of your product?" />
-            </div>
-          </div>
-        </div>
-        <div class="p-field p-grid">
-          <label
-            class="p-col-4"
-            for="unit">
-            Unit of Measurement
-          </label>
-          <div class="p-col-8">
-            <Dropdown
-              v-model="productObject.unit"
-              :options="unitOfMeasurement"
-              optionLabel="unit"
-              optionValue="unit"
-              placeholder="Unit of Measurement"
-              @change="setMinDecimal()"
-              :class="{ 'p-invalid': !productObject.unit }" />
-          </div>
-        </div>
-        <div class="p-field p-grid">
-          <label
-            class="p-col-4"
-            for="quantity">
-          Quantity
-          </label>
-          <div class="p-col-8" >
-            <InputNumber
-              v-model="productObject.quantity"
-              :minFractionDigits="minDecimal"
-              :class="{ 'p-invalid': !productObject.quantity }"
-              placeholder="How much are you selling per subscription?" />
-          </div>
-        </div>
-      </div>
-      <div class="p-fluid">
-      <h3>Subscription Terms</h3>
-        <div class="p-field p-grid">
-          <label
-            class="p-col-12 p-md-4"
-            for="frequency">
-            Delivery Frequency
-          </label>
-          <div class="p-col-12 p-md-8">
+        <h3>Subscription Terms</h3>
+        <div class="p-fluid p-field p-grid" style="width:100%">
+
+        <div class="p-field p-col-6 ">
             <Dropdown
               v-model="productObject.frequency"
               :options="frequencyOfDelivery"
@@ -140,15 +114,8 @@
               optionValue="frequency"
               placeholder="How often will you ship your products?"
               :class="{ 'p-invalid': !productObject.frequency }" />
-          </div>
         </div>
-        <div class="p-field p-grid">
-          <label
-            class="p-col-12 p-md-4"
-            for="price">
-            Delivery Day
-          </label>
-          <div class="p-col-12 p-md-8">
+        <div class="p-field p-col-6">
             <Dropdown
               v-model="productObject.delivery_day"
               :options="days"
@@ -156,7 +123,6 @@
               optionValue="code"
               placeholder="On which day of the week will you ship?"
               :class="{ 'p-invalid': !productObject.delivery_day }" />
-          </div>
         </div>
       </div>
       <div class="button-group">
@@ -164,7 +130,7 @@
           label="Cancel"
           class="p-button-danger"
           @click="onCancel"
-          icon="pi pi-times"
+          icon="pi pi-times-circle"
           iconPos="left" />
         <Button
           label="Submit"
@@ -195,7 +161,7 @@ export default {
         product_name: null,
         product_description: null,
         product_price: null,
-        product_type: PRODUCT_TYPE['subscription'],
+        product_category: PRODUCT_TYPE['subscription'],
         quantity: null,
         unit: null,
         frequency: null,
@@ -211,6 +177,16 @@ export default {
         {frequency: 'Bi-weekly'},
         {frequency: 'Monthly'}
       ],
+      productCategory: [
+        {type: 'Root'},
+        {type: 'Tuber'},
+        {type: 'Fruit'},
+        {type: 'Flower'},
+        {type: 'Bulb'},
+        {type: 'Seed'},
+        {type: 'Leave'},
+        {type: 'Stem'},
+      ]
     }
   },
   computed: {
