@@ -104,7 +104,7 @@
     </div>
     <template #footer>
       <Button label="Cancel" icon="pi pi-times-circle" @click="cancel" class="p-button-danger"/>
-      <Button label="Place Order" icon="pi pi-check" @click="placeOrder" autofocus />
+      <Button label="Place Order" icon="pi pi-check-circle" @click="placeOrder" autofocus />
     </template>
   </Dialog>
 </template>

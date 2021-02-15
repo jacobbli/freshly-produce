@@ -48,13 +48,13 @@
             <span class="product-price">${{slotProps.data.product_price}}</span>
             <Button
               v-if="slotProps.data.is_published"
-              icon="pi pi-times"
+              icon="pi pi-times-circle"
               class="p-button-warning"
               label="Unpublish"
               @click="openConfirmationModal(slotProps.data, 'unpublish')" />
             <Button
               v-else
-              icon="pi pi-check"
+              icon="pi pi-check-circle"
               label="Publish"
               @click="openConfirmationModal(slotProps.data, 'publish')" />
           </div>

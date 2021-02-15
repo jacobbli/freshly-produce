@@ -30,7 +30,7 @@
                 icon="pi pi-times"
                 label="You're already subscribed!" />
               <Button v-else
-                icon="pi pi-check"
+                icon="pi pi-check-circle"
                 label="Subscribe"
                 @click="openOrderModal(slotProps.data, 'subscribe')" />
             </div>
