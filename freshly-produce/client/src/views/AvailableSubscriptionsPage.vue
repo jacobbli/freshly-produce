@@ -27,7 +27,7 @@
               <Button
                 v-if="slotProps.data.is_subscribed"
                 disabled="disabled"
-                icon="pi pi-times"
+                icon="pi pi-times-circle"
                 label="You're already subscribed!" />
               <Button v-else
                 icon="pi pi-check-circle"

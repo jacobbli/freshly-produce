@@ -15,7 +15,7 @@
         <div class="p-col-6" style="text-align: right">
           <Button
             label="Add Product"
-            icon="pi pi-plus"
+            icon="pi pi-plus-circle"
             class="p-button"
             @click="openSubscriptionCreationModal()"/>
         </div>

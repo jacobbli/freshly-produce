@@ -136,7 +136,7 @@
         <Button
           label="Submit"
           @click="onSubmit"
-          icon="pi pi-check"
+          icon="pi pi-check-circle"
           iconPos="left"
           :disabled="isDisabled" />
       </div>

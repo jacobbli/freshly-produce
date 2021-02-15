@@ -55,7 +55,7 @@
             <template #footer>
 
                 <Button label="Cancel" class="p-button-danger" icon="pi pi-times-circle" @click="closeModal" autofocus />
-                <Button label="Submit" icon="pi pi-check" @click="submit" autofocus />
+                <Button label="Submit" icon="pi pi-check-circle" @click="submit" autofocus />
 
  
             </template>

@@ -8,7 +8,7 @@
                   <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="Sort By Price" @change="onSortChange($event)"/>
               </div>
               <div class="p-col-6" style="text-align: right">
-                <Button label="Add Product" icon="pi pi-plus" class="p-button" @click="openModal()"/>
+                <Button label="Add Product" icon="pi pi-plus-circle" class="p-button" @click="openModal()"/>
               </div>
           </div>
       </template>
@@ -39,13 +39,13 @@
                   <span class="product-price">${{slotProps.data.product_price}}</span>
                   <Button
                   v-if="slotProps.data.is_published"
-                  icon="pi pi-times"
+                  icon="pi pi-times-circle"
                   class="p-button-warning"
                   label="Unpublish"
                   @click="openConfirmationModal(slotProps.data, 'unpublish')" />
                   <Button
                     v-else
-                    icon="pi pi-check"
+                    icon="pi pi-check-circle"
                     label="Publish"
                     @click="openConfirmationModal(slotProps.data, 'publish')" />
                 </div>

@@ -24,7 +24,7 @@
             <div class="product-grid-item-bottom">
               <span class="product-price">${{slotProps.data.product_price}}</span>
                 <Button
-                  icon="pi pi-times"
+                  icon="pi pi-times-circle"
                   class="p-button-danger"
                   label="Unsubscribe"
                   @click="openConfirmationModal(slotProps.data, 'unsubscribe')" />
