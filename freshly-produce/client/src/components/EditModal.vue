@@ -29,6 +29,7 @@
             v-model="productObject.product_category"
             :options="productCategory"
             optionLabel="type"
+            optionValue="type"
             placeholder="Select a Product Category"
             :class="{ 'p-invalid': !productObject.product_category }" />
         </div>
@@ -134,7 +135,7 @@
       <Button
         label="Submit"
         @click="editProduct()"
-        icon="pi pi-check"
+        icon="pi pi-check-circle"
         iconPos="left" />
     </div>
   </Dialog>
@@ -192,6 +193,7 @@ export default {
         product_description: '',
         product_price: 0,
         product_photo: '',
+        product_category: '',
         unit: '',
         quantity: 0,
         frequency: '',
@@ -261,7 +263,7 @@ export default {
 .button-group {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .p-dropdown	 {
