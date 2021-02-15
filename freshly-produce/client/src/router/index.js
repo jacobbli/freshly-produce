@@ -5,8 +5,6 @@ import LoginPage from '../views/LoginPage.vue'
 import ProfilePage from '../views/ProfilePage.vue'
 import DiscountedProduce from '../views/DiscountedProduce.vue'
 import CartPage from '../views/CartPage.vue'
-import RoleSelectionForm from '../components/login-component/RoleSelectionForm.vue'
-import LoginForm from '../components/login-component/LoginForm.vue'
 import CustomerSubscriptions from '../components/profile-component/CustomerSubscriptions.vue'
 import FarmerSubscriptionsPage from '../views/FarmerSubscriptionsPage.vue'
 import AvailableSubscriptionsPage from '../views/AvailableSubscriptionsPage.vue'
@@ -77,18 +75,6 @@ const routes = [
     path: '/login',
     name: 'LoginPage',
     component: LoginPage,
-    children: [
-      {
-        path: '/role',
-        name: 'RoleSelectionForm',
-        component: RoleSelectionForm
-      },
-      {
-        path: 'auth',
-        name: 'LoginForm',
-        component: LoginForm
-      }
-    ]
   }
 ]
 
