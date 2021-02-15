@@ -18,7 +18,7 @@
             <div class="product-grid-item card">
                 <div class="product-grid-item-top">
                     <span class="product-category">
-                      <Button class="p-button-sm edit-button" icon="pi pi-pencil" />
+                      <Button class="p-button-sm edit-button" icon="pi pi-pencil"  @click="openEditModal(slotProps.data)"/>
                       <Button
                         class="p-button-sm p-button-danger"
                         icon="pi pi-times"
@@ -58,19 +58,27 @@
       @cancel="closeConfirmationModal()"
       @change-published-status="changePublishedStatus()"
       @delete="deleteProduct()" />
+      
+    <edit-modal
+      :is-visible="editModalIsVisible"
+      :selected-product="selectedProduct"
+      @cancel="closeEditModal()"
+      @editProduct="editProduct()" />
   </div>
 </template>
 
 <script>
 import AddDiscountedProduceModel from '../components/discounted-produce-component/AddDiscountedProduceModel.vue'
-import ActionConfirmationModal from '../components/ActionConfirmationModal.vue'
+import ActionConfirmationModal from '../components/discounted-produce-component/ActionConfirmationModalDiscount.vue'
 import { getMyDiscountedProducts } from '../api/DiscountedProductApi.js'
+import EditModal from '../components/discounted-produce-component/EditModalDiscount.vue'
 
 export default {
   name: 'FarmerDiscountedProducePage',
   components: {
     AddDiscountedProduceModel,
-    ActionConfirmationModal
+    ActionConfirmationModal,
+    EditModal
   },
   data() {
 		return {
@@ -78,6 +86,7 @@ export default {
       sortKey: null,
       sortOrder: null,
       sortField: null,
+      editModalIsVisible:false,
       productPhotoEmpty:false,
       sortOptions: [
           {label: 'Price High to Low', value: '!product_price'},
@@ -130,8 +139,22 @@ export default {
       this.confirmationModalIsVisible = false;
     },
 
+    openEditModal(product) {
+      this.selectedProduct = product
+      this.editModalIsVisible = true;
+    },
+
+    editProduct() {
+      this.updateDiscountedProductsList();
+      this.closeEditModal();
+    },
+
     openModal() {
       this.modalIsVisible = true;
+    },
+
+    closeEditModal() {
+      this.editModalIsVisible = false;
     },
 
     closeModal() {
@@ -147,7 +170,10 @@ export default {
           if(item.product_photo == null){
             item.product_photo = "/images/temp/"+this.listphotos[Math.floor(Math.random() * 6)]
           }
+          let indexT = item.expiration_date.indexOf("T")
+          item.expiration_date = item.expiration_date.substring(0,indexT)
         })
+        console.log(res)
         this.listProduct = res;
       }).catch(err => {
         console.error(err);

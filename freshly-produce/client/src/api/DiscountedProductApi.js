@@ -31,3 +31,15 @@ export async function getMyDiscountedProducts(reqObject) {
     return error;
   }
 }
+
+export async function editDiscountProduce(productObject) {
+  try {
+    let apiUrl = `${process.env.VUE_APP_ROOT_URL}/product/edit/${productObject.product_id}`;
+    let response = await axios.patch(apiUrl, productObject, {
+      headers: {'Content-Type': 'application/json'},
+    });
+    return response.data;
+  } catch(error) {
+    return error;
+  }
+}
