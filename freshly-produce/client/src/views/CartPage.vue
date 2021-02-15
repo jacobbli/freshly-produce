@@ -23,7 +23,7 @@
         <div class="p-col-4 p-pt-4">
             <h1>Total Cost:</h1>
             <h3><span>$555.25</span></h3>
-            <Button icon="pi pi-check" label="Check Out" @click="checkOutOrders" ></Button>
+            <Button icon="pi pi-check-circle" label="Check Out" @click="checkOutOrders" ></Button>
         </div>
 
     </div>

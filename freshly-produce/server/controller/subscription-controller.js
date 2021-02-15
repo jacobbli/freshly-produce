@@ -82,7 +82,7 @@ async function getAvailableSubscriptions(request, response) {
 function createNewSubscription(request, response) {
   const created_at = new Date();
   let product_photo = request.body.product_photo
-  if (!product_photo) {
+  if (product_photo == '') {
     product_photo = "/images/temp/carrots.jpg"
   }
   const queryArgs = [
@@ -92,6 +92,7 @@ function createNewSubscription(request, response) {
     request.body.product_type,
     request.body.product_price,
     request.body.product_description,
+    request.body.product_category,
     request.body.unit,
     request.body.quantity,
     request.body.frequency,
@@ -120,13 +121,12 @@ async function deleteSubscription(request, response) {
 }
 
 function updateSubscription(request, response) {
-  const created_at = new Date();
-
   const queryArgs = [
     request.body.product_photo,
     request.body.product_name,
     request.body.product_price,
     request.body.product_description,
+    request.body.product_category,
     request.body.unit,
     request.body.quantity,
     request.body.frequency,

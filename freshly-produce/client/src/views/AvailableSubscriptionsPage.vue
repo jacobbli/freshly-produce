@@ -3,36 +3,38 @@
     <h1>Available Subscriptions</h1>
     <DataView v-if="listProduct.length > 0" :value="listProduct" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
       <template #header>
-          <div class="p-grid p-nogutter">
-              <div class="p-col-6" style="text-align: left">
-                  <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="Sort By Price" @change="onSortChange($event)"/>
-              </div>
+        <div class="p-grid p-nogutter">
+          <div class="p-col-6" style="text-align: left">
+            <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="Sort By Price" @change="onSortChange($event)"/>
           </div>
+        </div>
       </template>
 
       <template #grid="slotProps">
-          <div class="p-col-12 p-lg-4 p-xl-4">
-            <div class="product-grid-item card">
-                <div class="product-grid-item-top">
-                    <span class="product-category">
-                    </span>
-                </div>
-                <div class="product-grid-item-content">
-                  <subscription-product-description :selected-product="slotProps.data" />
-                </div>
-                <div class="product-grid-item-bottom">
-                    <span class="product-price">${{slotProps.data.product_price}}</span>
-                    <Button
-                      v-if="slotProps.data.is_subscribed"
-                      disabled="disabled"
-                      icon="pi pi-times"
-                      label="You're already subscribed!" />
-                    <Button v-else
-                      icon="pi pi-check"
-                      label="Subscribe"
-                      @click="openOrderModal(slotProps.data, 'subscribe')" />
-                </div>
+        <div class="p-col-12 p-lg-4 p-xl-3">
+          <div class="product-grid-item card">
+            <div class="product-grid-item-top">
+              <div>
+                <i class="pi pi-tag product-category-icon"></i>
+                <span class="product-category">{{slotProps.data.product_category}}</span>
+              </div>
             </div>
+            <div class="product-grid-item-content">
+              <subscription-product-description :selected-product="slotProps.data" />
+            </div>
+            <div class="product-grid-item-bottom">
+              <span class="product-price">${{slotProps.data.product_price}}</span>
+              <Button
+                v-if="slotProps.data.is_subscribed"
+                disabled="disabled"
+                icon="pi pi-times-circle"
+                label="You're already subscribed!" />
+              <Button v-else
+                icon="pi pi-check-circle"
+                label="Subscribe"
+                @click="openOrderModal(slotProps.data, 'subscribe')" />
+            </div>
+          </div>
         </div>
       </template>
     </DataView>
@@ -180,7 +182,7 @@ export default {
 .product-grid-item-top {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin: .5rem;
 }
 

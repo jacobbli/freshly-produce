@@ -2,7 +2,7 @@ let db = require('../db/db');
 
 async function addProduct(args){
   try{
-    const query = `INSERT INTO products (seller_id, product_photo, product_name, product_type, product_price, product_description, is_published, unit, quantity, frequency, delivery_day, expiration_date, created_at, is_deleted) values($1, $9, $2, $3, $4,'',false,$5,$6,'','',$7,$8, false)`
+    const query = `INSERT INTO products (seller_id, product_photo, product_name, product_type, product_price, product_description, product_category, is_published, unit, quantity, expiration_date, created_at, is_deleted) values($1, $2, $3, $4, $5, $6, $7, false, $8, $9, $10, $11, false)`
     const res = await db.query(query,args);
     return Promise.resolve(res.rows);
   }catch(error){
@@ -59,10 +59,11 @@ async function updateProduct(args){
     product_name = $2,
     product_price = $3,
     product_description = $4,
-    unit = $5,
-    quantity = $6,
-    expiration_date = $7
-    WHERE product_id = $8`;
+    product_category = $5
+    unit = $6,
+    quantity = $7,
+    expiration_date = $8
+    WHERE product_id = $9`;
 
     const res = await db.query(query, args);
 

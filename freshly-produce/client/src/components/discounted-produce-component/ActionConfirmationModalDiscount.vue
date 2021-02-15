@@ -59,8 +59,8 @@
       </div>
     </div>
     <template #footer>
-      <Button label="No" icon="pi pi-times" @click="cancel" class="p-button-text"/>
-      <Button label="Yes" icon="pi pi-check" @click="confirm" autofocus />
+      <Button label="No" icon="pi pi-times-circle" @click="cancel" class="p-button-text"/>
+      <Button label="Yes" icon="pi pi-check-circle" @click="confirm" autofocus />
     </template>
   </Dialog>
 </template>

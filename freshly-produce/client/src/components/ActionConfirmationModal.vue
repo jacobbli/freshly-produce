@@ -73,8 +73,8 @@
     </div>
     <template #footer>
       <div class="button-group">
-        <Button label="No" icon="pi pi-times" @click="cancel" class="p-button-danger" />
-        <Button label="Yes" icon="pi pi-check" @click="confirm" autofocus />
+        <Button label="No" icon="pi pi-times-circle" @click="cancel" class="p-button-danger" />
+        <Button label="Yes" icon="pi pi-check-circle" @click="confirm" autofocus />
       </div>
     </template>
   </Dialog>
@@ -154,6 +154,6 @@ h2, h3 {
 .button-group {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 </style>

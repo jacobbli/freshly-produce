@@ -1,7 +1,7 @@
 <template>
   <div class="layout-content">
     <h1>Discounted Produce</h1>
-    <DataView :value="listProduct" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
+    <DataView v-if="listProduct.length > 0" :value="listProduct" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField">
       <template #header>
           <div class="p-grid p-nogutter">
               <div class="p-col-6" style="text-align: left">
@@ -11,15 +11,13 @@
       </template>
 
      <template #grid="slotProps">
-          <div class="p-col-12 p-md-2 p-lg-4 p-xl-3">
-            <div class="product-grid-item card  ">
-                <div class="product-grid-item-top">
-                    <div>
-                      
-                    </div>
-                    <span>
-                        Discount: 10%
-                    </span>
+        <div class="p-col-12 p-md-2 p-lg-4 p-xl-3">
+          <div class="product-grid-item card  ">
+            <div class="product-grid-item-top">
+              <div>
+                <i class="pi pi-tag product-category-icon"></i>
+                <span class="product-category">{{slotProps.data.product_category}}</span>
+              </div>
                 </div>
                 <div class="product-grid-item-content">
                     <img v-if="productPhotoEmpty" alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
@@ -36,6 +34,13 @@
         </div>
       </template>
     </DataView>
+    <div
+      v-else
+      class="no-products-label">
+      <h3>
+        More discounted produce coming soon!
+      </h3>
+    </div>
   </div>
 </template>
 
@@ -144,9 +149,9 @@ export default {
 	border: 1px solid #dee2e6;
 }
 .product-grid-item-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin: .5rem;
 }
 
@@ -192,6 +197,10 @@ img {
     font-weight: 700;
     font-size: 12px;
     letter-spacing: .3px;
+}
+
+.no-products-label {
+  margin-top: 300px;
 }
 
 </style>

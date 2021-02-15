@@ -16,7 +16,8 @@
               id="username" 
               type="username"
               autocomplete="on"
-              v-model="loginObject.username"/>
+              v-model="loginObject.username"
+              @keyup.enter="submitForm()" />
           </div>
         </div>
         <div class="password-input p-field p-grid p-jc-center">
@@ -30,14 +31,15 @@
               id="password" 
               type="password"
               autocomplete="on"
-              v-model="loginObject.password"/>
+              v-model="loginObject.password"
+              @keyup.enter="submitForm()"/>
           </div>
         </div>
         <div class="login-button p-grid p-jc-center">
           <div class="p-col-fixed">
             <Button 
               label="Sign in"
-              @click="submitForm()"/>
+              @click="submitForm()" />
           </div>
         </div>
       </form>
@@ -61,8 +63,11 @@ export default {
 	},
   methods: {
     submitForm() {
-      login(this.loginObject);
-      this.$router.push('/');
+      if (this.loginObject.username && this.loginObject.password) {
+        login(this.loginObject).then(() => {
+          this.$router.push('/');
+        });
+      }
     }
   }
 }

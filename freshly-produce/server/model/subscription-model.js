@@ -60,7 +60,7 @@ async function getOrders(args) {
 async function getActiveSubscriptions(args) {
   try {
     const query =
-    `SELECT O.order_id, P.product_photo, P.product_name, P.product_price, P.product_description, P.unit, P.quantity, P.frequency, P.delivery_day
+    `SELECT O.order_id, P.product_photo, P.product_name, P.product_price, P.product_description, P.product_category, P.unit, P.quantity, P.frequency, P.delivery_day
       FROM orders O, products P
       WHERE O.buyer_id = $1 AND O.order_type = $2 AND O.is_deleted = false and O.product_id = P.product_id;`;
 
@@ -75,8 +75,8 @@ async function getActiveSubscriptions(args) {
 async function insertProduct(args){
   try {
     const query =
-    `INSERT INTO products (seller_id, product_photo, product_name, product_type, product_price, product_description, unit, quantity, frequency, delivery_day, is_published, is_deleted, created_at)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`;
+    `INSERT INTO products (seller_id, product_photo, product_name, product_type, product_price, product_description, product_category, unit, quantity, frequency, delivery_day, is_published, is_deleted, created_at)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`;
     const res = await db.query(query, args);
 
     return res.rows;
@@ -94,11 +94,12 @@ async function updateProduct(args){
     product_name = $2,
     product_price = $3,
     product_description = $4,
-    unit = $5,
-    quantity = $6,
-    frequency = $7,
-    delivery_day = $8
-    WHERE product_id = $9`;
+    product_category = $5,
+    unit = $6,
+    quantity = $7,
+    frequency = $8,
+    delivery_day = $9
+    WHERE product_id = $10`;
 
     const res = await db.query(query, args);
 
@@ -112,7 +113,7 @@ async function updateProduct(args){
 async function getOfferedSubscriptions(args) {
   try {
     const query =
-    `SELECT product_id, product_photo, product_name, product_price, product_description, unit, quantity, frequency, delivery_day, is_published
+    `SELECT product_id, product_photo, product_name, product_price, product_description, product_category, unit, quantity, frequency, delivery_day, is_published
     FROM products
     WHERE seller_id = $1 AND product_type = $2 AND is_deleted = false;`;
 

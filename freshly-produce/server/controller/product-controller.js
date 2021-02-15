@@ -10,24 +10,25 @@ async function addProduct (req,res){
     let p_expiration_date = req.body.expiration_date;
     let p_user_id = req.body.user_id;
     let p_product_photo = req.body.product_photo;
+    let p_product_category = req.body.product_category;
+    let p_product_description = req.body.product_description;
 
     var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
 
-    today = yyyy + '-'+ mm + '-' + dd ;
+    today = new Date();
 
     const arg = [
       p_user_id,
+      p_product_photo,
       p_product_name,
       p_product_type,
       p_product_price,
+      p_product_description,
+      p_product_category,
       p_unit,
       p_quantity,
       p_expiration_date,
-      today,
-      p_product_photo
+      today
     ]
 
     //add to model
@@ -87,6 +88,7 @@ function updateDiscount(request, response) {
     request.body.product_name,
     request.body.product_price,
     request.body.product_description,
+    request.body.product_category,
     request.body.unit,
     request.body.quantity,
     request.body.expiration_date,
