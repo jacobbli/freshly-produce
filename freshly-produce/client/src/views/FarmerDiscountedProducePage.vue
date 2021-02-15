@@ -14,8 +14,8 @@
       </template>
 
       <template #grid="slotProps">
-          <div class="p-col-12 p-md-4">
-            <div class="product-grid-item card">
+          <div class="p-col-12 p-lg-4 p-xl-3">
+            <div class="product-grid-item card ">
                 <div class="product-grid-item-top">
                     <span class="product-category">
                       <Button class="p-button-sm edit-button" icon="pi pi-pencil"  @click="openEditModal(slotProps.data)"/>
@@ -29,7 +29,7 @@
                     <img v-if="productPhotoEmpty" alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
                     <img v-else alt="user header" :src="slotProps.data.product_photo" style="width: 50%"/>
                     <div class="product-name">{{slotProps.data.product_name}}</div>
-                    <div class="product-description">{{slotProps.data.product_description}}</div>
+                    <div class="product-description" style="height:50px">{{slotProps.data.product_description}}</div>
                 </div>
                 <div class="product-grid-item-bottom">
                   <span class="product-price">${{slotProps.data.product_price}}</span>
@@ -254,20 +254,17 @@ export default {
   margin: .5rem;
 }
 
-img {
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  width:  100px;
-  height: 125px;
-  margin: 2rem 0;
-}
+
 
 .product-grid-item-content {
   text-align: center;
 }
 
 .product-grid-item-content img {
-  width: 75%
-
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  width:  100px;
+  height: 125px;
+  margin: 2rem 0;
 }
 
 .product-price {
