@@ -80,10 +80,31 @@ async function deleteProduct(request, response) {
   }
 }
 
+function updateDiscount(request, response) {
+
+  const queryArgs = [
+    request.body.product_photo,
+    request.body.product_name,
+    request.body.product_price,
+    request.body.product_description,
+    request.body.unit,
+    request.body.quantity,
+    request.body.expiration_date,
+    request.body.product_id,
+  ]
+  productModel.updateProduct(queryArgs).then(res => {
+    response.json(res);
+  }).catch(error => {
+    console.error(error)
+    response.status(404).end();
+  });
+}
+
 module.exports = {
     getProducts,
     deleteProduct,
     addProduct,
     getDiscountProducts,
-    getMyDiscountProducts
+    getMyDiscountProducts,
+    updateDiscount
   }
