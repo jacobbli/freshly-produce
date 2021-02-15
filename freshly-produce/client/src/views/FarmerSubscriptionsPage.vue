@@ -38,14 +38,7 @@
                     </span>
                 </div>
                 <div class="product-grid-item-content">
-                  <img alt="user header" :src="slotProps.data.product_photo" />
-                  <div class="product-name">{{slotProps.data.product_name}}</div>
-                  <div class="product-description">{{slotProps.data.product_description}}</div>
-                    <div class="quantity"> {{slotProps.data.quantity + ' ' + slotProps.data.unit }} </div>
-                  <div class="delivery-frequency">
-                    <i class="pi pi-clock"></i>
-                    {{setDeliveryFrequencyDescription(slotProps.data.frequency, slotProps.data.delivery_day)}}
-                  </div>
+                  <subscription-product-description :selected-product="slotProps.data" />
                 </div>
                 <div class="product-grid-item-bottom">
                     <span class="product-price">${{slotProps.data.product_price}}</span>
@@ -100,6 +93,8 @@
 
 <script>
 import SubscriptionCreationModal from '../components/SubscriptionCreationModal.vue'
+import SubscriptionProductDescription from '../components/SubscriptionProductDescription.vue'
+
 import ActionConfirmationModal from '../components/ActionConfirmationModal.vue'
 import EditModal from '../components/EditModal.vue'
 import { getOfferedSubscriptions } from '../api/SubscriptionsApi.js'
@@ -110,7 +105,8 @@ export default {
   components: {
     SubscriptionCreationModal,
     ActionConfirmationModal,
-    EditModal
+    EditModal,
+    SubscriptionProductDescription
   },
   data() {
 		return {
