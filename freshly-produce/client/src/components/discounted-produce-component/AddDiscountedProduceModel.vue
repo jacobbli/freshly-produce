@@ -66,6 +66,8 @@
 <script>
 import { toArrayBuffer } from '../../services/FileService'
 import ProductsApi from '../../api/ProductsApi.js'
+import { PRODUCT_TYPE } from  '../../models'
+
 export default {
     props: {
         isVisible: Boolean,
@@ -134,7 +136,8 @@ export default {
                 this.addProductValue["expiration_date"] = this.date;
                 this.addProductValue["this.userId"] = this.userId;
                 this.addProductValue["unit"] = this.selectedUnitType["unit"];
-                this.addProductValue["product_type"] = this.selectedProdueType["type"];
+                this.addProductValue["product_category"] = this.selectedProdueType["type"];
+                this.addProductValue["product_type"] = PRODUCT_TYPE.discounted_produce;
                 ProductsApi.addProduct(this.addProductValue)
                 this.$toast.add({severity:'success', summary: 'Submited!', life: 3000,});          
                 this.resetData();

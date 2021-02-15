@@ -30,6 +30,7 @@
             v-model="productObject.product_category"
             :options="productCategory"
             optionLabel="type"
+            optionValue="type"
             placeholder="Select a Product Category"
             :class="{ 'p-invalid': !productObject.product_category }" />
         </div>
@@ -161,7 +162,8 @@ export default {
         product_name: null,
         product_description: null,
         product_price: null,
-        product_category: PRODUCT_TYPE['subscription'],
+        product_type: PRODUCT_TYPE['subscription'],
+        product_category: null,
         quantity: null,
         unit: null,
         frequency: null,
@@ -248,6 +250,7 @@ export default {
         product_description: null,
         product_price: null,
         product_type: PRODUCT_TYPE['subscription'],
+        product_category: null,
         quantity: null,
         unit: null,
         frequency: null,
