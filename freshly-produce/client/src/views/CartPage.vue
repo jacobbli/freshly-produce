@@ -6,12 +6,12 @@
                     <div class="product-list-item">
                         <div class="p-grid">
                             <img class="p-col-4 p-mt-2" :src="slotProps.data.product_photo" :alt="'user header'"/>
-                            <div class="product-list-detail p-col-4">
+                            <div class="product-list-detail p-col-4 p-mx-4">
                                 <div class="product-name"><h4>{{slotProps.data.product_name}}</h4></div>
                                 <div class="product-description">Expiry date: {{slotProps.data.expiration_date}}</div>
-                                <i class="pi pi-tag product-category-icon"></i><span class="product-category">{{slotProps.data.product_category}}</span>
+                                <i class="pi pi-tag product-category-icon"></i><span class="product-category p-pl-2"> {{slotProps.data.product_category}}</span>
                             </div>
-                            <div class="product-list-action p-col-4 p-ml-6">
+                            <div class="product-list-action p-col-4">
                                 <h3 class="product-price p-col-12">${{slotProps.data.product_price}}</h3>
                                <Button icon="pi pi-times-circle" @click="openConfirmationModal(slotProps.data, 'delete')" label=" Delete" />
                             </div>
