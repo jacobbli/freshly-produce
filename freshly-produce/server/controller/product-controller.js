@@ -2,21 +2,23 @@ let productModel = require('../model/product-model');
 
 async function addProduct (req,res){
   try {
+    let product_photo = req.body.product_photo
+    if (product_photo == '') {
+      product_photo = "/images/temp/carrots.jpg"
+    }
+
     let p_product_type = req.body.product_type;
     let p_product_name = req.body.product_name;
-    let p_product_price = parseInt(req.body.product_price);
+    let p_product_price = parseFloat(req.body.product_price);
     let p_unit = req.body.unit;
     let p_quantity = req.body.quantity;
     let p_expiration_date = req.body.expiration_date;
     let p_user_id = req.body.user_id;
-    let p_product_photo = req.body.product_photo;
+    let p_product_photo = product_photo;
     let p_product_category = req.body.product_category;
     let p_product_description = req.body.product_description;
 
     var today = new Date();
-
-    today = new Date();
-
     const arg = [
       p_user_id,
       p_product_photo,
@@ -82,7 +84,6 @@ async function deleteProduct(request, response) {
 }
 
 function updateDiscount(request, response) {
-
   const queryArgs = [
     request.body.product_photo,
     request.body.product_name,
