@@ -59,7 +59,7 @@
       </div>
     </div>
     <template #footer>
-      <Button label="No" icon="pi pi-times-circle" @click="cancel" class="p-button-text"/>
+      <Button label="No" icon="pi pi-times-circle" @click="cancel" class="p-button-danger"/>
       <Button label="Yes" icon="pi pi-check-circle" @click="confirm" autofocus />
     </template>
   </Dialog>
@@ -97,12 +97,18 @@ export default {
       this.$emit('cancel');
     },
     confirm() {
-      if (this.selectedTask == 'publish' || this.selectedTask == 'unpublish') {
+      if (this.selectedTask == 'unpublish') {
         setPublishedStatus(this.selectedProduct.product_id);
         this.$emit('changePublishedStatus');
+        this.$toast.add({severity:'success', summary: 'Unpublished discounted product!', life: 3000,});
+      } else if(this.selectedTask == 'publish') {
+        setPublishedStatus(this.selectedProduct.product_id);
+        this.$emit('changePublishedStatus');
+        this.$toast.add({severity:'success', summary: 'Published discounted product!', life: 3000,});
       } else if (this.selectedTask == 'delete') {
         deleteProduct({'product_id': this.selectedProduct.product_id});
         this.$emit('delete');
+        this.$toast.add({severity:'success', summary: 'Deleted discounted product!', life: 3000,});
       } else if (this.selectedTask == 'unsubscribe') {
         unsubscribe(this.selectedProduct.order_id);
         this.$emit('unsubscribe');
