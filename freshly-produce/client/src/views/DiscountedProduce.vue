@@ -82,6 +82,8 @@ export default {
             let item = this.listProduct.filter(item => item.product_id == productID)
             this.myCart = JSON.parse(localStorage.getItem('myCart'));
             this.myCart.push(item[0])
+            this.$toast.add({severity:'success', summary: 'Added!', life: 3000,});
+
             localStorage.setItem('myCart',JSON.stringify(this.myCart))
             this.$emit('updateCartParent', this.myCart)
         }
