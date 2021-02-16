@@ -1,13 +1,13 @@
 <template>
   <Dialog
+    header="Create a New Subscription Plan:"
     :visible="isVisible"
     :modal="true"
     :closable="false"
-    :showHeader="false"
+    :contentStyle="{paddingBottom: '0'}"
+    position="top"
     class="p-col-8 p-p-0"
     @show="onShow" >
-    <h2>Create a New Subscription Plan</h2>
-    <div>
       <h3>Product Information</h3>
       <div class="p-fluid p-field p-grid" style="width:100%">
         <div class="p-field p-col-12 p-mt-2">
@@ -75,7 +75,6 @@
           </label>
           <div class="p-col-8">
             <FileUpload
-              mode="basic"
               id="photo"
               class="p-fileupload-sm"
               name="product_photo"
@@ -85,7 +84,9 @@
               @uploader="addFile"
               accept="image/*"
               :maxFileSize="1000000"
-              chooseLabel="Upload Photo">
+              chooseLabel="Upload Photo"
+              :showUploadButton="false"
+              :showCancelButton="false">
               <template>
               </template>
             </FileUpload>
@@ -94,13 +95,6 @@
               a random photo will be shown for your product.
               You can always upload a photo later!
             </sub>
-            <div>
-            <img
-              v-if="productObject.product_photo"
-              class="product-photo"
-              alt="product photo"
-              :src="productObject.product_photo" />
-              </div>
           </div>
         </div>
         </div>
@@ -126,7 +120,7 @@
               :class="{ 'p-invalid': !productObject.delivery_day }" />
         </div>
       </div>
-      <div class="button-group">
+      <template #footer>
         <Button
           label="Cancel"
           class="p-button-danger"
@@ -139,8 +133,7 @@
           icon="pi pi-check-circle"
           iconPos="left"
           :disabled="isDisabled" />
-      </div>
-    </div>
+      </template>
   </Dialog>
 </template>
 
@@ -168,6 +161,7 @@ export default {
         unit: null,
         frequency: null,
         delivery_day: null,
+        user_id: JSON.parse(sessionStorage.getItem('currentUser')).user_id
       },
       unitOfMeasurement: [
         {unit: 'Units'},
@@ -245,6 +239,7 @@ export default {
 
     onShow() {
       this.productObject = {
+        user_id: JSON.parse(sessionStorage.getItem('currentUser')).user_id,
         product_photo: '',
         product_name: null,
         product_description: null,
@@ -265,6 +260,7 @@ export default {
     onSubmit() {
       createNewSubscription(this.productObject).then(() => {
         this.$emit('submitForm');
+        this.$toast.add({severity:'success', summary: 'Created subscription plan successfully!', life: 3000,});
       });
     }
   }
@@ -281,8 +277,9 @@ export default {
   text-align: start;
 }
 
-h2, h3 {
+h3 {
   text-align: start;
+  margin-top: 0;
 }
 
 .button-group {
@@ -302,4 +299,5 @@ button {
 .product-photo {
   width: 50%;
 }
+
 </style>

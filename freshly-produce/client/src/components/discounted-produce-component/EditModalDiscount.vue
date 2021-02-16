@@ -1,11 +1,13 @@
 <template>
   <Dialog
-    header="Edit your discounted produce:"
+    header="Modify your discounted produce:"
     :visible="isVisible"
     :modal="true"
     :closable="false"
     class="p-col-8 p-p-0"
+    :contentStyle="{paddingBottom: '0'}"
     @show="updateFormValues">
+      <h3>Product Information</h3>
         <div class="p-fluid p-field p-grid" style="width:100%">
                 <div class="p-field p-grid p-col-12 p-p-0 p-mt-2">
                   <label for="product_name" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0 p-pl-3">Product</label>
@@ -22,17 +24,25 @@
                 <div class="p-field p-grid p-col-12 p-p-0">
                     <label for="product_category" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0 p-pl-3">Product Category</label>
                     <div class="p-col-12 p-md-8 p-pr-0">
-                      <Dropdown v-model="productObject.product_category" :options="produeType" optionLabel="type" placeholder="Select a Produce Type" />
+                      <Dropdown v-model="productObject.product_category" :options="produeType"
+                        optionLabel="type"
+                        optionValue="type"
+                        placeholder="Select a Produce Type" />
                     </div>
                 </div>
 
                 <div class="p-field p-col-6 ">
                     <label for="Qty">Qty</label>
-                    <InputNumber id="qty" placeholder="Qty" v-model="productObject.quantity" mode="decimal" showButtons :min="0" :max="1000" />
+                    <InputNumber id="qty" placeholder="Quantity" v-model="productObject.quantity" mode="decimal" showButtons :min="0" :max="1000" />
                 </div>
                 <div class="p-field p-col-6">
                     <label for="Units">Units</label>
-                    <Dropdown v-model="productObject.unit" :options="unitOfMeasurement" optionLabel="unit" placeholder="Select unit" />
+                    <Dropdown
+                      v-model="productObject.unit"
+                      :options="unitOfMeasurement"
+                      optionLabel="unit"
+                      optionValue="unit"
+                      placeholder="Select unit" />
                 </div>
 
                 <div class="p-field p-col-12 p-md-6">
@@ -49,11 +59,11 @@
                         <span class="p-inputgroup-addon">
                             <i class="pi pi-calendar"></i>
                         </span>
-                        <Calendar v-model="productObject.expiration_date" placeholder="YY-MM-DD " :showTime="false"/>
+                        <Calendar v-model="productObject.expiration_date" dateFormat="yy-mm-dd"  placeholder="YYYY-MM-DD " :showTime="false"/>
                     </div>
                 </div>
                 <div class="p-field p-grid p-col-12 p-p-0">
-                    <label for="Upload Photo" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0 p-pl-3">Change Photo</label>
+                    <label for="Upload Photo" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0 p-pl-3">Product Photo</label>
                     <div class="container p-col-12 p-md-8 p-mx-6">
                       <img
                         class="product-photo"
@@ -71,8 +81,8 @@
                         :maxFileSize="1000000"
                         chooseLabel="Change Photo" />
                     </div>
-                     
-                    
+
+
                 </div>
             </div>
             <template #footer>
@@ -80,14 +90,13 @@
                 label="Cancel"
                 class="p-button-danger"
                 @click="cancel"
-                icon="pi pi-times"
+                icon="pi pi-times-circle"
                 iconPos="left" />
               <Button
-                label="Confirm"
+                label="Submit"
                 @click="editProduct()"
                 icon="pi pi-pencil"
                 iconPos="left" />
- 
             </template>
   </Dialog>
 </template>
@@ -109,6 +118,8 @@ export default {
     editProduct() {
       editDiscountProduce(this.productObject).then(() => {
         this.$emit('editProduct');
+        this.$toast.add({severity:'success', summary: 'Modified discounted product successfully!', life: 3000,});
+
       })
     },
     setMinDecimal() {
@@ -122,13 +133,10 @@ export default {
 
     updateFormValues() {
       Object.assign(this.productObject, this.selectedProduct);
-      console.log(this.selectedProduct)
-      console.log(this.productObject.product_category)
-      this.productObject.product_category = {type: ''+this.selectedProduct.product_category}
-      this.productObject.unit = {unit: ''+this.selectedProduct.unit}
+      this.productObject.product_category = this.selectedProduct.product_category;
+      this.productObject.unit = this.selectedProduct.unit;
       this.productObject.product_price = parseFloat(this.productObject.product_price);
       this.productObject.quantity = parseFloat(this.productObject.quantity);
-      this.productObject.delivery_day = parseFloat(this.productObject.delivery_day);
     },
 
     async addFile(event) {
@@ -154,18 +162,11 @@ export default {
         expiration_date: ''
       },
       selectedUnit: {name: ''},
-      selectedFrequency: {frequency: ''},
-      selectedDay: Number,
       minDecimal: 0,
       unitOfMeasurement: [
         {unit: 'Units'},
         {unit: 'Kg'},
         {unit: 'Lbs'}
-      ],
-      frequencyOfDelivery: [
-        {frequency: 'Weekly'},
-        {frequency: 'Bi-weekly'},
-        {frequency: 'Monthly'}
       ],
       produeType: [
           {type: 'Root'},
@@ -177,32 +178,6 @@ export default {
           {type: 'Leave'},
           {type: 'Stem'},
       ],
-    }
-  },
-  computed: {
-    days: function () {
-      let options = [];
-      if (this.productObject === null) {
-        return options;
-      }
-      if (this.productObject.frequency == 'Monthly') {
-        options = [
-          {day: 'first Monday of the month', code: 1},
-          {day: 'first Tuesday of the month', code: 2},
-          {day: 'first Wednesday of the month', code: 3},
-          {day: 'first Thursday of the month', code: 4},
-          {day: 'first Friday of the month', code: 5},
-        ]
-      } else if (this.productObject.frequency == 'Weekly' || this.productObject.frequency == 'Bi-weekly') {
-        options = [
-          {day: 'Monday', code: 1},
-          {day: 'Tuesday', code: 2},
-          {day: 'Wednesday', code: 3},
-          {day: 'Thursday', code: 4},
-          {day: 'Friday', code: 5},
-        ]
-      }
-      return options;
     }
   }
 }
@@ -236,6 +211,11 @@ button {
 
 .p-fileupload {
   opacity: 0.8;
+}
+
+h3 {
+  margin-top: 0;
+  text-align: start;
 }
 
 /* Container needed to position the button. Adjust the width as needed */

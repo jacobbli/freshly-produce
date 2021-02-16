@@ -73,7 +73,6 @@ export async function getOfferedSubscriptions(reqObject) {
 
 export async function createNewSubscription(productObject) {
   try {
-    productObject['user_id'] = JSON.parse(sessionStorage.getItem('currentUser')).user_id;
     let apiUrl = `${process.env.VUE_APP_ROOT_URL}/subscription/my-offers`;
     let response = await axios.post(apiUrl, productObject, {
       headers: {'Content-Type': 'application/json'},

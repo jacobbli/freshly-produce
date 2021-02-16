@@ -157,7 +157,9 @@ export default {
           product_type: PRODUCT_TYPE['subscription'],
           user_id: JSON.parse(sessionStorage.getItem('currentUser')).user_id
         }
-        subscribe(reqObject)
+        subscribe(reqObject).then(() => {
+          this.$toast.add({severity:'success', summary: 'Successfully subscribed to product!', life: 3000,});
+        })
       }
 
       this.$emit('placeOrder');

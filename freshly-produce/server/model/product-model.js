@@ -59,7 +59,7 @@ async function updateProduct(args){
     product_name = $2,
     product_price = $3,
     product_description = $4,
-    product_category = $5
+    product_category = $5,
     unit = $6,
     quantity = $7,
     expiration_date = $8
