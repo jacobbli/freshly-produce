@@ -1,31 +1,41 @@
 <template>
   <Dialog
+    header="Modify Your Subscription Plan:"
     :visible="isVisible"
-    :showHeader="false"
     :modal="true"
     :closable="false"
-    @show="updateFormValues" 
+    @show="updateFormValues"
+    :contentStyle="{paddingBottom: '0'}"
     class="p-col-8 p-p-0" >
-    <h2>Modify Your Subscription Plan</h2>
     <h3>Product Information</h3>
-      <div class="p-fluid p-field p-grid" style="width:100%">
-        <div class="p-field p-col-12 p-mt-2">
+    <div class="p-fluid p-field p-grid" style="width:100%">
+      <div class="p-field p-grid p-col-12 p-p-0 p-mt-2">
+        <label for="product_name" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0 p-pl-3">Product Name</label>
+          <div class="p-col-12 p-md-8 p-pr-0">
           <InputText
+            id="product_name"
             v-model="productObject.product_name"
             placeholder="Product Name"
             type="text"
             :class="{ 'p-invalid': !productObject.product_name }"/>
         </div>
-        <div class="p-field p-col-12">
+      </div>
+      <div class="p-field p-grid p-col-12 p-p-0">
+        <label for="product_description" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0 p-pl-3">Product Description</label>
+        <div class="p-col-12 p-md-8 p-pr-0">
           <Textarea
-            id="description"
+            id="product_description"
             :autoResize="true"
             placeholder="Product Description"
             v-model="productObject.product_description"
             :class="{ 'p-invalid': !productObject.product_description }" />
+          </div>
         </div>
-        <div class="p-field p-col-12 ">
+      <div class="p-field p-grid p-col-12 p-p-0">
+        <label for="product_description" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0 p-pl-3">Product Category</label>
+        <div class="p-col-12 p-md-8 p-pr-0">
           <Dropdown
+            id="product_category"
             v-model="productObject.product_category"
             :options="productCategory"
             optionLabel="type"
@@ -33,27 +43,35 @@
             placeholder="Select a Product Category"
             :class="{ 'p-invalid': !productObject.product_category }" />
         </div>
-        <div class="p-field p-col-6 ">
-            <InputNumber id="qty" placeholder="Quantity"
-              :minFractionDigits="minDecimal"
-              :class="{ 'p-invalid': !productObject.quantity }"
-              v-model="productObject.quantity"
-              mode="decimal"
-              showButtons
-              :min="0"
-              :max="1000" />
-        </div>
+      </div>
+      <div class="p-field p-col-6 ">
+        <label for="quantity">Subscription Quantity</label>
+        <InputNumber
+          id="Quantity"
+          placeholder="Quantity"
+          :minFractionDigits="minDecimal"
+          :class="{ 'p-invalid': !productObject.quantity }"
+          v-model="productObject.quantity"
+          mode="decimal"
+          showButtons
+          :min="0"
+          :max="1000" />
+      </div>
         <div class="p-field p-col-6">
-            <Dropdown
-              v-model="productObject.unit"
-              :options="unitOfMeasurement"
-              optionLabel="unit"
-              optionValue="unit"
-              placeholder="Unit of Measurement"
-              @change="setMinDecimal()"
-              :class="{ 'p-invalid': !productObject.unit }" />
+          <label for="unit">Unit of Measurement</label>
+          <Dropdown
+            id="unit"
+            v-model="productObject.unit"
+            :options="unitOfMeasurement"
+            optionLabel="unit"
+            optionValue="unit"
+            placeholder="Unit of Measurement"
+            @change="setMinDecimal()"
+            :class="{ 'p-invalid': !productObject.unit }" />
         </div>
+
         <div class="p-field p-col-12 p-md-6">
+          <label for="product_price">Price</label>
           <div class="p-inputgroup">
               <span class="p-inputgroup-addon">$</span>
               <InputNumber
@@ -66,66 +84,58 @@
           </div>
         </div>
 
-        <div class="p-field p-col-12">
-          <label
-            class="p-col-4"
-            for="photo">
-            Upload Product Photo
-          </label>
-          <div class="p-col-8">
-            <FileUpload
-              mode="basic"
-              id="photo"
-              class="p-fileupload-sm"
-              name="product_photo"
-              url=""
-              :auto="true"
-              :customUpload="true"
-              @uploader="addFile"
-              accept="image/*"
-              :maxFileSize="1000000"
-              chooseLabel="Upload Photo">
-              <template>
-              </template>
+      <div class="p-field p-grid p-col-12 p-p-0">
+        <label for="Upload Photo" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0 p-pl-3">Product Photo</label>
+        <div class="container p-col-12 p-md-8 p-mx-6">
+          <img
+            v-if="productObject.product_photo"
+            class="product-photo"
+            alt="product photo"
+            :src="productObject.product_photo" />
+          <FileUpload
+            mode="basic"
+            id="photo"
+            class="btn"
+            name="product_photo"
+            url=""
+            :auto="true"
+            :customUpload="true"
+            @uploader="addFile"
+            accept="image/*"
+            :maxFileSize="1000000"
+            chooseLabel="Upload Photo">
             </FileUpload>
-            <sub>
-              *If you don't upload a photo,
-              a random photo will be shown for your product.
-              You can always upload a photo later!
-            </sub>
-            <div>
-            <img
-              v-if="productObject.product_photo"
-              class="product-photo"
-              alt="product photo"
-              :src="productObject.product_photo" />
-              </div>
-          </div>
         </div>
-        </div>
-        <h3>Subscription Terms</h3>
-        <div class="p-fluid p-field p-grid" style="width:100%">
+      </div>
+
+    </div>
+    <h3>Subscription Terms</h3>
+      <div class="p-fluid p-field p-grid" style="width:100%">
 
         <div class="p-field p-col-6 ">
+          <label for="frequency">Delivery Frequency</label>
             <Dropdown
+              id="frequency"
               v-model="productObject.frequency"
               :options="frequencyOfDelivery"
               optionLabel="frequency"
               optionValue="frequency"
               placeholder="How often will you ship your products?"
               :class="{ 'p-invalid': !productObject.frequency }" />
-        </div>
-        <div class="p-field p-col-6">
-            <Dropdown
-              v-model="productObject.delivery_day"
-              :options="days"
-              optionLabel="day"
-              optionValue="code"
-              placeholder="On which day of the week will you ship?"
-              :class="{ 'p-invalid': !productObject.delivery_day }" />
-        </div>
+          </div>
+          <div class="p-field p-col-6">
+            <label day="Units">Day of Delivery</label>
+              <Dropdown
+                id="day"
+                v-model="productObject.delivery_day"
+                :options="days"
+                optionLabel="day"
+                optionValue="code"
+                placeholder="On which day of the week will you ship?"
+                :class="{ 'p-invalid': !productObject.delivery_day }" />
+          </div>
       </div>
-    <div class="button-group">
+    <template #footer>
       <Button
         label="Cancel"
         class="p-button-danger"
@@ -135,9 +145,9 @@
       <Button
         label="Submit"
         @click="editProduct()"
-        icon="pi pi-check-circle"
+        icon="pi pi-pencil"
         iconPos="left" />
-    </div>
+    </template>
   </Dialog>
 </template>
 
@@ -158,6 +168,7 @@ export default {
     editProduct() {
       editSubscription(this.productObject).then(() => {
         this.$emit('editProduct');
+        this.$toast.add({severity:'success', summary: 'Modified subscription plan successfully!', life: 3000,});
       })
     },
     setMinDecimal() {
@@ -270,16 +281,45 @@ export default {
   text-align: start;
 }
 
+.p-fileupload {
+  opacity: 0.8;
+}
+
 button {
 	margin-right: .5rem;
 }
 
-.product-photo {
+h3 {
+  margin-top: 0;
+  text-align: start;
+}
+
+/* Container needed to position the button. Adjust the width as needed */
+.container {
+  position: relative;
   width: 50%;
 }
 
-h2, h3 {
-  text-align: start;
+/* Make the image responsive */
+.container img {
+  width: 100%;
+  height: auto;
+}
+
+/* Style the button and place it in the middle of the container/image */
+.container .btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  /* background-color: #555; */
+  color: white;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
 </style>

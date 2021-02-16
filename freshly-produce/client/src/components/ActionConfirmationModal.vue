@@ -112,15 +112,22 @@ export default {
       this.$emit('cancel');
     },
     confirm() {
-      if (this.selectedTask == 'publish' || this.selectedTask == 'unpublish') {
+      if (this.selectedTask == 'unpublish') {
         setPublishedStatus(this.selectedProduct.product_id);
         this.$emit('changePublishedStatus');
+        this.$toast.add({severity:'success', summary: 'Unpublished subscription plan!', life: 3000,});
+      } else if(this.selectedTask == 'publish') {
+        setPublishedStatus(this.selectedProduct.product_id);
+        this.$emit('changePublishedStatus');
+        this.$toast.add({severity:'success', summary: 'Published subscription plan!', life: 3000,});
       } else if (this.selectedTask == 'delete') {
         deleteProduct({'product_id': this.selectedProduct.product_id});
         this.$emit('delete');
+        this.$toast.add({severity:'success', summary: 'Deleted subscription plan!', life: 3000,});
       } else if (this.selectedTask == 'unsubscribe') {
         unsubscribe(this.selectedProduct.order_id);
         this.$emit('unsubscribe');
+        this.$toast.add({severity:'success', summary: 'Cancelled subscription!', life: 3000,});
       }
     },
   },
