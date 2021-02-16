@@ -60,7 +60,7 @@ async function getOrders(args) {
 async function getActiveSubscriptions(args) {
   try {
     const query =
-    `SELECT O.order_id, P.product_photo, P.product_name, P.product_price, P.product_description, P.product_category, P.unit, P.quantity, P.frequency, P.delivery_day
+    `SELECT O.order_id, P.product_id, P.product_photo, P.product_name, P.product_price, P.product_description, P.product_category, P.unit, P.quantity, P.frequency, P.delivery_day
       FROM orders O, products P
       WHERE O.buyer_id = $1 AND O.order_type = $2 AND O.is_deleted = false and O.product_id = P.product_id;`;
 
