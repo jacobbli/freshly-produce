@@ -62,4 +62,4 @@ Thank for the following for providing the technology to make it work:
 ## License
 A short snippet describing the license (MIT, Apache etc)
 
-MIT © [Jameson Cheong](https://github.com/jcheong9) [Jacob Lee](https://github.com/jlee93115)
+MIT © [Jameson Cheong](https://github.com/jcheong9) & [Jacob Lee](https://github.com/jlee93115)
