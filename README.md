@@ -9,10 +9,9 @@ What can be done to better connect our local farm businesses with residents and 
 
 
 ## Screenshots
-Include logo/demo screenshot etc.
+
 
 ## Tech/framework used
-
 <b>Built with</b>
 - [Vue3,js](https://v3.vuejs.org/)
 - [Node.js](https://nodejs.org/en/)
@@ -54,7 +53,7 @@ Server:
 
 ## Credits
 Thank for the following for providing the technology to make it work:
-- [Vue3,js](https://v3.vuejs.org/)
+- [Vue3.js](https://v3.vuejs.org/)
 - [Node.js](https://nodejs.org/en/)
 - [PostgreSQL](https://www.postgresql.org/)
 - [PrimeVue](https://www.primefaces.org/primevue/showcase/#/)
