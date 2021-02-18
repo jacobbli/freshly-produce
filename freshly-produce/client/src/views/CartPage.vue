@@ -32,7 +32,11 @@
 import {  computed } from "vue";
 export default {
     mounted() {
-        this.myCart = JSON.parse(localStorage.getItem('myCart'));
+        if(this.myCart != null){
+            this.myCart = JSON.parse(localStorage.getItem('myCart'));
+        }else{
+            localStorage.setItem('myCart',JSON.stringify(this.myCart));
+        }
     },
 
    methods: {
@@ -59,9 +63,12 @@ export default {
             myCart: [],
             totalCost: computed(()=>{
                 let sum = 0;
-                this.myCart.forEach((item) =>{
-                    sum += parseInt(item.product_price)
-                })
+                
+                    this.myCart.forEach((item) =>{
+                        sum += parseInt(item.product_price)
+                    })
+                
+
                 return sum
                 
             }),

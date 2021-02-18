@@ -113,6 +113,9 @@ export default {
     },
     mounted: function() {
         this.updateDiscountedProductsList();
+        if(JSON.parse(localStorage.getItem('myCart')) == null){
+          localStorage.setItem('myCart',JSON.stringify(this.myCart));
+        }
     }
 }
 </script>
