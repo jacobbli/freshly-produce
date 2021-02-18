@@ -1,4 +1,5 @@
 <template>
+  <Toast position="top-right" />
   <Card>
     <template #title>
       <img alt="logo" src="/images/freshlyproduce.png" height="50" class="p-mx-4 p-mb-4">
@@ -58,9 +59,15 @@ export default {
   methods: {
     submitForm() {
       if (this.loginObject.username && this.loginObject.password) {
-        login(this.loginObject).then(() => {
+        login(this.loginObject)
+        .then(() => {
           this.$router.push('/');
-        });
+        })
+        .catch (() => {
+          this.$toast.add({severity:'error', summary: 'Login failed!', life: 3000,});
+        })
+      } else {
+        this.$toast.add({severity:'error', summary: 'Invalid username or password!', life: 3000,});
       }
     }
   }
