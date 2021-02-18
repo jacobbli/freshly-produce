@@ -58,24 +58,24 @@ export default {
       },
       menuitems: [
         {
-          label:'Discounted Produce',
+          label:'Browse All Available Discounted Produce',
           icon:'pi pi-clock',
           to: '/discounted-produce',
         },                   
         {
-          label:'Available Subscriptions',
+          label:'Browse All Available Subscriptions',
           icon:'pi pi-bell',
           to: '/available-subscriptions'
         },
         {
-          label:'My Offered Subscriptions',
+          label:'Manage My Subscriptions',
           icon:'pi pi-tags',
           to: '/my-offers',
           visible: () => this.isUserFarmer()
         },
         {
-          label:'My Discounted Produce',
-          icon:'pi pi-apple',
+          label:'Manage My Discounted Produce',
+          icon:'pi pi-percentage',
           to: '/my-dicounted-produce',
           visible: () => this.isUserFarmer()
         }
@@ -121,7 +121,7 @@ export default {
     }
 
     #navbar .p-menuitem{
-        height: 50px;
+        text-align: start;
     }
     
     #navbar #freshlyLogo{
