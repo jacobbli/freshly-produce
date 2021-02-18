@@ -9,7 +9,7 @@ What can be done to better connect our local farm businesses with residents and 
 
 
 ## Screenshots
-
+![](FreshlyProduce.gif)
 
 ## Tech/framework used
 <b>Built with</b>
