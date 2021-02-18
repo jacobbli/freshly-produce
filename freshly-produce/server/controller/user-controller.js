@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 async function getUser(request, response) {
   try {
     let res = await userModel.getUser(request.body.username);
-    if (!res.body) {
+    if (!res) {
       return response.status(403).end();
     }
     if (!request.body.password || !res[0].password) {
