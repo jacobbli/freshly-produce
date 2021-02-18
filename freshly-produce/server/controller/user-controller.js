@@ -4,18 +4,21 @@ const bcrypt = require('bcrypt');
 async function getUser(request, response) {
   try {
     let res = await userModel.getUser(request.body.username);
-    if (!request.body.password && !res[0].password) {
-      return Promise.reject(response.status(403).end());
+    if (!res.body) {
+      return response.status(403).end();
+    }
+    if (!request.body.password || !res[0].password) {
+      return response.status(403).end();
     }
     const match = await bcrypt.compare(request.body.password, res[0].password);
     if (match) {
       delete res[0].password;
-      return Promise.resolve(response.json(res[0]));
+      return response.json(res[0]);
     } else {
-      return Promise.reject(response.status(403).end());
+      return response.status(403).end();
     }
   } catch(error) {
-    return Promise.reject(error);
+    return response.status(403).end();
   }
 }
 
@@ -36,14 +39,14 @@ async function addUser(request, response) {
       created_at
     ];
     userModel.addUser(args).then(res => {
-      return Promise.resolve(response.json(res));
+      return response.json(res);
     }).catch(error => {
       console.error(error)
-      return Promise.reject(response.status(404).end());
+      returnresponse.status(404).end();
     })
   } catch(error) {
     console.error(error)
-    return Promise.reject(response.status(404).end());
+    return response.status(403).end();
   }
 }
 
