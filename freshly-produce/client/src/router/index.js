@@ -92,17 +92,21 @@ router.beforeEach((to, from, next) => {
       next({
         path: '/login',
       })
+    } else {
+      next()
     }
-  }
-  if (to.matched.some(record => record.meta.requiresVendorAuth)) {
+  } else if (to.matched.some(record => record.meta.requiresVendorAuth)) {
     const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
     if (currentUser.role != USER_ROLE.farmer) {
       next({
         path: '/login',
       })
+    } else {
+      next()
     }
+  } else {
+    next()
   }
-  next()
 })
 
 export default router
