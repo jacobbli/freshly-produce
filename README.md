@@ -8,7 +8,7 @@ Freshly Produce is using Microsoft Azure and other technologies to find an innov
 What can be done to better connect our local farm businesses with residents and other businesses to help increase a ‘buy local’ movement?
 
 
-## Screenshots
+## Demo Video
 ![](FreshlyProduce.gif)
 
 ## Tech/framework used
