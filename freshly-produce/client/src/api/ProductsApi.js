@@ -12,20 +12,6 @@ export default {
     }
 }
 
-// export async function getDiscountedProducts() {
-//   try {
-//     let products = []
-//     let endpointUrl = `${process.env.VUE_APP_ROOT_URL}/product/discountProducts`;
-//     let response = await axios.get(endpointUrl);
-
-//     if (response.status == 200) {
-//       products = response.data;
-//     }
-//     return products;
-//   } catch(error) {
-//     return error;
-//   }
-// }
 
 export async function getProducts(reqObject) {
   try {
