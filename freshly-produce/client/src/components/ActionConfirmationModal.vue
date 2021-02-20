@@ -45,6 +45,7 @@ export default {
   methods: {
     cancel() {
       this.$emit('cancel');
+      console.log("hello");
     },
     confirm() {
       if (this.selectedTask == 'publish' || this.selectedTask == 'unpublish') {
