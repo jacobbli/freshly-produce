@@ -1,0 +1,68 @@
+@startuml
+
+entity user {
+  Integer user_id
+  String username
+  String first_name
+  String surname
+  Integer role
+  String phone
+  String email
+  String address
+  bytea photo
+}
+
+entity user_subscriptions {
+    Integer subscription_id
+    String frequency (weekly, bi-weekly)
+    String delivery_day
+    timestamptz expiration_date
+    timestamptz created_at
+    ----
+    Integer user_id
+    Integer product_id
+}
+
+entity products {
+  Integer product_id
+  String product_name
+  String product_type
+  Numeric product_price
+  String unit
+  Integer quantity
+  timestamptz expiry_date
+  bytea product_photo
+  Boolean published
+  ----
+  Integer user_id
+}
+
+entity order {
+  Integer order_id
+  Numeric price
+  Integer quantity
+  timestamptz created_at
+  ----
+  Integer user_id
+  Integer transaction_id
+  Integer product_id
+}
+
+
+entity transaction {
+    Integer transaction_id
+    Numeric transaction_cost
+    timestamptz created_at
+    ----
+    Integer user_id
+}
+
+transaction -- order
+user -- order
+products -- user
+transaction - user
+user_subscriptions -- products
+user - user_subscriptions
+order - products
+
+@enduml

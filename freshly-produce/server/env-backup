@@ -1,0 +1,11 @@
+PGHOST=freshly-produce-database.postgres.database.azure.com
+PGUSER=freshlyproduce@freshly-produce-database
+PGDATABASE=postgres
+PGPASSWORD=fp123456789!
+PGPORT=5432
+
+PGHOST=localhost
+PGUSER=postgres
+PGDATABASE=freshly_produce
+PGPASSWORD=postgres
+PGPORT=5432
